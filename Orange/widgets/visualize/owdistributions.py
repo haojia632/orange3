@@ -136,8 +136,8 @@ class DistributionBarItem(pg.GraphicsObject):
 
 
 class OWDistributions(widget.OWWidget):
-    name = "Distributions"
-    description = "Display value distributions of a data feature in a graph."
+    name = "直方图"
+    description = "在图形中显示数据特性的值分布"
     icon = "icons/Distribution.svg"
     priority = 120
     keywords = []
@@ -158,7 +158,7 @@ class OWDistributions(widget.OWWidget):
     smoothing_index = settings.Setting(5)
     show_prob = settings.ContextSetting(0)
 
-    graph_name = "plot"
+    graph_name = "绘图"
 
     ASH_HIST = 50
 
@@ -172,7 +172,7 @@ class OWDistributions(widget.OWWidget):
         self.distributions = None
         self.contingencies = None
         self.var = self.cvar = None
-        varbox = gui.vBox(self.controlArea, "Variable")
+        varbox = gui.vBox(self.controlArea, "变量")
 
         self.varmodel = itemmodels.VariableListModel()
         self.groupvarmodel = []
@@ -190,7 +190,7 @@ class OWDistributions(widget.OWWidget):
             self._on_variable_idx_changed)
         varbox.layout().addWidget(self.varview)
 
-        box = gui.vBox(self.controlArea, "Precision")
+        box = gui.vBox(self.controlArea, "精度")
 
         gui.separator(self.controlArea, 4, 4)
 
@@ -203,11 +203,11 @@ class OWDistributions(widget.OWWidget):
 
         gui.checkBox(
             gui.indentedBox(box, sep=4),
-            self, "disc_cont", "Bin numeric variables",
+            self, "disc_cont", "数字变量容器",
             callback=self._on_groupvar_idx_changed,
-            tooltip="Show numeric variables as categorical.")
+            tooltip="将数字变量显示为类别变量。")
 
-        box = gui.vBox(self.controlArea, "Group by")
+        box = gui.vBox(self.controlArea, "分组")
         self.icons = gui.attributeIconDict
         gui.comboBox(
             box, self, "groupvar_idx",
@@ -215,13 +215,13 @@ class OWDistributions(widget.OWWidget):
             valueType=str, contentsLength=12)
         box2 = gui.indentedBox(box, sep=4)
         gui.checkBox(
-            box2, self, "relative_freq", "Show relative frequencies",
+            box2, self, "relative_freq", "显示相对频率",
             callback=self._on_relative_freq_changed,
             tooltip="Normalize probabilities so that probabilities "
                     "for each group-by value sum to 1.")
         gui.separator(box2)
         gui.comboBox(
-            box2, self, "show_prob", label="Show probabilities:",
+            box2, self, "show_prob", label="显示概率:",
             orientation=Qt.Horizontal,
             callback=self._on_relative_freq_changed,
             tooltip="Show probabilities for a chosen group-by value "
@@ -322,12 +322,12 @@ class OWDistributions(widget.OWWidget):
 
     def _setup_smoothing(self):
         if not self.disc_cont and self.var and self.var.is_continuous:
-            self.controls.disc_cont.setText("Bin numeric variables")
-            self.l_smoothing_l.setText("Smooth")
-            self.l_smoothing_r.setText("Precise")
+            self.controls.disc_cont.setText("二进制数值变量")
+            self.l_smoothing_l.setText("平滑")
+            self.l_smoothing_r.setText("精确")
         else:
             self.controls.disc_cont.setText(
-                "Bin numeric variables into {} bins".
+                "将数值变量存储到{} bins".
                 format(self.bins[self.smoothing_index]))
             self.l_smoothing_l.setText(" " + str(self.bins[0]))
             self.l_smoothing_r.setText(" " + str(self.bins[-1]))
@@ -655,11 +655,11 @@ class OWDistributions(widget.OWWidget):
             prob = self.controls.show_prob
             indiv_probs = 0 < prob.currentIndex() < prob.count() - 1
             if not indiv_probs or self.relative_freq:
-                text += " grouped by '{}'".format(group_var)
+                text += " g按'{}'划分".format(group_var)
                 if self.relative_freq:
-                    text += " (relative frequencies)"
+                    text += " (相对频率)"
             if indiv_probs:
-                text += "; probabilites for '{}={}'".format(
+                text += ";概率为'{}={}'".format(
                     group_var, prob.currentText())
         self.report_caption(text)
 

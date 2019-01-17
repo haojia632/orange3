@@ -23,8 +23,8 @@ INDEX = "Position (index)"
 
 
 class OWMergeData(widget.OWWidget):
-    name = "Merge Data"
-    description = "Merge datasets based on the values of selected features."
+    name = "数据合并"
+    description = "基于所选特征的值合并数据集。"
     icon = "icons/MergeData.svg"
     priority = 1110
     keywords = ["join"]
@@ -67,12 +67,12 @@ class OWMergeData(widget.OWWidget):
 
         box = gui.hBox(self.controlArea, box=None)
         self.infoBoxData = gui.label(
-            box, self, self.dataInfoText(None), box="Data")
+            box, self, self.dataInfoText(None), box="数据")
         self.infoBoxExtraData = gui.label(
-            box, self, self.dataInfoText(None), box="Extra Data")
+            box, self, self.dataInfoText(None), box="额外数据")
 
         grp = gui.radioButtonsInBox(
-            self.controlArea, self, "merging", box="Merging",
+            self.controlArea, self, "merging", box="合并",
             callback=self.change_merging)
         self.attr_boxes = []
 
@@ -102,18 +102,17 @@ class OWMergeData(widget.OWWidget):
             cb.setFixedWidth(190)
             vbox.layout().addSpacing(6)
 
-        add_option("Append columns from Extra Data",
-                   "by matching", "with", "augment",
+        add_option("添加额外的数据列", "by matching", "with", "augment",
                    self.model, self.extra_model_unique)
-        add_option("Find matching rows", "where",
+        add_option("查找匹配行", "where",
                    "equals", "merge",
                    self.model_unique_with_id, self.extra_model_unique_with_id)
-        add_option("Concatenate tables, merge rows",
+        add_option("连接表格，合并行",
                    "where", "equals", "combine",
                    self.model_unique_with_id, self.extra_model_unique_with_id)
         self.set_merging()
 
-        gui.auto_commit(self.controlArea, self, "auto_apply", "&Apply",
+        gui.auto_commit(self.controlArea, self, "auto_apply", "应用",
                         box=False)
 
     def set_merging(self):
@@ -230,7 +229,7 @@ class OWMergeData(widget.OWWidget):
 
     def dataInfoText(self, data):
         if data is None:
-            return "No data."
+            return "没有数据."
         else:
             return "{}\n{} instances\n{} variables".format(
                 data.name, len(data), len(data.domain) + len(data.domain.metas))

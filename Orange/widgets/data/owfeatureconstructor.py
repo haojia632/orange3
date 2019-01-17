@@ -330,9 +330,8 @@ class FeatureConstructorHandler(DomainContextHandler):
 
 
 class OWFeatureConstructor(OWWidget):
-    name = "Feature Constructor"
-    description = "Construct new features (data columns) from a set of " \
-                  "existing features in the input dataset."
+    name = "特征约束"
+    description = "从输入数据集中的一组现有特征构造新特征（数据列）。"
     icon = "icons/FeatureConstructor.svg"
     keywords = []
 
@@ -363,7 +362,7 @@ class OWFeatureConstructor(OWWidget):
         self.data = None
         self.editors = {}
 
-        box = gui.vBox(self.controlArea, "Variable Definitions")
+        box = gui.vBox(self.controlArea, "变量定义")
 
         toplayout = QHBoxLayout()
         toplayout.setContentsMargins(0, 0, 0, 0)
@@ -386,7 +385,7 @@ class OWFeatureConstructor(OWWidget):
         buttonlayout.setContentsMargins(0, 0, 0, 0)
 
         self.addbutton = QPushButton(
-            "New", toolTip="Create a new variable",
+            "新建", toolTip="新建变量",
             minimumWidth=120,
             shortcut=QKeySequence.New
         )
@@ -407,30 +406,30 @@ class OWFeatureConstructor(OWWidget):
             return unique_name(fmt, reserved_names())
 
         menu = QMenu(self.addbutton)
-        cont = menu.addAction("Numeric")
+        cont = menu.addAction("数字")
         cont.triggered.connect(
             lambda: self.addFeature(
                 ContinuousDescriptor(generate_newname("X{}"), "", 3))
         )
-        disc = menu.addAction("Categorical")
+        disc = menu.addAction("分类")
         disc.triggered.connect(
             lambda: self.addFeature(
                 DiscreteDescriptor(generate_newname("D{}"), "",
                                    ("A", "B"), -1, False))
         )
-        string = menu.addAction("Text")
+        string = menu.addAction("文本")
         string.triggered.connect(
             lambda: self.addFeature(
                 StringDescriptor(generate_newname("S{}"), ""))
         )
         menu.addSeparator()
-        self.duplicateaction = menu.addAction("Duplicate Selected Variable")
+        self.duplicateaction = menu.addAction("复制选中变量")
         self.duplicateaction.triggered.connect(self.duplicateFeature)
         self.duplicateaction.setEnabled(False)
         self.addbutton.setMenu(menu)
 
         self.removebutton = QPushButton(
-            "Remove", toolTip="Remove selected variable",
+            "删除", toolTip="删除选中变量",
             minimumWidth=120,
             shortcut=QKeySequence.Delete
         )
@@ -465,7 +464,7 @@ class OWFeatureConstructor(OWWidget):
 
         box = gui.hBox(self.controlArea)
         gui.rubber(box)
-        commit = gui.button(box, self, "Send", callback=self.apply,
+        commit = gui.button(box, self, "发送", callback=self.apply,
                             default=True)
         commit.setMinimumWidth(180)
 

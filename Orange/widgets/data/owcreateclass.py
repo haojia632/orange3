@@ -124,8 +124,8 @@ class ValueFromDiscreteSubstring(Lookup):
 
 
 class OWCreateClass(widget.OWWidget):
-    name = "Create Class"
-    description = "Create class attribute from a string attribute"
+    name = "创建类"
+    description = "根据字符串属性，创建类属性"
     icon = "icons/CreateClass.svg"
     category = "Data"
     keywords = []
@@ -174,7 +174,7 @@ class OWCreateClass(widget.OWWidget):
         self.counts = []
 
         combo = gui.comboBox(
-            self.controlArea, self, "attribute", label="From column: ",
+            self.controlArea, self, "attribute", label="来自列: ",
             box=True, orientation=Qt.Horizontal, callback=self.update_rules,
             model=DomainModel(valid_types=(StringVariable, DiscreteVariable)))
         # Don't use setSizePolicy keyword argument here: it applies to box,
@@ -196,27 +196,27 @@ class OWCreateClass(widget.OWWidget):
         self.rules_box.setColumnStretch(0, 1)
         self.rules_box.setColumnStretch(1, 1)
         self.rules_box.setColumnStretch(2, 100)
-        rules_box.addWidget(QLabel("Name"), 0, 1)
-        rules_box.addWidget(QLabel("Substring"), 0, 2)
-        rules_box.addWidget(QLabel("#Instances"), 0, 3, 1, 2)
+        rules_box.addWidget(QLabel("名称"), 0, 1)
+        rules_box.addWidget(QLabel("子串"), 0, 2)
+        rules_box.addWidget(QLabel("#实例"), 0, 3, 1, 2)
         self.update_rules()
 
         gui.lineEdit(
             self.controlArea, self, "class_name",
-            label="Name for the new class:",
+            label="新类名称:",
             box=True, orientation=Qt.Horizontal)
 
         optionsbox = gui.vBox(self.controlArea, box=True)
         gui.checkBox(
-            optionsbox, self, "match_beginning", "Match only at the beginning",
+            optionsbox, self, "match_beginning", "仅在开头匹配",
             callback=self.options_changed)
         gui.checkBox(
-            optionsbox, self, "case_sensitive", "Case sensitive",
+            optionsbox, self, "case_sensitive", "区分大小写",
             callback=self.options_changed)
 
         box = gui.hBox(self.controlArea)
         gui.rubber(box)
-        gui.button(box, self, "Apply", autoDefault=False, width=180,
+        gui.button(box, self, "应用", autoDefault=False, width=180,
                    callback=self.apply)
 
         # TODO: Resizing upon changing the number of rules does not work

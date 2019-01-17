@@ -34,7 +34,7 @@ def init():
     version = ".".join(version.split(".", 2)[:2])
 
     QCoreApplication.setOrganizationDomain("biolab.si")
-    QCoreApplication.setApplicationName("Orange Canvas")
+    QCoreApplication.setApplicationName("数据挖掘系统")
     QCoreApplication.setApplicationVersion(version)
     QSettings.setDefaultFormat(QSettings.IniFormat)
 
@@ -311,6 +311,6 @@ def application_icon():
     Return the main application icon.
     """
     path = pkg_resources.resource_filename(
-        __name__, "icons/orange-canvas.svg"
+        __name__, "icons/favicon.ico"
     )
     return QIcon(path)

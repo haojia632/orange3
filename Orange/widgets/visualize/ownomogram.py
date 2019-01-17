@@ -35,8 +35,8 @@ class SortBy(IntEnum):
 
     @staticmethod
     def items():
-        return ["No sorting", "Name", "Absolute importance",
-                "Positive influence", "Negative influence"]
+        return ["不排序", "名称", "绝对重要",
+                "积极作用", "消极作用"]
 
 
 class MovableToolTip(QLabel):
@@ -563,8 +563,8 @@ class NomogramItem(QGraphicsWidget):
 
 class OWNomogram(OWWidget):
     name = "Nomogram"
-    description = " Nomograms for Visualization of Naive Bayesian" \
-                  " and Logistic Regression Classifiers."
+    description = " 朴素贝叶斯可视化的诺莫图" \
+                  " 和逻辑回归分类器"
     icon = "icons/Nomogram.svg"
     priority = 2000
     keywords = []
@@ -587,11 +587,10 @@ class OWNomogram(OWWidget):
     sort_index = Setting(SortBy.ABSOLUTE)
     cont_feature_dim_index = Setting(0)
 
-    graph_name = "scene"
+    graph_name = "场景"
 
     class Error(OWWidget.Error):
-        invalid_classifier = Msg("Nomogram accepts only Naive Bayes and "
-                                 "Logistic Regression classifiers.")
+        invalid_classifier = Msg("诺莫图只接受朴素贝叶斯和逻辑回归分类器")
 
     def __init__(self):
         super().__init__()

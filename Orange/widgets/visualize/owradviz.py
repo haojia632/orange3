@@ -116,9 +116,9 @@ class RadvizVizRank(VizRankDialog, OWComponent):
         anything so the user can still see the results until actually restarting the search.
         """
         if self.n_attrs != self.last_run_n_attrs or self.saved_state is None:
-            self.button.setText("Start")
+            self.button.setText("开始")
         else:
-            self.button.setText("Continue")
+            self.button.setText("继续")
         self.button.setEnabled(self.check_preconditions())
 
     def progressBarSet(self, value, processEvents=None):
@@ -268,7 +268,7 @@ class OWRadvizGraph(OWGraphWithAnchors):
 
 class OWRadviz(OWAnchorProjectionWidget):
     name = "Radviz"
-    description = "Display Radviz projection"
+    description = "显示Radviz投影"
     icon = "icons/Radviz.svg"
     priority = 241
     keywords = ["viz"]
@@ -281,9 +281,8 @@ class OWRadviz(OWAnchorProjectionWidget):
     graph = SettingProvider(OWRadvizGraph)
 
     class Warning(OWAnchorProjectionWidget.Warning):
-        invalid_embedding = widget.Msg("No projection for selected features")
-        removed_vars = widget.Msg("Categorical variables with more than"
-                                  " two values are not shown.")
+        invalid_embedding = widget.Msg("选择的特征没有投影")
+        removed_vars = widget.Msg("不显示具有两个以上值的分类变量")
 
     def __init__(self):
         self.model_selected = VariableListModel(enable_dnd=True)

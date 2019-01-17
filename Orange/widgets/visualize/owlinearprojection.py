@@ -246,8 +246,8 @@ class OWLinProjGraph(OWGraphWithAnchors):
 
 class OWLinearProjection(OWAnchorProjectionWidget):
     name = "Linear Projection"
-    description = "A multi-axis projection of data onto " \
-                  "a two-dimensional plane."
+    description = "数据的多轴投影 " \
+                  "一个二维平面"
     icon = "icons/LinearProjection.svg"
     priority = 240
     keywords = []
@@ -255,9 +255,9 @@ class OWLinearProjection(OWAnchorProjectionWidget):
     Placement = Enum("Placement", dict(Circular=0, LDA=1, PCA=2),
                      type=int, qualname="OWLinearProjection.Placement")
 
-    Projection_name = {Placement.Circular: "Circular Placement",
-                       Placement.LDA: "Linear Discriminant Analysis",
-                       Placement.PCA: "Principal Component Analysis"}
+    Projection_name = {Placement.Circular: "圆弧形布局",
+                       Placement.LDA: "线性判别分析",
+                       Placement.PCA: "主成分分析"}
 
     settings_version = 5
 
@@ -268,7 +268,7 @@ class OWLinearProjection(OWAnchorProjectionWidget):
     graph = SettingProvider(OWLinProjGraph)
 
     class Error(OWAnchorProjectionWidget.Error):
-        no_cont_features = Msg("Plotting requires numeric features")
+        no_cont_features = Msg("绘图需要数字特征")
 
     def __init__(self):
         self.model_selected = VariableListModel(enable_dnd=True)
@@ -394,19 +394,19 @@ class OWLinearProjection(OWAnchorProjectionWidget):
     def _init_vizrank(self):
         is_enabled, msg = False, ""
         if self.data is None:
-            msg = "There is no data."
+            msg = "没有数据"
         elif self.attr_color is None:
-            msg = "Color variable has to be selected"
+            msg = "必须选择颜色变量"
         elif self.attr_color.is_continuous and \
                 self.placement == self.Placement.LDA:
-            msg = "Suggest Features does not work for Linear " \
-                  "Discriminant Analysis Projection when " \
-                  "continuous color variable is selected."
+            msg = "建议特征对线性不起作用" \
+                  "判别分析投影时" \
+                  "选择连续颜色变量"
         elif len([v for v in self.continuous_variables
                   if v is not self.attr_color]) < 3:
-            msg = "Not enough available continuous variables"
+            msg = "可用的连续变量不够"
         elif len(self.data[self.valid_data]) < 2:
-            msg = "Not enough valid data instances"
+            msg = "没有足够的有效数据实例"
         else:
             is_enabled = not np.isnan(self.data.get_column_view(
                 self.attr_color)[0].astype(float)).all()

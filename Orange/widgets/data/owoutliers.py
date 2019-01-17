@@ -12,8 +12,8 @@ from Orange.widgets.utils.sql import check_sql_input
 
 
 class OWOutliers(widget.OWWidget):
-    name = "Outliers"
-    description = "Detect outliers."
+    name = "异常点分析"
+    description = "异常值检测。"
     icon = "icons/Outliers.svg"
     priority = 3000
     category = "Data"
@@ -37,7 +37,7 @@ class OWOutliers(widget.OWWidget):
     empirical_covariance = Setting(False)
     support_fraction = Setting(1)
 
-    data_info_default = 'No data on input.'
+    data_info_default = '没有输入数据。'
     in_out_info_default = ' '
 
     class Error(widget.OWWidget.Error):
@@ -49,16 +49,15 @@ class OWOutliers(widget.OWWidget):
         self.data = None
         self.n_inliers = self.n_outliers = None
 
-        box = gui.vBox(self.controlArea, "Information")
+        box = gui.vBox(self.controlArea, "信息")
         self.data_info_label = gui.widgetLabel(box, self.data_info_default)
         self.in_out_info_label = gui.widgetLabel(box,
                                                  self.in_out_info_default)
 
-        box = gui.vBox(self.controlArea, "Outlier Detection Method")
+        box = gui.vBox(self.controlArea, "异常值检测方法")
         detection = gui.radioButtons(box, self, "outlier_method")
 
-        gui.appendRadioButton(detection,
-                              "One class SVM with non-linear kernel (RBF)")
+        gui.appendRadioButton(detection, "一类非线性支持向量机 (RBF)")
         ibox = gui.indentedBox(detection)
         tooltip = "An upper bound on the fraction of training errors and a " \
                   "lower bound of the fraction of support vectors"
@@ -67,7 +66,7 @@ class OWOutliers(widget.OWWidget):
             ibox, self, "nu", minValue=1, maxValue=100, ticks=10,
             labelFormat="%d %%", callback=self.nu_changed, tooltip=tooltip)
         self.gamma_spin = gui.spin(
-            ibox, self, "gamma", label="Kernel coefficient:", step=1e-2,
+            ibox, self, "gamma", label="核系数:", step=1e-2,
             spinType=float, minv=0.01, maxv=10, callback=self.gamma_changed)
         gui.separator(detection, 12)
 
@@ -88,7 +87,7 @@ class OWOutliers(widget.OWWidget):
 
         gui.separator(detection, 12)
 
-        gui.button(self.buttonsArea, self, "Detect Outliers",
+        gui.button(self.buttonsArea, self, "异常值检测",
                    callback=self.commit)
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
 

@@ -16,9 +16,8 @@ from Orange.util import Reprable
 
 
 class OWDataSampler(OWWidget):
-    name = "Data Sampler"
-    description = "Randomly draw a subset of data points " \
-                  "from the input dataset."
+    name = "数据采样器"
+    description = "从输入数据集中随机抽取一个数据点子集。"
     icon = "icons/DataSampler.svg"
     priority = 100
     category = "Data"
@@ -68,11 +67,11 @@ class OWDataSampler(OWWidget):
         self.indices = None
         self.sampled_instances = self.remaining_instances = None
 
-        box = gui.vBox(self.controlArea, "Information")
-        self.dataInfoLabel = gui.widgetLabel(box, 'No data on input.')
+        box = gui.vBox(self.controlArea, "信息")
+        self.dataInfoLabel = gui.widgetLabel(box, '没有输入数据。')
         self.outputInfoLabel = gui.widgetLabel(box, ' ')
 
-        self.sampling_box = gui.vBox(self.controlArea, "Sampling Type")
+        self.sampling_box = gui.vBox(self.controlArea, "采样类型")
         sampling = gui.radioButtons(self.sampling_box, self, "sampling_type",
                                     callback=self.sampling_type_changed)
 
@@ -82,7 +81,7 @@ class OWDataSampler(OWWidget):
                 self.sampling_type_changed()
             return set_sampling_type_i
 
-        gui.appendRadioButton(sampling, "Fixed proportion of data:")
+        gui.appendRadioButton(sampling, "固定数据比例:")
         self.sampleSizePercentageSlider = gui.hSlider(
             gui.indentedBox(sampling), self,
             "sampleSizePercentage",
@@ -90,19 +89,19 @@ class OWDataSampler(OWWidget):
             callback=set_sampling_type(self.FixedProportion),
             addSpace=12)
 
-        gui.appendRadioButton(sampling, "Fixed sample size")
+        gui.appendRadioButton(sampling, "固定样品大小")
         ibox = gui.indentedBox(sampling)
         self.sampleSizeSpin = gui.spin(
-            ibox, self, "sampleSizeNumber", label="Instances: ",
+            ibox, self, "sampleSizeNumber", label="实例: ",
             minv=1, maxv=self._MAX_SAMPLE_SIZE,
             callback=set_sampling_type(self.FixedSize),
             controlWidth=90)
         gui.checkBox(
-            ibox, self, "replacement", "Sample with replacement",
+            ibox, self, "replacement", "更换样品",
             callback=set_sampling_type(self.FixedSize),
             addSpace=12)
 
-        gui.appendRadioButton(sampling, "Cross validation")
+        gui.appendRadioButton(sampling, "交叉验证")
         form = QFormLayout(
             formAlignment=Qt.AlignLeft | Qt.AlignTop,
             labelAlignment=Qt.AlignLeft,
@@ -118,7 +117,7 @@ class OWDataSampler(OWWidget):
             addToLayout=False, callback=self.fold_changed)
         form.addRow("Selected fold:", self.selected_fold_spin)
 
-        gui.appendRadioButton(sampling, "Bootstrap")
+        gui.appendRadioButton(sampling, "引导程序")
 
         self.sql_box = gui.vBox(self.controlArea, "Sampling Type")
         sampling = gui.radioButtons(self.sql_box, self, "sampling_type",
@@ -136,20 +135,20 @@ class OWDataSampler(OWWidget):
         spin.setSuffix(" %")
         self.sql_box.setVisible(False)
 
-        self.options_box = gui.vBox(self.controlArea, "Options")
+        self.options_box = gui.vBox(self.controlArea, "选项")
         self.cb_seed = gui.checkBox(
             self.options_box, self, "use_seed",
-            "Replicable (deterministic) sampling",
+            "可复制（确定性）抽样                 ",
             callback=self.settings_changed)
         self.cb_stratify = gui.checkBox(
             self.options_box, self, "stratify",
-            "Stratify sample (when possible)", callback=self.settings_changed)
+            "分层样品（如果可能）", callback=self.settings_changed)
         self.cb_sql_dl = gui.checkBox(
             self.options_box, self, "sql_dl", "Download data to local memory",
             callback=self.settings_changed)
         self.cb_sql_dl.setVisible(False)
 
-        gui.button(self.buttonsArea, self, "Sample Data",
+        gui.button(self.buttonsArea, self, "样本数据",
                    callback=self.commit)
 
     def sampling_type_changed(self):

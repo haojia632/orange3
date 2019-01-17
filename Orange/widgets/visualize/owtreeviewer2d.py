@@ -370,7 +370,7 @@ class OWTreeViewer2D(OWWidget):
     _DEF_NODE_WIDTH = 24
     _DEF_NODE_HEIGHT = 20
 
-    graph_name = "scene"
+    graph_name = "场景"
 
     def __init__(self):
         super().__init__()
@@ -379,38 +379,38 @@ class OWTreeViewer2D(OWWidget):
         self.model = None
 
         box = gui.vBox(
-            self.controlArea, 'Tree', addSpace=20,
+            self.controlArea, '树', addSpace=20,
             sizePolicy=QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
-        self.info = gui.widgetLabel(box, 'No tree.')
+        self.info = gui.widgetLabel(box, '没有树。')
 
         layout = QFormLayout()
         layout.setVerticalSpacing(20)
         layout.setFieldGrowthPolicy(layout.ExpandingFieldsGrow)
         box = self.display_box = \
-            gui.widgetBox(self.controlArea, "Display", addSpace=True,
+            gui.widgetBox(self.controlArea, "显示", addSpace=True,
                           orientation=layout)
         layout.addRow(
-            "Zoom: ",
+            "缩放: ",
             gui.hSlider(box, self, 'zoom',
                         minValue=1, maxValue=10, step=1, ticks=False,
                         callback=self.toggle_zoom_slider,
                         createLabel=False, addToLayout=False, addSpace=False))
         layout.addRow(
-            "Width: ",
+            "宽度: ",
             gui.hSlider(box, self, 'max_node_width',
                         minValue=50, maxValue=200, step=1, ticks=False,
                         callback=self.toggle_node_size,
                         createLabel=False, addToLayout=False, addSpace=False))
         policy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         layout.addRow(
-            "Depth: ",
+            "深度: ",
             gui.comboBox(box, self, 'max_tree_depth',
                          items=["Unlimited"] + [
                              "{} levels".format(x) for x in range(2, 10)],
                          addToLayout=False, sendSelectedValue=False,
                          callback=self.toggle_tree_depth, sizePolicy=policy))
         layout.addRow(
-            "Edge width: ",
+            "边界宽度: ",
             gui.comboBox(box, self, 'line_width_method',
                          items=['Fixed', 'Relative to root',
                                 'Relative to parent'],

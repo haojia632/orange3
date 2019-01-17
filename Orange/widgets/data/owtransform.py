@@ -7,8 +7,8 @@ from Orange.widgets.widget import OWWidget, Input, Output, Msg
 
 
 class OWTransform(OWWidget):
-    name = "Transform"
-    description = "Transform data table."
+    name = "转换"
+    description = "转换数据表。"
     icon = "icons/Transform.svg"
     priority = 2110
     keywords = []
@@ -32,7 +32,7 @@ class OWTransform(OWWidget):
         self.preprocessor = None
         self.transformed_data = None
 
-        info_box = gui.widgetBox(self.controlArea, "Info")
+        info_box = gui.widgetBox(self.controlArea, "信息")
         self.input_label = gui.widgetLabel(info_box, "")
         self.preprocessor_label = gui.widgetLabel(info_box, "")
         self.output_label = gui.widgetLabel(info_box, "")
@@ -40,7 +40,7 @@ class OWTransform(OWWidget):
         self.set_preprocessor_label_text()
 
     def set_input_label_text(self):
-        text = "No data on input."
+        text = "输入时没有数据。"
         if self.data is not None:
             text = "Input data with {:,} instances and {:,} features.".format(
                 len(self.data),
@@ -48,7 +48,7 @@ class OWTransform(OWWidget):
         self.input_label.setText(text)
 
     def set_preprocessor_label_text(self):
-        text = "No preprocessor on input."
+        text = "输入时没有预处理器。"
         if self.transformed_data is not None:
             text = "Preprocessor {} applied.".format(self.preprocessor)
         elif self.preprocessor is not None:

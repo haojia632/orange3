@@ -127,7 +127,7 @@ class ReportTable(QTableView):
 
 
 class OWReport(OWWidget):
-    name = "Report"
+    name = "报告"
     save_dir = Setting("")
     open_dir = Setting("")
 
@@ -164,16 +164,16 @@ class OWReport(OWWidget):
 
         self.last_scheme = None
         self.scheme_button = gui.button(
-            self.controlArea, self, "Back to Last Scheme",
+            self.controlArea, self, "返回上一个方案",
             callback=self._show_last_scheme
         )
         box = gui.hBox(self.controlArea)
         box.setContentsMargins(-6, 0, -6, 0)
         self.save_button = gui.button(
-            box, self, "Save", callback=self.save_report, disabled=True
+            box, self, "保持", callback=self.save_report, disabled=True
         )
         self.print_button = gui.button(
-            box, self, "Print", callback=self._print_report, disabled=True
+            box, self, "打印", callback=self._print_report, disabled=True
         )
 
         class PyBridge(QObject):

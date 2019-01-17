@@ -10,8 +10,8 @@ from Orange.widgets.widget import Input
 
 
 class OWSaveDistances(widget.OWWidget):
-    name = "Save Distance Matrix"
-    description = "Save distance matrix to an output file."
+    name = "保存距离矩阵"
+    description = "将距离矩阵保存到输出文件。"
     icon = "icons/SaveDistances.svg"
     category = "Unsupervised"
     keywords = ["distance matrix", "save"]
@@ -31,11 +31,11 @@ class OWSaveDistances(widget.OWWidget):
         self.filename = ""
 
         self.save = gui.auto_commit(
-            self.controlArea, self, "auto_save", "Save", box=False,
+            self.controlArea, self, "auto_save", "保存", box=False,
             commit=self.save_file, callback=self.adjust_label,
             disabled=True, addSpace=True)
         self.saveAs = gui.button(
-            self.controlArea, self, "Save As...",
+            self.controlArea, self, "另存为...",
             callback=self.save_file_as, disabled=True)
         self.saveAs.setMinimumWidth(300)
         self.adjustSize()

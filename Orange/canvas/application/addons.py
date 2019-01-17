@@ -208,7 +208,7 @@ class AddonManagerWidget(QWidget):
             textFormat=Qt.RichText
         )
         self.__search = QLineEdit(
-            placeholderText=self.tr("Filter")
+            placeholderText=self.tr("筛选")
         )
 
         self.tophlayout = topline = QHBoxLayout()
@@ -225,7 +225,7 @@ class AddonManagerWidget(QWidget):
         self.layout().addWidget(view)
 
         self.__model = model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(["", "Name", "Version", "Action"])
+        model.setHorizontalHeaderLabels(["", "名称", "版本", "活动"])
         model.dataChanged.connect(self.__data_changed)
         self.__proxy = proxy = QSortFilterProxyModel(
             filterKeyColumn=1,
@@ -401,11 +401,11 @@ class AddonManagerWidget(QWidget):
             flags = modelitem.flags()
 
             if flags & Qt.ItemIsTristate and state == Qt.Checked:
-                actionitem.setText("Update")
+                actionitem.setText("更新")
             elif isinstance(item, Available) and state == Qt.Checked:
-                actionitem.setText("Install")
+                actionitem.setText("安装")
             elif isinstance(item, Installed) and state == Qt.Unchecked:
-                actionitem.setText("Uninstall")
+                actionitem.setText("卸载")
             else:
                 actionitem.setText("")
         self.statechanged.emit()
@@ -489,8 +489,11 @@ class AddonManagerDialog(QDialog):
             orientation=Qt.Horizontal,
             standardButtons=QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
         )
+        buttons.button(QDialogButtonBox.Ok).setText("确定")
+        buttons.button(QDialogButtonBox.Cancel).setText("取消")
+
         addmore = QPushButton(
-            "Add more...", toolTip="Add an add-on not listed below",
+            "添加更多...", toolTip="添加一个未出现在列表中的附加组件",
             autoDefault=False
         )
         self.addonwidget.tophlayout.addWidget(addmore)
@@ -520,25 +523,25 @@ class AddonManagerDialog(QDialog):
             self.__progressDialog()
 
     def __run_add_package_dialog(self):
-        dlg = QDialog(self, windowTitle="Add add-on by name")
+        dlg = QDialog(self, windowTitle="按名称添加附加组件")
         dlg.setAttribute(Qt.WA_DeleteOnClose)
 
         vlayout = QVBoxLayout()
         form = QFormLayout()
         form.setContentsMargins(0, 0, 0, 0)
         nameentry = QLineEdit(
-            placeholderText="Package name",
-            toolTip="Enter a package name as displayed on "
-                    "PyPI (capitalization is not important)")
+            placeholderText="包名",
+            toolTip="输入PyPI上显示的包名称（忽略大写）")
         nameentry.setMinimumWidth(250)
-        form.addRow("Name:", nameentry)
+        form.addRow("名称:", nameentry)
         vlayout.addLayout(form)
         buttons = QDialogButtonBox(
             standardButtons=QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         )
         okb = buttons.button(QDialogButtonBox.Ok)
         okb.setEnabled(False)
-        okb.setText("Add")
+        okb.setText("添加")
+        buttons.button(QDialogButtonBox.Cancel).setText("取消")
 
         def changed(name):
             okb.setEnabled(bool(name))
@@ -584,7 +587,7 @@ class AddonManagerDialog(QDialog):
 
     @Slot(str, str)
     def __show_error_for_query(self, text, error_details):
-        message_error(text, title="Error", details=error_details)
+        message_error(text, title="错误", details=error_details)
 
     @Slot(object)
     def add_package(self, installable):
@@ -602,10 +605,11 @@ class AddonManagerDialog(QDialog):
             self.__progress = QProgressDialog(
                 self,
                 minimum=0, maximum=0,
-                labelText=self.tr("Retrieving package list"),
+                labelText=self.tr("正在检索包列表"),
                 sizeGripEnabled=False,
-                windowTitle="Progress",
+                windowTitle="进展",
             )
+            self.__progress.setCancelButtonText("取消")
             self.__progress.setWindowModality(Qt.WindowModal)
             self.__progress.canceled.connect(self.reject)
             self.__progress.hide()
@@ -624,7 +628,7 @@ class AddonManagerDialog(QDialog):
         except Exception as err:
             message_warning(
                 "Could not retrieve package list",
-                title="Error",
+                title="错误",
                 informative_text=str(err),
                 parent=self
             )
@@ -766,7 +770,7 @@ class AddonManagerDialog(QDialog):
 
     def __on_installer_error(self, command, pkg, retcode, output):
         message_error(
-            "An error occurred while running a subprocess", title="Error",
+            "An error occurred while running a subprocess", title="错误",
             informative_text="{} exited with non zero status.".format(command),
             details="".join(output),
             parent=self

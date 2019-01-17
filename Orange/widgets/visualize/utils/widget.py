@@ -8,7 +8,7 @@ from AnyQt.QtWidgets import QApplication
 from Orange.data import (
     Table, ContinuousVariable, Domain, Variable, StringVariable
 )
-from Orange.data.util import get_unique_names
+from Orange.data.util import get_unique_names, array_equal
 from Orange.data.sql.table import SqlTable
 from Orange.preprocess.preprocess import Preprocess, ApplyDomain
 from Orange.statistics.util import bincount
@@ -363,6 +363,11 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
     class Warning(OWProjectionWidgetBase.Warning):
         too_many_labels = Msg(
             "Too many labels to show (zoom in or label only selected)")
+        subset_not_subset = Msg(
+            "Subset data contains some instances that do not appear in "
+            "input data")
+        subset_independent = Msg(
+            "None of subset data instance appear in input data")
 
     settingsHandler = DomainContextHandler()
     selection = Setting(None, schema_only=True)
@@ -403,7 +408,7 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
         self.control_area_stretch.layout().addStretch(100)
         self.gui.box_zoom_select(area)
         gui.auto_commit(
-            area, self, "auto_commit", "Send Selection", "Send Automatically")
+            area, self, "auto_commit", "选择发送", "自动发送")
 
     @property
     def effective_variables(self):
@@ -432,12 +437,10 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
         self.use_context()
         self._invalidated = not (
             data_existed and self.data is not None and
-            effective_data.X.shape == self.effective_data.X.shape and
-            np.allclose(effective_data.X,
-                        self.effective_data.X, equal_nan=True))
+            array_equal(effective_data.X, self.effective_data.X))
         if self._invalidated:
             self.clear()
-        self.cb_class_density.setEnabled(self.can_draw_density())
+        self.enable_controls()
 
     def check_data(self):
         self.valid_data = None
@@ -445,6 +448,9 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
 
     def use_context(self):
         pass
+
+    def enable_controls(self):
+        self.cb_class_density.setEnabled(self.can_draw_density())
 
     @Inputs.data_subset
     @check_sql_input
@@ -463,10 +469,19 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
         self.commit()
 
     def get_subset_mask(self):
-        if self.subset_indices:
-            return np.array([ex.id in self.subset_indices
-                             for ex in self.data[self.valid_data]])
-        return None
+        self.Warning.subset_independent.clear()
+        self.Warning.subset_not_subset.clear()
+        if not self.subset_indices:
+            return None
+        valid_data = self.data[self.valid_data]
+        mask = np.fromiter((ex.id in self.subset_indices for ex in valid_data),
+                           dtype=np.bool, count=len(valid_data))
+        in_mask = mask.sum()
+        if not in_mask:
+            self.Warning.subset_independent()
+        elif in_mask < len(self.subset_indices):
+            self.Warning.subset_not_subset()
+        return mask
 
     # Plot
     def get_embedding(self):
@@ -486,8 +501,9 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
 
     def get_coordinates_data(self):
         embedding = self.get_embedding()
-        return embedding[self.valid_data].T[:2] if embedding is not None \
-            else (None, None)
+        if embedding is not None and len(embedding[self.valid_data]):
+            return embedding[self.valid_data].T
+        return None, None
 
     def setup_plot(self):
         self.graph.reset_graph()
@@ -541,11 +557,8 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
         return data
 
     def _get_projection_variables(self):
-        domain = self.data.domain
         names = get_unique_names(
-            [v.name for v in domain.variables + domain.metas],
-            self.embedding_variables_names
-        )
+            self.data.domain, self.embedding_variables_names)
         return ContinuousVariable(names[0]), ContinuousVariable(names[1])
 
     @staticmethod

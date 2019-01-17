@@ -9,8 +9,8 @@ from Orange.widgets.widget import Input, Output
 
 
 class OWTranspose(OWWidget):
-    name = "Transpose"
-    description = "Transpose data table."
+    name = "矩阵转置"
+    description = "转置数据表。"
     icon = "icons/Transpose.svg"
     priority = 2000
     keywords = []
@@ -42,17 +42,17 @@ class OWTranspose(OWWidget):
         self.data = None
 
         box = gui.radioButtons(
-            self.controlArea, self, "feature_type", box="Feature names",
+            self.controlArea, self, "feature_type", box="特征名称",
             callback=lambda: self.apply())
 
-        button = gui.appendRadioButton(box, "Generic")
+        button = gui.appendRadioButton(box, "通用")
         edit = gui.lineEdit(
             gui.indentedBox(box, gui.checkButtonOffsetHint(button)), self,
             "feature_name",
-            placeholderText="Type a prefix ...", toolTip="Custom feature name")
+            placeholderText="Type a prefix ...", toolTip="自定义特征名称")
         edit.editingFinished.connect(self._apply_editing)
 
-        self.meta_button = gui.appendRadioButton(box, "From meta attribute:")
+        self.meta_button = gui.appendRadioButton(box, "来自元属性:")
         self.feature_model = DomainModel(
             order=DomainModel.METAS, valid_types=StringVariable,
             alphabetical=True)
@@ -62,7 +62,7 @@ class OWTranspose(OWWidget):
             callback=self._feature_combo_changed, model=self.feature_model)
 
         self.apply_button = gui.auto_commit(
-            self.controlArea, self, "auto_apply", "&Apply",
+            self.controlArea, self, "auto_apply", "应用",
             box=False, commit=self.apply)
         self.apply_button.button.setAutoDefault(False)
 

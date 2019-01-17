@@ -124,8 +124,8 @@ class DiscDelegate(QStyledItemDelegate):
 
 
 class OWDiscretize(widget.OWWidget):
-    name = "Discretize"
-    description = "Discretize the numeric data features."
+    name = "离散化"
+    description = "离散化数字数据特征。"
     icon = "icons/Discretize.svg"
     keywords = []
 
@@ -161,7 +161,7 @@ class OWDiscretize(widget.OWWidget):
         self.method = 0
         self.k = 5
 
-        box = gui.vBox(self.controlArea, self.tr("Default Discretization"))
+        box = gui.vBox(self.controlArea, self.tr("默认离散化"))
         self.default_bbox = rbox = gui.radioButtons(
             box, self, "default_method", callback=self._default_disc_changed)
         rb = gui.hBox(rbox)
@@ -200,7 +200,7 @@ class OWDiscretize(widget.OWWidget):
         self.k_general.layout().setContentsMargins(0, 0, 0, 0)
         vlayout = QHBoxLayout()
         box = gui.widgetBox(
-            self.controlArea, "Individual Attribute Settings",
+            self.controlArea, "单个属性设置",
             orientation=vlayout, spacing=8
         )
 
@@ -235,9 +235,9 @@ class OWDiscretize(widget.OWWidget):
 
         self.controlbox = controlbox
 
-        box = gui.auto_commit(self.controlArea, self, "autosend", "Apply",
+        box = gui.auto_commit(self.controlArea, self, "autosend", "应用",
                               orientation=Qt.Horizontal,
-                              checkbox_label="Apply automatically")
+                              checkbox_label="自动应用")
         box.button.setFixedWidth(180)
         box.layout().insertStretch(0)
 

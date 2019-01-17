@@ -280,8 +280,8 @@ class ContinuousTable(ColorTable):
 
 
 class OWColor(widget.OWWidget):
-    name = "Color"
-    description = "Set color legend for variables."
+    name = "添加颜色"
+    description = "设置变量的颜色图例。"
     icon = "icons/Colors.svg"
 
     class Inputs:
@@ -307,7 +307,7 @@ class OWColor(widget.OWWidget):
         self.disc_colors = []
         self.cont_colors = []
 
-        box = gui.hBox(self.controlArea, "Discrete Variables")
+        box = gui.hBox(self.controlArea, "离散变量")
         self.disc_model = DiscColorTableModel()
         disc_view = self.disc_view = DiscreteTable(self.disc_model)
         disc_view.horizontalHeader().setSectionResizeMode(
@@ -315,7 +315,7 @@ class OWColor(widget.OWWidget):
         self.disc_model.dataChanged.connect(self._on_data_changed)
         box.layout().addWidget(disc_view)
 
-        box = gui.hBox(self.controlArea, "Numeric Variables")
+        box = gui.hBox(self.controlArea, "数值变量")
         self.cont_model = ContColorTableModel()
         cont_view = self.cont_view = ContinuousTable(self, self.cont_model)
         cont_view.setColumnWidth(1, 256)
@@ -323,8 +323,8 @@ class OWColor(widget.OWWidget):
         box.layout().addWidget(cont_view)
 
         box = gui.auto_commit(
-            self.controlArea, self, "auto_apply", "Apply",
-            orientation=Qt.Horizontal, checkbox_label="Apply automatically")
+            self.controlArea, self, "auto_apply", "应用",
+            orientation=Qt.Horizontal, checkbox_label="自动应用")
         box.button.setFixedWidth(180)
         box.layout().insertStretch(0)
 

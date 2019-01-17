@@ -70,9 +70,9 @@ class FilterDiscreteType(enum.Enum):
 
 
 class OWSelectRows(widget.OWWidget):
-    name = "Select Rows"
+    name = "选择行"
     id = "Orange.widgets.data.file"
-    description = "Select rows from the data based on values of variables."
+    description = "根据变量值从数据中选择行。"
     icon = "icons/SelectRows.svg"
     priority = 100
     category = "Data"
@@ -146,7 +146,7 @@ class OWSelectRows(widget.OWWidget):
         self.data = None
         self.data_desc = self.match_desc = self.nonmatch_desc = None
 
-        box = gui.vBox(self.controlArea, 'Conditions', stretch=100)
+        box = gui.vBox(self.controlArea, '条件', stretch=100)
         self.cond_list = QTableWidget(
             box, showGrid=False, selectionMode=QTableWidget.NoSelection)
         box.layout().addWidget(self.cond_list)
@@ -162,11 +162,11 @@ class OWSelectRows(widget.OWWidget):
         box2 = gui.hBox(box)
         gui.rubber(box2)
         self.add_button = gui.button(
-            box2, self, "Add Condition", callback=self.add_row)
+            box2, self, "添加条件", callback=self.add_row)
         self.add_all_button = gui.button(
-            box2, self, "Add All Variables", callback=self.add_all)
+            box2, self, "添加所有变量", callback=self.add_all)
         self.remove_all_button = gui.button(
-            box2, self, "Remove All", callback=self.remove_all)
+            box2, self, "全部删除", callback=self.remove_all)
         gui.rubber(box2)
 
         boxes = gui.widgetBox(self.controlArea, orientation=QGridLayout())
@@ -174,18 +174,18 @@ class OWSelectRows(widget.OWWidget):
         layout.setColumnStretch(0, 1)
         layout.setColumnStretch(1, 1)
 
-        box_data = gui.vBox(boxes, 'Data', addToLayout=False)
+        box_data = gui.vBox(boxes, '数据', addToLayout=False)
         self.data_in_variables = gui.widgetLabel(box_data, " ")
         self.data_out_rows = gui.widgetLabel(box_data, " ")
         layout.addWidget(box_data, 0, 0)
 
-        box_setting = gui.vBox(boxes, 'Purging', addToLayout=False)
+        box_setting = gui.vBox(boxes, '删除', addToLayout=False)
         self.cb_pa = gui.checkBox(
-            box_setting, self, "purge_attributes", "Remove unused features",
+            box_setting, self, "purge_attributes", "删除未使用的特征",
             callback=self.conditions_changed)
         gui.separator(box_setting, height=1)
         self.cb_pc = gui.checkBox(
-            box_setting, self, "purge_classes", "Remove unused classes",
+            box_setting, self, "purge_classes", "删除未使用的类",
             callback=self.conditions_changed)
         layout.addWidget(box_setting, 0, 1)
 
@@ -194,8 +194,8 @@ class OWSelectRows(widget.OWWidget):
         layout.addWidget(self.buttonsArea, 1, 0)
 
         acbox = gui.auto_commit(
-            None, self, "auto_commit", label="Send", orientation=Qt.Horizontal,
-            checkbox_label="Send automatically")
+            None, self, "auto_commit", label="发送", orientation=Qt.Horizontal,
+            checkbox_label="自动发送")
         layout.addWidget(acbox, 1, 1)
 
         self.set_data(None)

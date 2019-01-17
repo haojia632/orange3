@@ -184,7 +184,7 @@ class DictItemsModel(QStandardItemModel):
     def __init__(self, parent=None, dict=None):
         super().__init__(parent)
         self._dict = {}
-        self.setHorizontalHeaderLabels(["Key", "Value"])
+        self.setHorizontalHeaderLabels(["关键字", "值"])
         if dict is not None:
             self.set_dict(dict)
 
@@ -269,7 +269,7 @@ class VariableEditor(QWidget):
         self.name_edit.editingFinished.connect(
             lambda: self.name_edit.isModified() and self.on_name_changed()
         )
-        form.addRow("Name:", self.name_edit)
+        form.addRow("名称:", self.name_edit)
 
         vlayout = QVBoxLayout(margin=0, spacing=1)
         self.labels_edit = view = QTreeView(
@@ -286,13 +286,13 @@ class VariableEditor(QWidget):
         agrp = QActionGroup(view, objectName="annotate-action-group")
         action_add = QAction(
             "+", self, objectName="action-add-label",
-            toolTip="Add a new label.",
+            toolTip="添加新标签。",
             shortcut=QKeySequence(QKeySequence.New),
             shortcutContext=Qt.WidgetShortcut
         )
         action_delete = QAction(
             "\N{MINUS SIGN}", self, objectName="action-delete-label",
-            toolTip="Remove selected label.",
+            toolTip="删除选中标签。",
             shortcut=QKeySequence(QKeySequence.Delete),
             shortcutContext=Qt.WidgetShortcut
         )
@@ -343,7 +343,7 @@ class VariableEditor(QWidget):
         hlayout.addWidget(button)
         hlayout.addStretch(10)
         vlayout.addLayout(hlayout)
-        form.addRow("Labels:", vlayout)
+        form.addRow("标签:", vlayout)
 
     def set_data(self, var, transform=()):
         # type: (Optional[Variable], Sequence[Transform]) -> None
@@ -492,7 +492,7 @@ class DiscreteVariableEditor(VariableEditor):
         )
         self.move_value_up = QAction(
             "\N{UPWARDS ARROW}", group,
-            toolTip="Move the selected item up.",
+            toolTip="向上移动所选项。",
             shortcut=QKeySequence(Qt.ControlModifier | Qt.AltModifier |
                                   Qt.Key_BracketLeft),
             shortcutContext=Qt.WidgetShortcut,
@@ -501,7 +501,7 @@ class DiscreteVariableEditor(VariableEditor):
 
         self.move_value_down = QAction(
             "\N{DOWNWARDS ARROW}", group,
-            toolTip="Move the selected item down.",
+            toolTip="向下移动所选项。",
             shortcut=QKeySequence(Qt.ControlModifier | Qt.AltModifier |
                                   Qt.Key_BracketRight),
             shortcutContext=Qt.WidgetShortcut,
@@ -511,14 +511,14 @@ class DiscreteVariableEditor(VariableEditor):
         self.add_new_item = QAction(
             "+", group,
             objectName="action-add-item",
-            toolTip="Append a new item.",
+            toolTip="增加一个新的项。",
             shortcut=QKeySequence(QKeySequence.New),
             shortcutContext=Qt.WidgetShortcut,
         )
         self.remove_item = QAction(
             "\N{MINUS SIGN}", group,
             objectName="action-remove-item",
-            toolTip="Delete the selected item.",
+            toolTip="删除选中项。",
             shortcut=QKeySequence(QKeySequence.Delete),
             shortcutContext=Qt.WidgetShortcut,
         )
@@ -553,7 +553,7 @@ class DiscreteVariableEditor(VariableEditor):
         hlayout.addStretch(10)
         vlayout.addLayout(hlayout)
 
-        form.insertRow(1, "Values:", vlayout)
+        form.insertRow(1, "值:", vlayout)
 
         QWidget.setTabOrder(self.name_edit, self.values_edit)
         QWidget.setTabOrder(self.values_edit, button1)
@@ -831,8 +831,8 @@ class VariableListModel(itemmodels.PyListModel):
 
 
 class OWEditDomain(widget.OWWidget):
-    name = "Edit Domain"
-    description = "Rename variables, edit categories and variable annotations."
+    name = "文本编辑"
+    description = "重命名变量，编辑种类和变量注释。"
     icon = "icons/EditDomain.svg"
     priority = 3125
     keywords = []
@@ -865,7 +865,7 @@ class OWEditDomain(widget.OWWidget):
         assert isinstance(mainlayout, QVBoxLayout)
         layout = QHBoxLayout()
         mainlayout.addLayout(layout)
-        box = QGroupBox("Variables")
+        box = QGroupBox("变量")
         box.setLayout(QVBoxLayout())
         layout.addWidget(box)
 
@@ -881,7 +881,7 @@ class OWEditDomain(widget.OWWidget):
         )
         box.layout().addWidget(self.variables_view)
 
-        box = QGroupBox("Edit", )
+        box = QGroupBox("编辑", )
         box.setLayout(QVBoxLayout(margin=4))
         layout.addWidget(box)
 
@@ -898,24 +898,24 @@ class OWEditDomain(widget.OWWidget):
         bbox.setStyleSheet(
             "button-layout: {:d};".format(QDialogButtonBox.MacLayout))
         bapply = QPushButton(
-            "Apply",
+            "应用",
             objectName="button-apply",
-            toolTip="Apply changes and commit data on output.",
+            toolTip="应用更改并在输出时提交数据",
             default=True,
             autoDefault=False
         )
         bapply.clicked.connect(self.commit)
         breset = QPushButton(
-            "Reset Selected",
+            "重置选定",
             objectName="button-reset",
-            toolTip="Rest selected variable to its input state.",
+            toolTip="将所选变量静止到其输入状态。",
             autoDefault=False
         )
         breset.clicked.connect(self.reset_selected)
         breset_all = QPushButton(
-            "Reset All",
+            "重置全部",
             objectName="button-reset-all",
-            toolTip="Reset all variables to their input state.",
+            toolTip="将所有变量重置为其输入状态。",
             autoDefault=False
         )
         breset_all.clicked.connect(self.reset_all)

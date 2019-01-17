@@ -107,7 +107,7 @@ class MosaicVizRank(VizRankDialog, OWComponent):
 
     def check_preconditions(self):
         """Require at least one variable to allow ranking."""
-        self.Information.add_message("no_attributes", "No variables to rank.")
+        self.Information.add_message("没有属性", "没有变量排序")
         self.Information.no_attributes.clear()
         data = self.master.discrete_data
         if not super().check_preconditions() or data is None:
@@ -265,8 +265,8 @@ class MosaicVizRank(VizRankDialog, OWComponent):
 
 
 class OWMosaicDisplay(OWWidget):
-    name = "Mosaic Display"
-    description = "Display data in a mosaic plot."
+    name = "镶嵌显示"
+    description = "在镶嵌图中显示数据"
     icon = "icons/MosaicDisplay.svg"
     priority = 220
     keywords = []
@@ -303,10 +303,10 @@ class OWMosaicDisplay(OWWidget):
     attrs_changed_manually = Signal(list)
 
     class Warning(OWWidget.Warning):
-        incompatible_subset = Msg("Data subset is incompatible with Data")
-        no_valid_data = Msg("No valid data")
+        incompatible_subset = Msg("数据子集与数据不兼容")
+        no_valid_data = Msg("没有有效数据")
         no_cont_selection_sql = \
-            Msg("Selection of numeric features on SQL is not supported")
+            Msg("不支持在SQL上选择数值特性")
 
     def __init__(self):
         super().__init__()
@@ -814,7 +814,7 @@ class OWMosaicDisplay(OWWidget):
             _, y1 = y0_y1
             if self.variable_color is None:
                 names = ["<-8", "-8:-4", "-4:-2", "-2:2", "2:4", "4:8", ">8",
-                         "Residuals:"]
+                         "残差:"]
                 colors = self.RED_COLORS[::-1] + self.BLUE_COLORS[1:]
             else:
                 names = get_variable_values_sorted(class_var) + \

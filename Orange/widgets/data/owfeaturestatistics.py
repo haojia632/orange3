@@ -687,8 +687,8 @@ class DistributionDelegate(QStyledItemDelegate):
 
 
 class OWFeatureStatistics(widget.OWWidget):
-    name = 'Feature Statistics'
-    description = 'Show basic statistics for data features.'
+    name = '特征统计'
+    description = '显示数据特征的基本统计信息。'
     icon = 'icons/FeatureStatistics.svg'
 
     class Inputs:
@@ -716,7 +716,7 @@ class OWFeatureStatistics(widget.OWWidget):
         self.data = None  # type: Optional[Table]
 
         # Information panel
-        info_box = gui.vBox(self.controlArea, 'Info')
+        info_box = gui.vBox(self.controlArea, '信息')
         info_box.setMinimumWidth(200)
         self.info_summary = gui.widgetLabel(info_box, wordWrap=True)
         self.info_attr = gui.widgetLabel(info_box, wordWrap=True)
@@ -738,7 +738,7 @@ class OWFeatureStatistics(widget.OWWidget):
             valid_types=(ContinuousVariable, DiscreteVariable),
             placeholder='None',
         )
-        box = gui.vBox(self.controlArea, 'Histogram')
+        box = gui.vBox(self.controlArea, '直方图')
         self.cb_color_var = gui.comboBox(
             box, master=self, value='color_var', model=self.color_var_model,
             label='Color:', orientation=Qt.Horizontal,
@@ -747,8 +747,8 @@ class OWFeatureStatistics(widget.OWWidget):
 
         gui.rubber(self.controlArea)
         gui.auto_commit(
-            self.buttonsArea, self, 'auto_commit', 'Send Selected Rows',
-            'Send Automatically',
+            self.buttonsArea, self, 'auto_commit', '发送选中行',
+            '自动发送',
         )
 
         # Main area
@@ -885,7 +885,7 @@ class OWFeatureStatistics(widget.OWWidget):
                 self._format_variables_string(self.data.domain.metas)
             )
         else:
-            self.info_summary.setText('No data on input.')
+            self.info_summary.setText('没有输入数据。')
             self.info_attr.setText('')
             self.info_class.setText('')
             self.info_meta.setText('')

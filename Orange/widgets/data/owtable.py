@@ -365,8 +365,8 @@ TableSlot = namedtuple("TableSlot", ["input_id", "table", "summary", "view"])
 
 
 class OWDataTable(widget.OWWidget):
-    name = "Data Table"
-    description = "View the dataset in a spreadsheet."
+    name = "数据表"
+    description = "显示电子表格中的数据集。"
     icon = "icons/Table.svg"
     priority = 50
     keywords = []
@@ -404,8 +404,8 @@ class OWDataTable(widget.OWWidget):
 
         self.dist_color = QColor(*self.dist_color_RGB)
 
-        info_box = gui.vBox(self.controlArea, "Info")
-        self.info_ex = gui.widgetLabel(info_box, 'No data on input.', )
+        info_box = gui.vBox(self.controlArea, "信息")
+        self.info_ex = gui.widgetLabel(info_box, '没有输入数据。', )
         self.info_ex.setWordWrap(True)
         self.info_attr = gui.widgetLabel(info_box, ' ')
         self.info_attr.setWordWrap(True)
@@ -416,31 +416,30 @@ class OWDataTable(widget.OWWidget):
         info_box.setMinimumWidth(200)
         gui.separator(self.controlArea)
 
-        box = gui.vBox(self.controlArea, "Variables")
+        box = gui.vBox(self.controlArea, "变量")
         self.c_show_attribute_labels = gui.checkBox(
-            box, self, "show_attribute_labels",
-            "Show variable labels (if present)",
+            box, self, "show_attribute_labels", "显示变量标签（如果存在）",
             callback=self._on_show_variable_labels_changed)
 
         gui.checkBox(box, self, "show_distributions",
-                     'Visualize numeric values',
+                     '可视化数值',
                      callback=self._on_distribution_color_changed)
-        gui.checkBox(box, self, "color_by_class", 'Color by instance classes',
+        gui.checkBox(box, self, "color_by_class", '按实例类着色',
                      callback=self._on_distribution_color_changed)
 
-        box = gui.vBox(self.controlArea, "Selection")
+        box = gui.vBox(self.controlArea, "选择")
 
-        gui.checkBox(box, self, "select_rows", "Select full rows",
+        gui.checkBox(box, self, "select_rows", "选择整行",
                      callback=self._on_select_rows_changed)
 
         gui.rubber(self.controlArea)
 
         reset = gui.button(
-            None, self, "Restore Original Order", callback=self.restore_order,
-            tooltip="Show rows in the original order", autoDefault=False)
+            None, self, "恢复原始顺序", callback=self.restore_order,
+            tooltip="按原始顺序显示行", autoDefault=False)
         self.buttonsArea.layout().insertWidget(0, reset)
         gui.auto_commit(self.buttonsArea, self, "auto_commit",
-                        "Send Selected Rows", "Send Automatically")
+                        "发送所选行", "自动发送")
 
         # GUI with tabs
         self.tabs = gui.tabWidget(self.mainArea)

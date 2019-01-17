@@ -699,18 +699,17 @@ class OWScatterPlotGraph(gui.OWComponent, ScaleScatterPlotData):
 
         self.master = scatter_widget
         self.master.Warning.add_message(
-            "missing_coords",
-            "Plot cannot be displayed because '{}' or '{}' is missing for "
-            "all data points")
+            "坐标丢失",
+            "无法显示绘图，因为所有数据点都缺少'{}' or '{}' ")
         self.master.Information.add_message(
-            "missing_coords",
-            "Points with missing '{}' or '{}' are not displayed")
+            "无法显示绘图，因为所有数据点都缺少",
+            "不显示缺少'{}' or '{}' 的点")
         self.master.Information.add_message(
-            "missing_size",
-            "Points with undefined '{}' are shown in smaller size")
+            "大小丢失",
+            "未定义'{}'的点以较小的尺寸显示")
         self.master.Information.add_message(
-            "missing_shape",
-            "Points with undefined '{}' are shown as crossed circles")
+            "形状丢失",
+            "未定义'{}'的点表示为交叉的圆")
         self.shown_attribute_indices = []
         self.shown_x = self.shown_y = None
         self.pen_colors = self.brush_colors = None

@@ -280,15 +280,11 @@ class CanvasMainWindow(QMainWindow):
         self.dock_help = canvas_tool_dock.help
         self.dock_help.setMaximumHeight(150)
         self.dock_help.document().setDefaultStyleSheet("h3, a {color: orange;}")
-        default_help = "Select a widget to show its description." \
-                       "<br><br>" \
-                       "See <a href='orange://examples'>workflow examples</a>, " \
-                       "<a href='orange://tutorials'>YouTube tutorials</a>, " \
-                       "or open the <a href='orange://welcome'>welcome screen</a>."
+        default_help = "显示选择一个部件的说明。"
         self.dock_help.setDefaultText(default_help)
 
         self.dock_help_action = canvas_tool_dock.toogleQuickHelpAction()
-        self.dock_help_action.setText(self.tr("Show Help"))
+        self.dock_help_action.setText(self.tr("显示帮助"))
         self.dock_help_action.setIcon(canvas_icons("Info.svg"))
 
         self.canvas_tool_dock = canvas_tool_dock
@@ -353,7 +349,7 @@ class CanvasMainWindow(QMainWindow):
         )
 
         self.log_dock = DockWidget(
-            self.tr("Log"), self, objectName="log-dock",
+            self.tr("日志"), self, objectName="log-dock",
             allowedAreas=Qt.BottomDockWidgetArea,
             visible=self.show_log_action.isChecked(),
         )
@@ -364,7 +360,7 @@ class CanvasMainWindow(QMainWindow):
         self.addDockWidget(Qt.BottomDockWidgetArea, self.log_dock)
 
         self.help_dock = DockWidget(
-            self.tr("Help"), self, objectName="help-dock",
+            self.tr("帮助"), self, objectName="help-dock",
             allowedAreas=Qt.RightDockWidgetArea | Qt.BottomDockWidgetArea,
             visible=False
         )
@@ -418,36 +414,37 @@ class CanvasMainWindow(QMainWindow):
             permDialog.show()
 
         settings = config.settings()
+        """
         if not settings["error-reporting/permission-requested"]:
             requestDataCollectionPermission()
+        """
 
     def setup_actions(self):
         """Initialize main window actions.
         """
 
         self.new_action = \
-            QAction(self.tr("New"), self,
+            QAction(self.tr("新建"), self,
                     objectName="action-new",
-                    toolTip=self.tr("Open a new workflow."),
+                    toolTip=self.tr("创建新的数据挖掘流程。"),
                     triggered=self.new_workflow_window,
                     shortcut=QKeySequence.New,
                     icon=canvas_icons("New.svg")
                     )
 
         self.open_action = \
-            QAction(self.tr("Open"), self,
+            QAction(self.tr("打开"), self,
                     objectName="action-open",
-                    toolTip=self.tr("Open a workflow."),
+                    toolTip=self.tr("打开存在的数据挖掘流程。"),
                     triggered=self.open_scheme,
                     shortcut=QKeySequence.Open,
                     icon=canvas_icons("Open.svg")
                     )
 
         self.open_and_freeze_action = \
-            QAction(self.tr("Open and Freeze"), self,
+            QAction(self.tr("打开并冻结"), self,
                     objectName="action-open-and-freeze",
-                    toolTip=self.tr("Open a new workflow and freeze signal "
-                                    "propagation."),
+                    toolTip=self.tr("打开新的数据挖掘流程并冻结"),
                     triggered=self.open_and_freeze_scheme
                     )
         self.open_and_freeze_action.setShortcut(
@@ -455,79 +452,79 @@ class CanvasMainWindow(QMainWindow):
         )
 
         self.close_window_action = \
-            QAction(self.tr("Close Window"), self,
+            QAction(self.tr("关闭窗口"), self,
                     objectName="action-close-window",
-                    toolTip=self.tr("Close the window"),
+                    toolTip=self.tr("关闭当前窗口"),
                     shortcut=QKeySequence.Close,
                     triggered=self.close,
                     )
 
         self.open_report_action = \
-            QAction(self.tr("Open Report"), self,
+            QAction(self.tr("打开报告"), self,
                     objectName="action-open-report",
                     triggered=self.open_report,
                     )
 
         self.save_action = \
-            QAction(self.tr("Save"), self,
+            QAction(self.tr("保存"), self,
                     objectName="action-save",
-                    toolTip=self.tr("Save current workflow."),
+                    toolTip=self.tr("保存当前工作流程。"),
                     triggered=self.save_scheme,
                     shortcut=QKeySequence.Save,
                     )
 
         self.save_as_action = \
-            QAction(self.tr("Save As..."), self,
+            QAction(self.tr("另存为..."), self,
                     objectName="action-save-as",
-                    toolTip=self.tr("Save current workflow as."),
+                    toolTip=self.tr("另存当前工作流程。"),
                     triggered=self.save_scheme_as,
                     shortcut=QKeySequence.SaveAs,
                     )
 
         self.quit_action = \
-            QAction(self.tr("Quit"), self,
+            QAction(self.tr("退出"), self,
                     objectName="quit-action",
-                    toolTip=self.tr("Quit Orange Canvas."),
+                    toolTip=self.tr("退出系统。"),
                     triggered=QApplication.closeAllWindows,
                     menuRole=QAction.QuitRole,
                     shortcut=QKeySequence.Quit,
                     )
 
         self.welcome_action = \
-            QAction(self.tr("Welcome"), self,
+            QAction(self.tr("欢迎"), self,
                     objectName="welcome-action",
-                    toolTip=self.tr("Show welcome screen."),
+                    toolTip=self.tr("显示欢迎界面。"),
                     triggered=self.welcome_dialog,
                     )
 
         self.get_started_action = \
-            QAction(self.tr("Get Started"), self,
+            QAction(self.tr("开始"), self,
                     objectName="get-started-action",
-                    toolTip=self.tr("View a 'Get Started' introduction."),
+                    toolTip=self.tr("查看入门介绍"),
                     triggered=self.get_started,
                     icon=canvas_icons("Documentation.svg")
                     )
 
         self.tutorials_action = \
-            QAction(self.tr("YouTube Tutorials"), self,
+            QAction(self.tr("YouTube教程"), self,
                     objectName="tutorials-action",
-                    toolTip=self.tr("View YouTube tutorials."),
+                    toolTip=self.tr("查看YouTube视频教程。"),
                     triggered=self.tutorials,
                     icon=canvas_icons("YouTube.svg")
                     )
 
         self.examples_action = \
-            QAction(self.tr("Workflow Examples"), self,
+            QAction(self.tr("数据挖掘示例"), self,
                     objectName="tutorial-action",
-                    toolTip=self.tr("Browse example workflows."),
+                    toolTip=self.tr("浏览数据挖掘示例"),
                     triggered=self.tutorial_scheme,
                     icon=canvas_icons("Examples.svg")
                     )
 
         self.about_action = \
-            QAction(self.tr("About"), self,
+            QAction(self.tr("关于"), self,
                     objectName="about-action",
-                    toolTip=self.tr("Show about dialog."),
+                    toolTip=self.tr("显示关于对话框。"),
                     triggered=self.open_about,
                     menuRole=QAction.AboutRole,
                     )
@@ -539,9 +536,9 @@ class CanvasMainWindow(QMainWindow):
                          triggered=self._on_recent_scheme_action)
 
         self.recent_action = \
-            QAction(self.tr("Browse Recent"), self,
+            QAction(self.tr("浏览最近的"), self,
                     objectName="recent-action",
-                    toolTip=self.tr("Browse and open a recent workflow."),
+                    toolTip=self.tr("浏览并打开最近的数据挖掘流程。"),
                     triggered=self.recent_scheme,
                     shortcut=QKeySequence(Qt.ControlModifier | \
                                           (Qt.ShiftModifier | Qt.Key_R)),
@@ -549,70 +546,70 @@ class CanvasMainWindow(QMainWindow):
                     )
 
         self.reload_last_action = \
-            QAction(self.tr("Reload Last Workflow"), self,
+            QAction(self.tr("重新加载"), self,
                     objectName="reload-last-action",
-                    toolTip=self.tr("Reload last open workflow."),
+                    toolTip=self.tr("重新加载上次打开的数据挖掘流程。"),
                     triggered=self.reload_last,
                     shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_R)
                     )
 
         self.clear_recent_action = \
-            QAction(self.tr("Clear Menu"), self,
+            QAction(self.tr("清除"), self,
                     objectName="clear-recent-menu-action",
-                    toolTip=self.tr("Clear recent menu."),
+                    toolTip=self.tr("清除最近使用的菜单。"),
                     triggered=self.clear_recent_schemes
                     )
 
         self.show_properties_action = \
-            QAction(self.tr("Workflow Info"), self,
+            QAction(self.tr("属性"), self,
                     objectName="show-properties-action",
-                    toolTip=self.tr("Show workflow properties."),
+                    toolTip=self.tr("显示数据挖掘流程属性。"),
                     triggered=self.show_scheme_properties,
                     shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_I),
                     icon=canvas_icons("Document Info.svg")
                     )
 
         self.canvas_settings_action = \
-            QAction(self.tr("Settings"), self,
+            QAction(self.tr("偏好设置"), self,
                     objectName="canvas-settings-action",
-                    toolTip=self.tr("Set application settings."),
+                    toolTip=self.tr("设置系统环境参数。"),
                     triggered=self.open_canvas_settings,
                     menuRole=QAction.PreferencesRole,
                     shortcut=QKeySequence.Preferences
                     )
 
         self.canvas_addons_action = \
-            QAction(self.tr("&Add-ons..."), self,
+            QAction(self.tr("&附加组件..."), self,
                     objectName="canvas-addons-action",
-                    toolTip=self.tr("Manage add-ons."),
+                    toolTip=self.tr("管理附加组件。"),
                     triggered=self.open_addons,
                     )
 
         self.show_log_action = \
-            QAction(self.tr("&Log"), self,
-                    toolTip=self.tr("Show application standard output."),
+            QAction(self.tr("&日志"), self,
+                    toolTip=self.tr("显示日志输出。"),
                     checkable=True,
                     triggered=lambda checked: self.log_dock.setVisible(checked),
                     )
 
         self.show_report_action = \
-            QAction(self.tr("&Report"), self,
+            QAction(self.tr("&报告"), self,
                     triggered=self.show_report_view,
                     shortcut=QKeySequence(Qt.ShiftModifier | Qt.Key_R)
                     )
 
         self.zoom_in_action = \
-            QAction(self.tr("Zoom in"), self,
+            QAction(self.tr("放大"), self,
                     triggered=self.zoom_in,
                     shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_Plus))
 
         self.zoom_out_action = \
-            QAction(self.tr("Zoom out"), self,
+            QAction(self.tr("缩小"), self,
                     triggered=self.zoom_out,
                     shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_Minus))
 
         self.zoom_reset_action = \
-            QAction(self.tr("Reset Zoom"), self,
+            QAction(self.tr("重置大小"), self,
                     triggered=self.zoom_reset,
                     shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_0))
 
@@ -631,16 +628,16 @@ class CanvasMainWindow(QMainWindow):
                         )
 
         self.freeze_action = \
-            QAction(self.tr("Freeze"), self,
+            QAction(self.tr("冻结"), self,
                     objectName="signal-freeze-action",
                     checkable=True,
-                    toolTip=self.tr("Freeze signal propagation."),
+                    toolTip=self.tr("冻结信号传播。"),
                     toggled=self.set_signal_freeze,
                     icon=canvas_icons("Pause.svg")
                     )
 
         self.toggle_tool_dock_expand = \
-            QAction(self.tr("Expand Tool Dock"), self,
+            QAction(self.tr("展开工具箱停靠"), self,
                     objectName="toggle-tool-dock-expand",
                     checkable=True,
                     shortcut=QKeySequence(Qt.ControlModifier |
@@ -653,22 +650,22 @@ class CanvasMainWindow(QMainWindow):
         self.dock_help_action = None
 
         self.toogle_margins_action = \
-            QAction(self.tr("Show Workflow Margins"), self,
+            QAction(self.tr("显示视图边距"), self,
                     checkable=True,
-                    toolTip=self.tr("Show margins around the workflow view."),
+                    toolTip=self.tr("显示视图周围边距。"),
                     )
         self.toogle_margins_action.setChecked(True)
         self.toogle_margins_action.toggled.connect(
             self.set_scheme_margins_enabled)
 
         self.reset_widget_settings_action = \
-            QAction(self.tr("Reset Widget Settings..."), self,
+            QAction(self.tr("重置部件设置..."), self,
                     triggered=self.reset_widget_settings)
 
         self.float_widgets_on_top_action = \
-            QAction(self.tr("Display Widgets on Top"), self,
+            QAction(self.tr("顶端显示部件"), self,
                     checkable=True,
-                    toolTip=self.tr("Widgets are always displayed above other windows."))
+                    toolTip=self.tr("部件始终显示在其他窗口的上方。"))
         self.float_widgets_on_top_action.toggled.connect(
             self.set_float_widgets_on_top_enabled)
 
@@ -679,14 +676,14 @@ class CanvasMainWindow(QMainWindow):
         menu_bar = QMenuBar(self)
 
         # File menu
-        file_menu = QMenu(self.tr("&File"), menu_bar)
+        file_menu = QMenu(self.tr("&文件"), menu_bar)
         file_menu.addAction(self.new_action)
         file_menu.addAction(self.open_action)
         file_menu.addAction(self.open_and_freeze_action)
         file_menu.addAction(self.reload_last_action)
 
         # File -> Open Recent submenu
-        self.recent_menu = QMenu(self.tr("Open Recent"), file_menu)
+        self.recent_menu = QMenu(self.tr("最近使用"), file_menu)
         file_menu.addMenu(self.recent_menu)
         file_menu.addAction(self.open_report_action)
         file_menu.addAction(self.close_window_action)
@@ -732,7 +729,7 @@ class CanvasMainWindow(QMainWindow):
         menu_bar.addMenu(self.edit_menu)
 
         # View menu
-        self.view_menu = QMenu(self.tr("&View"), self)
+        self.view_menu = QMenu(self.tr("&视图"), self)
         # find and insert window group presets submenu
         window_groups = self.scheme_widget.findChild(
             QAction, "window-groups-action"
@@ -762,8 +759,11 @@ class CanvasMainWindow(QMainWindow):
         self.view_menu.addAction(self.float_widgets_on_top_action)
         menu_bar.addMenu(self.view_menu)
 
+        # Widget menu
+        menu_bar.addMenu(self.widget_menu)
+
         # Options menu
-        self.options_menu = QMenu(self.tr("&Options"), self)
+        self.options_menu = QMenu(self.tr("&选项"), self)
 #        self.options_menu.addAction("Add-ons")
 #        self.options_menu.addAction("Developers")
 #        self.options_menu.addAction("Run Discovery")
@@ -774,12 +774,9 @@ class CanvasMainWindow(QMainWindow):
         self.options_menu.addAction(self.reset_widget_settings_action)
         self.options_menu.addAction(self.canvas_addons_action)
 
-        # Widget menu
-        menu_bar.addMenu(self.widget_menu)
-
         if sys.platform == "darwin":
             # Mac OS X native look and feel.
-            self.window_menu = QMenu(self.tr("Window"), self)
+            self.window_menu = QMenu(self.tr("窗口"), self)
             self.window_menu.addAction(self.minimize_action)
             self.window_menu.addAction(self.zoom_action)
             menu_bar.addMenu(self.window_menu)
@@ -787,7 +784,7 @@ class CanvasMainWindow(QMainWindow):
         menu_bar.addMenu(self.options_menu)
 
         # Help menu.
-        self.help_menu = QMenu(self.tr("&Help"), self)
+        self.help_menu = QMenu(self.tr("&帮助"), self)
         self.help_menu.addAction(self.about_action)
         self.help_menu.addAction(self.welcome_action)
         self.help_menu.addAction(self.tutorials_action)
@@ -1072,13 +1069,13 @@ class CanvasMainWindow(QMainWindow):
             start_dir = user_documents_path()
 
         dlg = QFileDialog(
-            self, windowTitle=self.tr("Open Orange Workflow File"),
+            self, windowTitle=self.tr("打开数据挖掘流程文件"),
             acceptMode=QFileDialog.AcceptOpen,
             fileMode=QFileDialog.ExistingFile,
         )
         dlg.setAttribute(Qt.WA_DeleteOnClose)
         dlg.setDirectory(start_dir)
-        dlg.setNameFilters(["Orange Workflow (*.ows)"])
+        dlg.setNameFilters(["数据挖掘流程(*.ows)"])
 
         def record_last_dir():
             path = dlg.directory().canonicalPath()
@@ -1109,7 +1106,7 @@ class CanvasMainWindow(QMainWindow):
         settings = QSettings()
         start_dir = settings.value("report/file-dialog-dir", "", type=str)
         filename, _ = QFileDialog.getOpenFileName(
-            self, "Open Report", start_dir, "Report (*.report)")
+            self, "打开报告", start_dir, "报告 (*.report)")
 
         if not filename:
             return
@@ -1185,21 +1182,17 @@ class CanvasMainWindow(QMainWindow):
 
         except Exception:
             message_critical(
-                self.tr("Could not load an Orange Workflow file"),
-                title=self.tr("Error"),
-                informative_text=self.tr("An unexpected error occurred "
-                                         "while loading '%s'.") % filename,
+                self.tr("无法加载数据挖掘流程文件"),
+                title=self.tr("错误"),
+                informative_text=self.tr("加载'%s'时发生意外错误。") % filename,
                 exc_info=True,
                 parent=self)
             return None
         if errors:
             message_warning(
-                self.tr("Errors occurred while loading the workflow."),
-                title=self.tr("Problem"),
-                informative_text=self.tr(
-                    "There were problems loading some widgets/links"
-                    "in the workflow."
-                ),
+                self.tr("加载数据挖掘流程时出错"),
+                title=self.tr("问题"),
+                informative_text=self.tr("在流程中加载某些部件/链接时出现问题。"),
                 details="\n".join(map(repr, errors))
             )
         return new_scheme
@@ -1264,8 +1257,8 @@ class CanvasMainWindow(QMainWindow):
             return QDialog.Accepted
 
         answ = message_question(
-            "Report window contains unsaved changes", "Report window",
-            "Save the report?",
+            "报告窗口更改的内容未保存", "报告",
+            "保存报告？",
             buttons=QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
             parent=self)
         if answ == QMessageBox.Cancel:
@@ -1284,9 +1277,9 @@ class CanvasMainWindow(QMainWindow):
         document = self.current_document()
         title = document.scheme().title or "untitled"
         selected = message_question(
-            self.tr('Save the changes to the workflow "%s"?') % title,
-            self.tr("Save Changes?"),
-            self.tr("Changes will be lost if they are not saved."),
+            self.tr('数据挖掘流程 "%s" 已改变，是否保存这些改变？') % title,
+            self.tr("保存改变?"),
+            self.tr("如果不保存更改，这些更改将被丢失。"),
             buttons=QMessageBox.Save | QMessageBox.Cancel | QMessageBox.Discard,
             default_button=QMessageBox.Save,
             parent=self)
@@ -1343,8 +1336,8 @@ class CanvasMainWindow(QMainWindow):
             start_dir = os.path.join(start_dir, title + ".ows")
 
         filename, _ = QFileDialog.getSaveFileName(
-            self, self.tr("Save Orange Workflow File"),
-            start_dir, self.tr("Orange Workflow (*.ows)")
+            self, self.tr("保持数据挖掘流程文件"),
+            start_dir, self.tr("数据挖掘流程 (*.ows)")
         )
 
         if filename:
@@ -1377,9 +1370,8 @@ class CanvasMainWindow(QMainWindow):
         except Exception:
             log.error("Error saving %r to %r", scheme, filename, exc_info=True)
             message_critical(
-                self.tr('An error occurred while trying to save workflow '
-                        '"%s" to "%s"') % (title, basename),
-                title=self.tr("Error saving %s") % basename,
+                self.tr('保存数据挖掘流程"%s"到"%s"时出错') % (title, basename),
+                title=self.tr("保存'%s'错误") % basename,
                 exc_info=True,
                 parent=self
             )
@@ -1395,25 +1387,21 @@ class CanvasMainWindow(QMainWindow):
             if ex.errno == 2:
                 # user might enter a string containing a path separator
                 message_warning(
-                    self.tr('Workflow "%s" could not be saved. The path does '
-                            'not exist') % title,
+                    self.tr('保存数据挖掘流程 "%s" 错误，路径不存在') % title,
                     title="",
-                    informative_text=self.tr("Choose another location."),
+                    informative_text=self.tr("选择其他位置。"),
                     parent=self
                 )
             elif ex.errno == 13:
                 message_warning(
-                    self.tr('Workflow "%s" could not be saved. You do not '
-                            'have write permissions.') % title,
+                    self.tr('保存数据挖掘流程 "%s" 错误，没有写入权限。') % title,
                     title="",
-                    informative_text=self.tr(
-                        "Change the file system permissions or choose "
-                        "another location."),
+                    informative_text=self.tr("请更改文件系统权限或选择其他位置。"),
                     parent=self
                 )
             else:
                 message_warning(
-                    self.tr('Workflow "%s" could not be saved.') % title,
+                    self.tr('保存数据挖掘流程 "%s" 错误。') % title,
                     title="",
                     informative_text=ex.strerror,
                     exc_info=True,
@@ -1424,9 +1412,8 @@ class CanvasMainWindow(QMainWindow):
         except Exception:
             log.error("Error saving %r to %r", scheme, filename, exc_info=True)
             message_critical(
-                self.tr('An error occurred while trying to save workflow '
-                        '"%s" to "%s"') % (title, basename),
-                title=self.tr("Error saving %s") % basename,
+                self.tr('保存数据挖掘流程"%s"到"%s"时出错') % (title, basename),
+                title=self.tr("保存'%s'错误") % basename,
                 exc_info=True,
                 parent=self
             )
@@ -1468,7 +1455,7 @@ class CanvasMainWindow(QMainWindow):
         model = previewmodel.PreviewModel(items=items)
 
         dialog = previewdialog.PreviewDialog(self)
-        title = self.tr("Recent Workflows")
+        title = self.tr("最近的数据挖掘流程")
         dialog.setWindowTitle(title)
         template = ('<h3 style="font-size: 26px">\n'
                     #'<img height="26" src="canvas_icons:Recent.svg">\n'
@@ -1502,7 +1489,7 @@ class CanvasMainWindow(QMainWindow):
         items = [previewmodel.PreviewItem(path=t.abspath()) for t in tutors]
         model = previewmodel.PreviewModel(items=items)
         dialog = previewdialog.PreviewDialog(self)
-        title = self.tr("Example Workflows")
+        title = self.tr("数据挖掘流程示例")
         dialog.setWindowTitle(title)
         template = ('<h3 style="font-size: 26px">\n'
                     #'<img height="26" src="canvas_icons:Tutorials.svg">\n'
@@ -1528,7 +1515,7 @@ class CanvasMainWindow(QMainWindow):
         """
 
         dialog = welcomedialog.WelcomeDialog(self)
-        dialog.setWindowTitle(self.tr("Welcome to Orange Data Mining"))
+        dialog.setWindowTitle(self.tr("欢迎使用数据挖掘系统"))
 
         def new_scheme():
             if not self.is_transient():
@@ -1551,26 +1538,26 @@ class CanvasMainWindow(QMainWindow):
                 dialog.accept()
 
         new_action = \
-            QAction(self.tr("New"), dialog,
-                    toolTip=self.tr("Open a new workflow."),
+            QAction(self.tr("新建"), dialog,
+                    toolTip=self.tr("创建新的数据挖掘流程。"),
                     triggered=new_scheme,
                     shortcut=QKeySequence.New,
                     icon=canvas_icons("New.svg")
                     )
 
         open_action = \
-            QAction(self.tr("Open"), dialog,
+            QAction(self.tr("打开"), dialog,
                     objectName="welcome-action-open",
-                    toolTip=self.tr("Open a workflow."),
+                    toolTip=self.tr("打开存在的数据挖掘流程。"),
                     triggered=open_scheme,
                     shortcut=QKeySequence.Open,
                     icon=canvas_icons("Open.svg")
                     )
 
         recent_action = \
-            QAction(self.tr("Recent"), dialog,
+            QAction(self.tr("最近的"), dialog,
                     objectName="welcome-recent-action",
-                    toolTip=self.tr("Browse and open a recent workflow."),
+                    toolTip=self.tr("浏览并打开最近的数据挖掘流程"),
                     triggered=open_recent,
                     shortcut=QKeySequence(Qt.ControlModifier | \
                                           (Qt.ShiftModifier | Qt.Key_R)),
@@ -1578,17 +1565,17 @@ class CanvasMainWindow(QMainWindow):
                     )
 
         examples_action = \
-            QAction(self.tr("Examples"), self,
+            QAction(self.tr("示例"), self,
                     icon=canvas_icons("Examples.svg"),
-                    toolTip=self.tr("Browse example workflows."),
+                    toolTip=self.tr("浏览数据挖掘示例。"),
                     objectName="tutorial-action",
                     triggered=open_examples
                     )
 
         tutorials_action = \
-            QAction(self.tr("Tutorials"), self,
+            QAction(self.tr("教程"), self,
                     objectName="tutorials-action",
-                    toolTip=self.tr("View YouTube tutorials."),
+                    toolTip=self.tr("查看YouTube视频教程。"),
                     triggered=self.tutorials,
                     icon=canvas_icons("YouTube.svg")
                     )
@@ -1623,7 +1610,7 @@ class CanvasMainWindow(QMainWindow):
         settings = QSettings()
         value_key = "schemeinfo/show-at-new-scheme"
         dialog = SchemeInfoDialog(
-            self, windowTitle=self.tr("Workflow Info"),
+            self, windowTitle=self.tr("数据挖掘流程属性信息"),
         )
         dialog.setFixedSize(725, 450)
         dialog.setShowAtNewScheme(settings.value(value_key, True, type=bool))
@@ -1647,7 +1634,7 @@ class CanvasMainWindow(QMainWindow):
         if status == QDialog.Accepted:
             editor = dlg.editor
             stack = current_doc.undoStack()
-            stack.beginMacro(self.tr("Change Info"))
+            stack.beginMacro(self.tr("更改信息"))
             current_doc.setTitle(editor.title())
             current_doc.setDescription(editor.description())
             stack.endMacro()
@@ -1686,7 +1673,7 @@ class CanvasMainWindow(QMainWindow):
         """Open canvas settings/preferences dialog
         """
         dlg = UserSettingsDialog(self)
-        dlg.setWindowTitle(self.tr("Preferences"))
+        dlg.setWindowTitle(self.tr("偏好设置"))
         dlg.show()
         status = dlg.exec_()
         if status == 0:
@@ -1701,17 +1688,15 @@ class CanvasMainWindow(QMainWindow):
                         "Insufficient permissions to install add-ons. Try starting Orange "
                         "as a system administrator or install Orange in user folders.",
                         parent=self).exec_()
-        dlg = AddonManagerDialog(self, windowTitle=self.tr("Add-ons"))
+        dlg = AddonManagerDialog(self, windowTitle=self.tr("附加组件"))
         dlg.setAttribute(Qt.WA_DeleteOnClose)
         return dlg.exec_()
 
     def reset_widget_settings(self):
         res = message_question(
-            "Clear all widget settings on next restart",
-            title="Clear settings",
-            informative_text=(
-                "A restart of the application is necessary " +
-                "for the changes to take effect"),
+            "下次重新启动时清除所有部件设置",
+            title="清除设置",
+            informative_text="必须重新启动应用程序，更改才能生效",
             buttons=QMessageBox.Ok | QMessageBox.Cancel,
             default_button=QMessageBox.Ok,
             parent=self
@@ -1728,7 +1713,7 @@ class CanvasMainWindow(QMainWindow):
 
             if not self.close():
                 message_information(
-                    "Settings will still be reset at next application start",
+                    "设置将在下次应用程序启动时重置",
                     parent=self)
 
     def set_float_widgets_on_top_enabled(self, enabled):
@@ -1976,7 +1961,7 @@ class CanvasMainWindow(QMainWindow):
                 except KeyError:
                     log.info("No help topic found for %r", url)
                     message_information(
-                        self.tr("There is no documentation for this widget yet."),
+                        self.tr("当前部件没有帮助文档。"),
                         parent=self)
             elif url.scheme() == "orange":
                 target = url.host()

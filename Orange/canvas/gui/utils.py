@@ -259,10 +259,10 @@ def message_critical(text, title=None, informative_text=None, details=None,
     """Show a critical message.
     """
     if not text:
-        text = "An unexpected error occurred."
+        text = "发生意外错误。"
 
     if title is None:
-        title = "Error"
+        title = "错误"
 
     return message(QMessageBox.Critical, text, title, informative_text,
                    details, buttons, default_button, exc_info, parent)
@@ -281,7 +281,7 @@ def message_warning(text, title=None, informative_text=None, details=None,
         text = random.choice(text_candidates)
 
     if title is not None:
-        title = "Warning"
+        title = "警告"
 
     return message(QMessageBox.Warning, text, title, informative_text,
                    details, buttons, default_button, exc_info, parent)
@@ -293,7 +293,7 @@ def message_information(text, title=None, informative_text=None, details=None,
     """Show an information message box.
     """
     if title is None:
-        title = "Information"
+        title = "信息"
     if not text:
         text = "I am not a number."
 
@@ -317,7 +317,7 @@ def message(icon, text, title=None, informative_text=None, details=None,
     """Show a message helper function.
     """
     if title is None:
-        title = "Message"
+        title = "消息"
     if not text:
         text = "I am neither a postman nor a doctor."
 
@@ -328,6 +328,55 @@ def message(icon, text, title=None, informative_text=None, details=None,
         details = traceback.format_exc(limit=20)
 
     mbox = QMessageBox(icon, title, text, buttons, parent)
+
+    msgBtn = mbox.button(QMessageBox.Save)
+    if msgBtn is not None: msgBtn.setText("保存")
+    msgBtn = mbox.button(QMessageBox.SaveAll)
+    if msgBtn is not None: msgBtn.setText("保存全部")
+
+    msgBtn = mbox.button(QMessageBox.Cancel)
+    if msgBtn is not None: msgBtn.setText("取消")
+
+    msgBtn = mbox.button(QMessageBox.Discard)
+    if msgBtn is not None: msgBtn.setText("丢弃")
+
+    msgBtn = mbox.button(QMessageBox.Yes)
+    if msgBtn is not None: msgBtn.setText("是")
+    msgBtn = mbox.button(QMessageBox.YesAll)
+    if msgBtn is not None: msgBtn.setText("全是")
+
+    msgBtn = mbox.button(QMessageBox.No)
+    if msgBtn is not None: msgBtn.setText("否")
+
+    msgBtn = mbox.button(QMessageBox.Ok)
+    if msgBtn is not None: msgBtn.setText("确定")
+
+    msgBtn = mbox.button(QMessageBox.Abort)
+    if msgBtn is not None: msgBtn.setText("终止")
+
+    msgBtn = mbox.button(QMessageBox.Retry)
+    if msgBtn is not None: msgBtn.setText("重试")
+
+    msgBtn = mbox.button(QMessageBox.Ignore)
+    if msgBtn is not None: msgBtn.setText("忽略")
+
+    msgBtn = mbox.button(QMessageBox.Close)
+    if msgBtn is not None: msgBtn.setText("关闭")
+
+    msgBtn = mbox.button(QMessageBox.Apply)
+    if msgBtn is not None: msgBtn.setText("应用")
+
+    msgBtn = mbox.button(QMessageBox.Retry)
+    if msgBtn is not None: msgBtn.setText("重试")
+
+    msgBtn = mbox.button(QMessageBox.Reset)
+    if msgBtn is not None: msgBtn.setText("重置")
+
+    msgBtn = mbox.button(QMessageBox.Help)
+    if msgBtn is not None: msgBtn.setText("帮助")
+
+    msgBtn = mbox.button(QMessageBox.Open)
+    if msgBtn is not None: msgBtn.setText("打开")
 
     if informative_text:
         mbox.setInformativeText(informative_text)

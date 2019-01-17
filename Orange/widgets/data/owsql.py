@@ -41,9 +41,9 @@ class BackendModel(PyListModel):
 
 
 class OWSql(OWWidget):
-    name = "SQL Table"
+    name = "SQL数据库"
     id = "orange.widgets.data.sql"
-    description = "Load dataset from SQL."
+    description = "根据SQL数据库，加载数据集。"
     icon = "icons/SQLTable.svg"
     priority = 30
     category = "Data"
@@ -72,11 +72,11 @@ class OWSql(OWWidget):
     materialize_table_name = Setting("")
 
     class Information(OWWidget.Information):
-        data_sampled = Msg("Data description was generated from a sample.")
+        data_sampled = Msg("从样本中生成数据描述。")
 
     class Error(OWWidget.Error):
         connection = Msg("{}")
-        no_backends = Msg("Please install a backend to use this widget")
+        no_backends = Msg("从后端安装使用该部件")
 
     class Warning(OWWidget.Warning):
         missing_extension = Msg("Database is missing extensions: {}")
@@ -88,7 +88,7 @@ class OWSql(OWWidget):
         self.data_desc_table = None
         self.database_desc = None
 
-        vbox = gui.vBox(self.controlArea, "Server", addSpace=True)
+        vbox = gui.vBox(self.controlArea, "服务器", addSpace=True)
         box = gui.vBox(vbox)
 
         self.backends = BackendModel(Backend.available_backends())
@@ -101,8 +101,8 @@ class OWSql(OWWidget):
         box.layout().addWidget(self.backendcombo)
 
         self.servertext = QLineEdit(box)
-        self.servertext.setPlaceholderText('Server')
-        self.servertext.setToolTip('Server')
+        self.servertext.setPlaceholderText('服务器')
+        self.servertext.setToolTip('服务器')
         self.servertext.editingFinished.connect(self._load_credentials)
         if self.host:
             self.servertext.setText(self.host if not self.port else
@@ -118,13 +118,13 @@ class OWSql(OWWidget):
                 '{}/{}'.format(self.database, self.schema))
         box.layout().addWidget(self.databasetext)
         self.usernametext = QLineEdit(box)
-        self.usernametext.setPlaceholderText('Username')
-        self.usernametext.setToolTip('Username')
+        self.usernametext.setPlaceholderText('用户名称')
+        self.usernametext.setToolTip('用户名称')
 
         box.layout().addWidget(self.usernametext)
         self.passwordtext = QLineEdit(box)
-        self.passwordtext.setPlaceholderText('Password')
-        self.passwordtext.setToolTip('Password')
+        self.passwordtext.setPlaceholderText('密码')
+        self.passwordtext.setToolTip('密码')
         self.passwordtext.setEchoMode(QLineEdit.Password)
 
         box.layout().addWidget(self.passwordtext)
@@ -138,7 +138,7 @@ class OWSql(OWWidget):
             sizeAdjustPolicy=QComboBox.AdjustToMinimumContentsLength
         )
         self.tablecombo.setModel(self.tables)
-        self.tablecombo.setToolTip('table')
+        self.tablecombo.setToolTip('表')
         tables.layout().addWidget(self.tablecombo)
 
         index = self.tablecombo.findText(str(self.table))
@@ -171,11 +171,11 @@ class OWSql(OWWidget):
         box.layout().addWidget(self.custom_sql)
 
         gui.checkBox(box, self, "guess_values",
-                     "Auto-discover categorical variables",
+                     "自动发现分类变量",
                      callback=self.open_table)
 
         self.downloadcb = gui.checkBox(box, self, "download",
-                                       "Download data to local memory",
+                                       "将数据下载到本地内存",
                                        callback=self.open_table)
 
         gui.rubber(self.buttonsArea)

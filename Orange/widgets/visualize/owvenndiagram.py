@@ -39,9 +39,9 @@ _ItemSet = namedtuple("_ItemSet", ["key", "name", "title", "items"])
 
 
 class OWVennDiagram(widget.OWWidget):
-    name = "Venn Diagram"
-    description = "A graphical visualization of the overlap of data instances " \
-                  "from a collection of input datasets."
+    name = "维恩图"
+    description = "数据实例重叠的图形可视化" \
+                  "从输入数据集的集合"
     icon = "icons/VennDiagram.svg"
     priority = 280
     keywords = []
@@ -69,7 +69,7 @@ class OWVennDiagram(widget.OWWidget):
     output_duplicates = settings.Setting(False)
     autocommit = settings.Setting(True)
 
-    graph_name = "scene"
+    graph_name = "场景"
 
     def __init__(self):
         super().__init__()
@@ -212,9 +212,9 @@ class OWVennDiagram(widget.OWWidget):
         self._createDiagram()
         if self.data:
             self.info.setText(
-                "{} datasets on input.\n".format(len(self.data)))
+                "{} 输入数据集.\n".format(len(self.data)))
         else:
-            self.info.setText("No data on input\n")
+            self.info.setText("无数据输入\n")
 
         self._updateInfo()
         super().handleNewSignals()
@@ -456,7 +456,7 @@ class OWVennDiagram(widget.OWWidget):
         self.warning()
 
         if not len(self.data):
-            self.info.setText("No data on input\n")
+            self.info.setText("无数据输入\n")
         else:
             self.info.setText(
                 "{0} datasets on input\n".format(len(self.data)))

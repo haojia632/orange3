@@ -1326,19 +1326,19 @@ def NodeItem_toolTipHelper(node, links_in=[], links_out=[]):
 
     title_fmt = "<b>{title}</b><hr/>"
     title = title_fmt.format(title=escape(node.title()))
-    inputs_list_fmt = "Inputs:<ul>{inputs}</ul><hr/>"
-    outputs_list_fmt = "Outputs:<ul>{outputs}</ul>"
+    inputs_list_fmt = "输入:<ul>{inputs}</ul><hr/>"
+    outputs_list_fmt = "输出:<ul>{outputs}</ul>"
     if desc.inputs:
         inputs = [channel_fmt.format(inp.name) for inp in desc.inputs]
         inputs = inputs_list_fmt.format(inputs="".join(inputs))
     else:
-        inputs = "No inputs<hr/>" 
+        inputs = "无输入<hr/>" 
 
     if desc.outputs:
         outputs = [channel_fmt.format(out.name) for out in desc.outputs]
         outputs = outputs_list_fmt.format(outputs="".join(outputs))
     else:
-        outputs = "No outputs" 
+        outputs = "无输出" 
 
     tooltip = title + inputs + outputs
     style = "ul { margin-top: 1px; margin-bottom: 1px; }"

@@ -132,8 +132,8 @@ class OWBoxPlot(widget.OWWidget):
     constructed in advance (by layout_changed). Instead, layout_changed and
     display_changed call display_changed_disc that draws everything.
     """
-    name = "Box Plot"
-    description = "Visualize the distribution of feature values in a box plot."
+    name = "箱形图"
+    description = "在方框图中可视化特征值的分布"
     icon = "icons/BoxPlot.svg"
     priority = 100
     keywords = ["whisker"]
@@ -142,7 +142,7 @@ class OWBoxPlot(widget.OWWidget):
         data = Input("Data", Orange.data.Table)
 
     class Outputs:
-        selected_data = Output("Selected Data", Orange.data.Table, default=True)
+        selected_data = Output("所选数据", Orange.data.Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Orange.data.Table)
 
     #: Comparison types for continuous variables
@@ -190,7 +190,7 @@ class OWBoxPlot(widget.OWWidget):
     _label_font.setPixelSize(11)
     _attr_brush = QBrush(QColor(0x33, 0x00, 0xff))
 
-    graph_name = "box_scene"
+    graph_name = "盒式布景"
 
     def __init__(self):
         super().__init__()
@@ -206,7 +206,7 @@ class OWBoxPlot(widget.OWWidget):
 
         self.attrs = VariableListModel()
         view = gui.listView(
-            self.controlArea, self, "attribute", box="Variable",
+            self.controlArea, self, "attribute", box="变量",
             model=self.attrs, callback=self.attr_changed)
         view.setMinimumSize(QSize(30, 30))
         # Any other policy than Ignored will let the QListBox's scrollbar
@@ -216,14 +216,14 @@ class OWBoxPlot(widget.OWWidget):
         gui.separator(view.box, 6, 6)
         self.cb_order = gui.checkBox(
             view.box, self, "order_by_importance",
-            "Order by relevance",
-            tooltip="Order by 𝜒² or ANOVA over the subgroups",
+            "按相关性排序",
+            tooltip="由𝜒²或方差对子群排序",
             callback=self.apply_sorting)
         self.group_vars = DomainModel(
             placeholder="None", separators=False,
             valid_types=Orange.data.DiscreteVariable)
         self.group_view = view = gui.listView(
-            self.controlArea, self, "group_var", box="Subgroups",
+            self.controlArea, self, "group_var", box="子群",
             model=self.group_vars, callback=self.grouping_changed)
         view.setEnabled(False)
         view.setMinimumSize(QSize(30, 30))
@@ -241,27 +241,27 @@ class OWBoxPlot(widget.OWWidget):
                      callback=self.display_changed)
         self.compare_rb = gui.radioButtonsInBox(
             self.display_box, self, 'compare',
-            btnLabels=["No comparison", "Compare medians", "Compare means"],
+            btnLabels=["无比较", "中位数比较", "均值比较"],
             callback=self.layout_changed)
 
         # The vertical size policy is needed to let only the list views expand
         self.stretching_box = box = gui.vBox(
-            self.controlArea, box="Display",
+            self.controlArea, box="显示",
             sizePolicy=(QSizePolicy.Minimum, QSizePolicy.Fixed))
         self.stretching_box.sizeHint = self.display_box.sizeHint
         gui.checkBox(
-            box, self, 'stretched', "Stretch bars",
+            box, self, 'stretched', "拉杆",
             callback=self.display_changed)
         gui.checkBox(
-            box, self, 'show_labels', "Show box labels",
+            box, self, 'show_labels', "显示框标签",
             callback=self.display_changed)
         self.sort_cb = gui.checkBox(
-            box, self, 'sort_freqs', "Sort by subgroup frequencies",
+            box, self, 'sort_freqs', "按子组频率排序",
             callback=self.display_changed)
         gui.rubber(box)
 
         gui.auto_commit(self.controlArea, self, "auto_commit",
-                        "Send Selection", "Send Automatically")
+                        "选择发送", "自动发送")
 
         gui.vBox(self.mainArea, addSpace=True)
         self.box_scene = QGraphicsScene()
@@ -275,7 +275,7 @@ class OWBoxPlot(widget.OWWidget):
         self.mainArea.layout().addWidget(self.box_view)
 
         e = gui.hBox(self.mainArea, addSpace=False)
-        self.infot1 = gui.widgetLabel(e, "<center>No test results.</center>")
+        self.infot1 = gui.widgetLabel(e, "<center>没有测试结果。</center>")
         self.mainArea.setMinimumWidth(600)
 
         self.stats = self.dist = self.conts = []
@@ -303,7 +303,8 @@ class OWBoxPlot(widget.OWWidget):
     @Inputs.data
     def set_data(self, dataset):
         if dataset is not None and (
-                not bool(dataset) or not len(dataset.domain)):
+                not bool(dataset) or not len(dataset.domain) and not
+                any(var.is_primitive() for var in dataset.domain.metas)):
             dataset = None
         self.closeContext()
         self.dataset = dataset
@@ -713,7 +714,7 @@ class OWBoxPlot(widget.OWWidget):
         if self.compare == OWBoxPlot.CompareNone or len(self.stats) < 2:
             t = ""
         elif any(s.n <= 1 for s in self.stats):
-            t = "At least one group has just one instance, " \
+            t = "At least one group has just one instance," \
                 "cannot compute significance"
         elif len(self.stats) == 2:
             if self.compare == OWBoxPlot.CompareMedians:

@@ -919,7 +919,7 @@ class QuickMenu(FramelessWindow):
         self.__search = SearchWidget(self, objectName="search-line")
 
         self.__search.setPlaceholderText(
-            self.tr("Search for widget or select from the list.")
+            self.tr("搜索部件或从列表中选择。")
         )
 
         self.layout().addWidget(self.__search)

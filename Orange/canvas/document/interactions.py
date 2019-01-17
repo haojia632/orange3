@@ -325,10 +325,9 @@ class NewLinkAction(UserInteraction):
             event.accept()
 
             helpevent = QuickHelpTipEvent(
-                self.tr("Create a new link"),
-                self.tr('<h3>Create new link</h3>'
-                        '<p>Drag a link to an existing node or release on '
-                        'an empty spot to create a new node.</p>'
+                self.tr("创建新连接"),
+                self.tr('<h3>创建新连接</h3>'
+                        '<p>将连接拖动到现有节点或在空点上，释放后创建新节点。</p>'
                         '<p>Hold Shift when releasing the mouse button to '
                         'edit connections.</p>'
                         # '<a href="help://orange-canvas/create-new-links">'
@@ -404,7 +403,7 @@ class NewLinkAction(UserInteraction):
             node = None
             stack = self.document.undoStack()
 
-            self.macro = QUndoCommand(self.tr("Add link"))
+            self.macro = QUndoCommand(self.tr("添加连接"))
 
             if item:
                 # If the release was over a node item then connect them
@@ -693,7 +692,7 @@ def edit_links(scheme, source_node, sink_node, initial_links=None,
     """
     log.info("Constructing a Link Editor dialog.")
 
-    dlg = EditLinksDialog(parent, windowTitle="Edit Links")
+    dlg = EditLinksDialog(parent, windowTitle="编辑连接")
 
     # all SchemeLinks between the two nodes.
     links = scheme.find_links(source_node=source_node, sink_node=sink_node)
@@ -985,7 +984,7 @@ class EditNodeLinksAction(UserInteraction):
         """
         log.info("Constructing a Link Editor dialog.")
 
-        dlg = EditLinksDialog(self.document, windowTitle="Edit Links")
+        dlg = EditLinksDialog(self.document, windowTitle="编辑连接")
 
         links = self.scheme.find_links(source_node=self.source_node,
                                        sink_node=self.sink_node)
@@ -1008,7 +1007,7 @@ class EditNodeLinksAction(UserInteraction):
             links_to_remove = set(existing_links) - set(links)
 
             stack = self.document.undoStack()
-            stack.beginMacro("Edit Links")
+            stack.beginMacro("编辑连接")
 
             # First remove links into a 'Single' sink channel,
             # but only the ones that do not have self.source_node as
@@ -1066,9 +1065,9 @@ class NewArrowAnnotation(UserInteraction):
         self.document.view().setCursor(Qt.CrossCursor)
 
         helpevent = QuickHelpTipEvent(
-            self.tr("Click and drag to create a new arrow"),
-            self.tr('<h3>New arrow annotation</h3>'
-                    '<p>Click and drag to create a new arrow annotation.</p>'
+            self.tr("单击并拖动，创建新的箭头"),
+            self.tr('<h3>新建箭头批注</h3>'
+                    '<p>单击并拖动，创建新的箭头批注。</p>'
                     # '<a href="help://orange-canvas/arrow-annotations>'
                     #'More ...</a>'
                     )
@@ -1169,10 +1168,9 @@ class NewTextAnnotation(UserInteraction):
         self.document.view().setCursor(Qt.CrossCursor)
 
         helpevent = QuickHelpTipEvent(
-            self.tr("Click to create a new text annotation"),
-            self.tr('<h3>New text annotation</h3>'
-                    '<p>Click (and drag to resize) on the canvas to create '
-                    'a new text annotation item.</p>'
+            self.tr("单击此处，创建新的文本批注"),
+            self.tr('<h3>新建文本批注</h3>'
+                    '<p>在画布上单击（并拖动以调整大小），创建新的文本注释项。</p>'
                     # '<a href="help://orange-canvas/text-annotations">'
                     # 'More ...</a>'
                     )

@@ -246,7 +246,7 @@ class TextAnnotation(Annotation):
 
         self.__textItem = GraphicsTextEdit(self)
         self.__textItem.setOpenExternalLinks(True)
-        self.__textItem.setPlaceholderText(self.tr("Enter text here"))
+        self.__textItem.setPlaceholderText(self.tr("请输入文字"))
         self.__textItem.setPos(2, 2)
         self.__textItem.setTextWidth(rect.width() - 4)
         self.__textItem.setTabChangesFocus(True)
@@ -486,7 +486,7 @@ class TextAnnotation(Annotation):
         if event.modifiers() & Qt.AltModifier:
             menu = QMenu(event.widget())
             menu.setAttribute(Qt.WA_DeleteOnClose)
-            formatmenu = menu.addMenu("Render as")
+            formatmenu = menu.addMenu("渲染为")
             group = QActionGroup(self, exclusive=True)
 
             def makeaction(text, parent, data=None, **kwargs):
@@ -497,17 +497,16 @@ class TextAnnotation(Annotation):
 
             formatactions = [
                 makeaction("Plain Text", group, checkable=True,
-                           toolTip=self.tr("Render contents as plain text"),
+                           toolTip=self.tr("渲染内容为 plain text"),
                            data="text/plain"),
                 makeaction("HTML", group, checkable=True,
-                           toolTip=self.tr("Render contents as HTML"),
+                           toolTip=self.tr("渲染内容为 HTML"),
                            data="text/html"),
                 makeaction("RST", group, checkable=True,
-                           toolTip=self.tr("Render contents as RST "
-                                           "(reStructuredText)"),
+                           toolTip=self.tr("渲染内容为 RST (reStructuredText)"),
                            data="text/rst"),
                 makeaction("Markdown", group, checkable=True,
-                           toolTip=self.tr("Render contents as Markdown"),
+                           toolTip=self.tr("渲染内容为 Markdown"),
                            data="text/markdown")
             ]
             for action in formatactions:

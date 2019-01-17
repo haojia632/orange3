@@ -40,8 +40,8 @@ ROW_NAMES_WIDTH = 200
 
 class OWSilhouettePlot(widget.OWWidget):
     name = "Silhouette Plot"
-    description = "Visually assess cluster quality and " \
-                  "the degree of cluster membership."
+    description = "可视化地评估集群质量和" \
+                  "集群成员的程度"
 
     icon = "icons/SilhouettePlot.svg"
     priority = 300
@@ -79,20 +79,20 @@ class OWSilhouettePlot(widget.OWWidget):
                  ("Manhattan", Orange.distance.Manhattan),
                  ("Cosine", Orange.distance.Cosine)]
 
-    graph_name = "scene"
+    graph_name = "场景"
     buttons_area_orientation = Qt.Vertical
 
     class Error(widget.OWWidget.Error):
-        need_two_clusters = Msg("Need at least two non-empty clusters")
-        singleton_clusters_all = Msg("All clusters are singletons")
-        memory_error = Msg("Not enough memory")
-        value_error = Msg("Distances could not be computed: '{}'")
+        need_two_clusters = Msg("至少需要两个非空集群")
+        singleton_clusters_all = Msg("所有集群都是单例的")
+        memory_error = Msg("内存不足")
+        value_error = Msg("距离无法计算: '{}'")
 
     class Warning(widget.OWWidget.Warning):
         missing_cluster_assignment = Msg(
-            "{} instance{s} omitted (missing cluster assignment)")
-        nan_distances = Msg("{} instance{s} omitted (undefined distances)")
-        ignoring_categorical = Msg("Ignoring categorical features")
+            "{} 实例{s}省略(缺少集群分配)")
+        nan_distances = Msg("{} 实例{s}省略(未定义的距离)")
+        ignoring_categorical = Msg("忽略分类特征")
 
     def __init__(self):
         super().__init__()
@@ -184,7 +184,7 @@ class OWSilhouettePlot(widget.OWWidget):
                 v for v in data.domain.variables + data.domain.metas
                 if v.is_discrete and len(v.values) >= 2]
             if not candidatevars:
-                error_msg = "Input does not have any suitable labels."
+                error_msg = "输入没有任何合适的标签"
                 data = None
 
         self.data = data

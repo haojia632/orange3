@@ -125,8 +125,8 @@ def var_key(var):
 
 
 class OWImpute(OWWidget):
-    name = "Impute"
-    description = "Impute missing values in the data table."
+    name = "归因"
+    description = "在数据表中输入缺少的值。"
     icon = "icons/Impute.svg"
     priority = 2130
     keywords = ["substitute", "missing"]
@@ -166,7 +166,7 @@ class OWImpute(OWWidget):
         main_layout.setContentsMargins(10, 10, 10, 10)
         self.controlArea.layout().addLayout(main_layout)
 
-        box = QGroupBox(title=self.tr("Default Method"), flat=False)
+        box = QGroupBox(title=self.tr("默认方法"), flat=False)
         box_layout = QVBoxLayout(box)
         main_layout.addWidget(box)
 
@@ -182,7 +182,7 @@ class OWImpute(OWWidget):
 
         self.default_button_group = button_group
 
-        box = QGroupBox(title=self.tr("Individual Attribute Settings"),
+        box = QGroupBox(title=self.tr("单个属性设置"),
                         flat=False)
         main_layout.addWidget(box)
 
@@ -234,7 +234,7 @@ class OWImpute(OWWidget):
         method_layout.addStretch(2)
 
         reset_button = QPushButton(
-            "Restore All to Default", checked=False, checkable=False,
+            "全部还原为默认值", checked=False, checkable=False,
             clicked=self.reset_variable_state, default=False,
             autoDefault=False)
         method_layout.addWidget(reset_button)
@@ -242,9 +242,9 @@ class OWImpute(OWWidget):
         self.variable_button_group = button_group
 
         box = gui.auto_commit(
-            self.controlArea, self, "autocommit", "Apply",
+            self.controlArea, self, "autocommit", "应用",
             orientation=Qt.Horizontal,
-            checkbox_label="Apply automatically")
+            checkbox_label="自动应用")
         box.button.setFixedWidth(180)
         box.layout().insertStretch(0)
 

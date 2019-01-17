@@ -17,9 +17,8 @@ from Orange.widgets.widget import Input, Output
 
 
 class OWContinuize(widget.OWWidget):
-    name = "Continuize"
-    description = ("Transform categorical attributes into numeric and, " +
-                   "optionally, normalize numeric values.")
+    name = "数据统计"
+    description = ("将分类属性转换为数字属性，或者规范化数值。")
     icon = "icons/Continuize.svg"
     category = "Data"
     keywords = []
@@ -69,32 +68,32 @@ class OWContinuize(widget.OWWidget):
     def __init__(self):
         super().__init__()
 
-        box = gui.vBox(self.controlArea, "Categorical Features")
+        box = gui.vBox(self.controlArea, "分类特征")
         gui.radioButtonsInBox(
             box, self, "multinomial_treatment",
             btnLabels=[x[0] for x in self.multinomial_treats],
             callback=self.settings_changed)
 
-        box = gui.vBox(self.controlArea, "Numeric Features")
+        box = gui.vBox(self.controlArea, "数值特征")
         gui.radioButtonsInBox(
             box, self, "continuous_treatment",
             btnLabels=[x[0] for x in self.continuous_treats],
             callback=self.settings_changed)
 
-        box = gui.vBox(self.controlArea, "Categorical Outcomes")
+        box = gui.vBox(self.controlArea, "分类结果")
         gui.radioButtonsInBox(
             box, self, "class_treatment",
             btnLabels=[t[0] for t in self.class_treats],
             callback=self.settings_changed)
 
-        zbbox = gui.vBox(self.controlArea, "Value Range")
+        zbbox = gui.vBox(self.controlArea, "值范围")
 
         gui.radioButtonsInBox(
             zbbox, self, "zero_based",
             btnLabels=self.value_ranges,
             callback=self.settings_changed)
 
-        gui.auto_commit(self.buttonsArea, self, "autosend", "Apply", box=False)
+        gui.auto_commit(self.buttonsArea, self, "autosend", "应用", box=False)
 
         self.data = None
 

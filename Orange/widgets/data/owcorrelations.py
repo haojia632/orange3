@@ -154,8 +154,8 @@ class CorrelationRank(VizRankDialogAttrPair):
 
 
 class OWCorrelations(OWWidget):
-    name = "Correlations"
-    description = "Compute all pairwise attribute correlations."
+    name = "相关性分析"
+    description = "计算所有成对的属性关联。"
     icon = "icons/Correlations.svg"
     priority = 1106
 
@@ -192,6 +192,7 @@ class OWCorrelations(OWWidget):
             None, self, None, self._vizrank_selection_changed)
         self.vizrank.progressBar = self.progressBar
         self.vizrank.button.setEnabled(False)
+        self.vizrank.button.setText("启动")
 
         gui.separator(box)
         box.layout().addWidget(self.vizrank.filter)

@@ -212,7 +212,7 @@ class OWFreeViz(OWAnchorProjectionWidget):
     MAX_INSTANCES = 10000
 
     name = "FreeViz"
-    description = "Displays FreeViz projection"
+    description = "显示FreeViz投影"
     icon = "icons/Freeviz.svg"
     priority = 240
     keywords = ["viz"]
@@ -223,18 +223,18 @@ class OWFreeViz(OWAnchorProjectionWidget):
     graph = settings.SettingProvider(OWFreeVizGraph)
 
     class Error(OWAnchorProjectionWidget.Error):
-        no_class_var = widget.Msg("Data has no target variable")
+        no_class_var = widget.Msg("数据没有目标变量")
         not_enough_class_vars = widget.Msg(
-            "Target variable is not at least binary")
+            "目标变量至少不是二进制的")
         features_exceeds_instances = widget.Msg(
-            "Number of features exceeds the number of instances.")
-        too_many_data_instances = widget.Msg("Data is too large.")
-        constant_data = widget.Msg("All data columns are constant.")
-        not_enough_features = widget.Msg("At least two features are required")
+            "特性的数量超过了实例的数量")
+        too_many_data_instances = widget.Msg("数据太大")
+        constant_data = widget.Msg("所有数据列都是常量")
+        not_enough_features = widget.Msg("至少需要两个特性")
 
     class Warning(OWAnchorProjectionWidget.Warning):
-        removed_features = widget.Msg("Categorical features with more than"
-                                      " two values are not shown.")
+        removed_features = widget.Msg("分类特征多于"
+                                      " 没有显示两个值")
 
     def __init__(self):
         super().__init__()
@@ -272,7 +272,7 @@ class OWFreeViz(OWAnchorProjectionWidget):
     def __toggle_start(self):
         if self._loop.isRunning():
             self._loop.cancel()
-            self.btn_start.setText("Optimize")
+            self.btn_start.setText("优化")
             self.progressBarFinished(processEvents=False)
         else:
             self._start()
@@ -302,10 +302,10 @@ class OWFreeViz(OWAnchorProjectionWidget):
 
         self.graph.set_sample_size(self.SAMPLE_SIZE)
         self._loop.setCoroutine(update_freeviz(self.projector.components_.T))
-        self.btn_start.setText("Stop")
+        self.btn_start.setText("停止")
         self.progressBarInit()
         self.setBlocking(True)
-        self.setStatusMessage("Optimizing")
+        self.setStatusMessage("优化")
 
     def __set_projection(self, _):
         # Set/update the projection matrix and coordinate embeddings
@@ -314,7 +314,7 @@ class OWFreeViz(OWAnchorProjectionWidget):
 
     def __freeviz_finished(self):
         self.graph.set_sample_size(None)
-        self.btn_start.setText("Optimize")
+        self.btn_start.setText("优化")
         self.setStatusMessage("")
         self.setBlocking(False)
         self.progressBarFinished()

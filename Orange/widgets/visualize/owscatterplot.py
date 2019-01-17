@@ -43,7 +43,7 @@ class ScatterPlotVizRank(VizRankDialogAttrPair):
 
     def check_preconditions(self):
         self.Information.add_message(
-            "color_required", "Color variable must be selected")
+            "颜色要求", "必须选择颜色变量")
         self.Information.color_required.clear()
         if not super().check_preconditions():
             return False
@@ -150,9 +150,9 @@ class OWScatterPlot(OWDataProjectionWidget):
     """Scatterplot visualization with explorative analysis and intelligent
     data visualization enhancements."""
 
-    name = 'Scatter Plot'
-    description = "Interactive scatter plot visualization with " \
-                  "intelligent data visualization enhancements."
+    name = '散点图'
+    description = "交互式散点图可视化" \
+                  "智能数据可视化增强"
     icon = "icons/ScatterPlot.svg"
     priority = 140
     keywords = []
@@ -177,14 +177,14 @@ class OWScatterPlot(OWDataProjectionWidget):
 
     class Warning(OWDataProjectionWidget.Warning):
         missing_coords = Msg(
-            "Plot cannot be displayed because '{}' or '{}' "
-            "is missing for all data points")
-        no_continuous_vars = Msg("Data has no continuous variables")
+            "无法显示绘图，因为 '{}' or '{}' "
+            "丢失了所有数据点")
+        no_continuous_vars = Msg("数据没有连续变量")
 
     class Information(OWDataProjectionWidget.Information):
-        sampled_sql = Msg("Large SQL table; showing a sample.")
+        sampled_sql = Msg("大型SQL表;显示一个示例")
         missing_coords = Msg(
-            "Points with missing '{}' or '{}' are not displayed")
+            "不显示缺少'{}' or '{}'的点")
 
     def __init__(self):
         self.sql_data = None  # Orange.data.sql.table.SqlTable
@@ -218,16 +218,16 @@ class OWScatterPlot(OWDataProjectionWidget):
         dmod = DomainModel
         self.xy_model = DomainModel(dmod.MIXED, valid_types=ContinuousVariable)
         self.cb_attr_x = gui.comboBox(
-            box, self, "attr_x", label="Axis x:",
+            box, self, "attr_x", label="轴线 x:",
             callback=self.set_attr_from_combo,
             model=self.xy_model, **common_options)
         self.cb_attr_y = gui.comboBox(
-            box, self, "attr_y", label="Axis y:",
+            box, self, "attr_y", label="轴线 y:",
             callback=self.set_attr_from_combo,
             model=self.xy_model, **common_options)
         vizrank_box = gui.hBox(box)
         self.vizrank, self.vizrank_button = ScatterPlotVizRank.add_vizrank(
-            vizrank_box, self, "Find Informative Projections", self.set_attr)
+            vizrank_box, self, "查找信息性预测", self.set_attr)
 
     def _add_controls_sampling(self):
         self.sampling = gui.auto_commit(
@@ -248,7 +248,7 @@ class OWScatterPlot(OWDataProjectionWidget):
             is_enabled and self.attr_color is not None and
             not np.isnan(self.data.get_column_view(
                 self.attr_color)[0].astype(float)).all())
-        text = "Color variable has to be selected." \
+        text = "必须选择颜色变量" \
             if is_enabled and self.attr_color is None else ""
         self.vizrank_button.setToolTip(text)
 

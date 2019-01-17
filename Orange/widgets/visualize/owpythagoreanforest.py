@@ -157,7 +157,7 @@ class ClickToClearSelectionListView(QListView):
 
 class OWPythagoreanForest(OWWidget):
     name = 'Pythagorean Forest'
-    description = 'Pythagorean forest for visualising random forests.'
+    description = '毕达哥拉斯森林用于可视化随机森林'
     icon = 'icons/PythagoreanForest.svg'
     settings_version = 2
     keywords = ["fractal"]
@@ -171,7 +171,7 @@ class OWPythagoreanForest(OWWidget):
         tree = Output("Tree", TreeModel)
 
     # Enable the save as feature
-    graph_name = 'scene'
+    graph_name = '场景'
 
     # Settings
     depth_limit = settings.ContextSetting(10)
@@ -309,18 +309,18 @@ class OWPythagoreanForest(OWWidget):
                  if isinstance(x, QLabel)][0]
 
         if self.instances.domain.has_discrete_class:
-            label_text = 'Target class'
+            label_text = '目标类'
             values = [c.title() for c in self.instances.domain.class_vars[0].values]
             values.insert(0, 'None')
         else:
-            label_text = 'Node color'
+            label_text = '节点颜色'
             values = list(ContinuousTreeNode.COLOR_METHODS.keys())
         label.setText(label_text)
         self.ui_target_class_combo.addItems(values)
         self.ui_target_class_combo.setCurrentIndex(self.target_class_index)
 
     def _clear_info_box(self):
-        self.ui_info.setText('No forest on input.')
+        self.ui_info.setText('没有森林输入')
 
     def _clear_target_class_combo(self):
         self.ui_target_class_combo.clear()

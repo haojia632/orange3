@@ -17,10 +17,9 @@ except ImportError:
 
 
 class OWDataInfo(widget.OWWidget):
-    name = "Data Info"
+    name = "数据信息"
     id = "orange.widgets.data.info"
-    description = """Display basic information about the dataset, such
-    as the number and type of variables in the columns and the number of rows."""
+    description = "显示数据集相关信息， 例如：列中变量的数量和类型以及行数。"
     icon = "icons/DataInfo.svg"
     priority = 80
     category = "Data"

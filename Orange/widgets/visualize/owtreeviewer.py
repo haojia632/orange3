@@ -157,7 +157,7 @@ class TreeNode(GraphicsNode):
 class OWTreeGraph(OWTreeViewer2D):
     """Graphical visualization of tree models"""
 
-    name = "Tree Viewer"
+    name = "树查看器"
     icon = "icons/TreeViewer.svg"
     priority = 35
     keywords = []
@@ -190,7 +190,7 @@ class OWTreeGraph(OWTreeViewer2D):
         self.clf_dataset = None
         self.tree_adapter = None
 
-        self.color_label = QLabel("Target class: ")
+        self.color_label = QLabel("目标类: ")
         combo = self.color_combo = gui.OrangeComboBox()
         combo.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         combo.setSizeAdjustPolicy(
@@ -263,7 +263,7 @@ class OWTreeGraph(OWTreeViewer2D):
         self.model = model
         self.target_class_index = 0
         if model is None:
-            self.info.setText('No tree.')
+            self.info.setText('没有树。')
             self.root_node = None
             self.dataset = None
             self.tree_adapter = None
@@ -278,14 +278,14 @@ class OWTreeGraph(OWTreeViewer2D):
             class_var = self.domain.class_var
             if class_var.is_discrete:
                 self.scene.colors = [QColor(*col) for col in class_var.colors]
-                self.color_label.setText("Target class: ")
-                self.color_combo.addItem("None")
+                self.color_label.setText("目标类: ")
+                self.color_combo.addItem("无")
                 self.color_combo.addItems(self.domain.class_vars[0].values)
                 self.color_combo.setCurrentIndex(self.target_class_index)
             else:
                 self.scene.colors = \
                     ContinuousPaletteGenerator(*model.domain.class_var.colors)
-                self.color_label.setText("Color by: ")
+                self.color_label.setText("调色: ")
                 self.color_combo.addItems(self.COL_OPTIONS)
                 self.color_combo.setCurrentIndex(self.regression_colors)
             self.openContext(self.domain.class_var)

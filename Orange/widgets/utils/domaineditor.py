@@ -99,7 +99,7 @@ class VarTableModel(QAbstractTableModel):
 
     def headerData(self, i, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and i < 4:
-            return ("Name", "Type", "Role", "Values")[i]
+            return ("名称", "类型", "角色", "值")[i]
         if role == Qt.TextAlignmentRole:
             return Qt.AlignLeft
         return super().headerData(i, orientation, role)

@@ -69,9 +69,9 @@ class SieveRank(VizRankDialogAttrPair):
 
 
 class OWSieveDiagram(OWWidget):
-    name = "Sieve Diagram"
-    description = "Visualize the observed and expected frequencies " \
-                  "for a combination of values."
+    name = "筛图"
+    description = "可视化观察到的和期望的频率 " \
+                  "对于值的组合"
     icon = "icons/SieveDiagram.svg"
     priority = 200
     keywords = []
@@ -84,7 +84,7 @@ class OWSieveDiagram(OWWidget):
         selected_data = Output("Selected Data", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
-    graph_name = "canvas"
+    graph_name = "画布"
 
     want_control_area = False
 
@@ -449,7 +449,7 @@ class OWSieveDiagram(OWWidget):
         square_size = max(square_size, 10)
         self.canvasView.setSceneRect(0, 0, view.width(), view.height())
         if not disc_x.values or not disc_y.values:
-            text_ = "Features {} and {} have no values".format(disc_x, disc_y) \
+            text_ = "特征 {} 和 {} 没有值".format(disc_x, disc_y) \
                 if not disc_x.values and \
                    not disc_y.values and \
                           disc_x != disc_y \

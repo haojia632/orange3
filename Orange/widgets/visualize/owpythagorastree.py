@@ -39,8 +39,8 @@ from Orange.widgets.widget import OWWidget
 
 
 class OWPythagorasTree(OWWidget):
-    name = 'Pythagorean Tree'
-    description = 'Pythagorean Tree visualization for tree like-structures.'
+    name = '毕达哥拉斯树'
+    description = '毕达哥拉斯的树状结构可视化'
     icon = 'icons/PythagoreanTree.svg'
     keywords = ["fractal"]
 
@@ -54,7 +54,7 @@ class OWPythagorasTree(OWWidget):
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     # Enable the save as feature
-    graph_name = 'scene'
+    graph_name = '场景'
 
     # Settings
     depth_limit = settings.ContextSetting(10)
@@ -271,7 +271,7 @@ class OWPythagorasTree(OWWidget):
             self.SIZE_CALCULATION[self.size_calc_idx][0] == 'Logarithmic')
 
     def _clear_info_box(self):
-        self.info.setText('No tree on input')
+        self.info.setText('没有树输入')
 
     def _clear_depth_slider(self):
         self.depth_slider.parent().setEnabled(False)
@@ -328,11 +328,11 @@ class OWPythagorasTree(OWWidget):
                  if isinstance(x, QLabel)][0]
 
         if self.instances.domain.has_discrete_class:
-            label_text = 'Target class'
+            label_text = '目标类'
             values = [c.title() for c in self.instances.domain.class_vars[0].values]
             values.insert(0, 'None')
         else:
-            label_text = 'Node color'
+            label_text = '节点颜色'
             values = list(ContinuousTreeNode.COLOR_METHODS.keys())
         label.setText(label_text)
         self.target_class_combo.addItems(values)

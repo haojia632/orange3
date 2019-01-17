@@ -109,20 +109,24 @@ class WelcomeDialog(QDialog):
         bottom_bar.setSizePolicy(QSizePolicy.MinimumExpanding,
                                  QSizePolicy.Maximum)
 
-        check = QCheckBox(self.tr("Show at startup"), bottom_bar)
+        check = QCheckBox(self.tr("启动显示"), bottom_bar)
         check.setChecked(False)
 
         self.__showAtStartupCheck = check
 
+        """
         feedback = QLabel(
             '<a href="http://orange.biolab.si/survey/long.html">Help us improve!</a>')
         feedback.setTextInteractionFlags(Qt.TextBrowserInteraction)
         feedback.setOpenExternalLinks(True)
+        """
 
         bottom_bar_layout.addWidget(check, alignment=Qt.AlignVCenter | \
                                     Qt.AlignLeft)
+        """
         bottom_bar_layout.addWidget(feedback, alignment=Qt.AlignVCenter | \
                                     Qt.AlignRight)
+        """
 
         self.layout().addWidget(bottom_bar, alignment=Qt.AlignBottom,
                                 stretch=1)

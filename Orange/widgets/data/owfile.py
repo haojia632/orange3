@@ -72,10 +72,9 @@ class LineEditSelectOnFocus(QLineEdit):
 
 
 class OWFile(widget.OWWidget, RecentPathsWComboMixin):
-    name = "File"
+    name = "文件导入"
     id = "orange.widgets.data.file"
-    description = "Read data from an input file or network " \
-                  "and send a data table to the output."
+    description = "从输入文件或网络读取数据，并将这些数据表发送到输出。"
     icon = "icons/File.svg"
     priority = 10
     category = "Data"
@@ -143,7 +142,7 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
         vbox = gui.radioButtons(None, self, "source", box=True, addSpace=True,
                                 callback=self.load_data, addToLayout=False)
 
-        rb_button = gui.appendRadioButton(vbox, "File:", addToLayout=False)
+        rb_button = gui.appendRadioButton(vbox, "文件:", addToLayout=False)
         layout.addWidget(rb_button, 0, 0, Qt.AlignVCenter)
 
         box = gui.hBox(None, addToLayout=False, margin=0)
@@ -160,7 +159,7 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
         layout.addWidget(file_button, 0, 2)
 
         reload_button = gui.button(
-            None, self, "Reload", callback=self.load_data, autoDefault=False)
+            None, self, "重新加载", callback=self.load_data, autoDefault=False)
         reload_button.setIcon(self.style().standardIcon(
             QStyle.SP_BrowserReload))
         reload_button.setSizePolicy(Policy.Fixed, Policy.Fixed)
@@ -200,23 +199,23 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
         layout.addWidget(url_combo, 3, 1, 3, 3)
         url_combo.activated.connect(self._url_set)
 
-        box = gui.vBox(self.controlArea, "Info")
-        self.info = gui.widgetLabel(box, 'No data loaded.')
+        box = gui.vBox(self.controlArea, "信息")
+        self.info = gui.widgetLabel(box, '没有加载数据。')
         self.warnings = gui.widgetLabel(box, '')
 
-        box = gui.widgetBox(self.controlArea, "Columns (Double click to edit)")
+        box = gui.widgetBox(self.controlArea, "列集合 (双击编辑)")
         self.domain_editor = DomainEditor(self)
         self.editor_model = self.domain_editor.model()
         box.layout().addWidget(self.domain_editor)
 
         box = gui.hBox(self.controlArea)
         gui.button(
-            box, self, "Browse documentation datasets",
+            box, self, "打开数据集",
             callback=lambda: self.browse_file(True), autoDefault=False)
         gui.rubber(box)
 
         self.apply_button = gui.button(
-            box, self, "Apply", callback=self.apply_domain_edit)
+            box, self, "应用", callback=self.apply_domain_edit)
         self.apply_button.setEnabled(False)
         self.apply_button.setFixedWidth(170)
         self.editor_model.dataChanged.connect(

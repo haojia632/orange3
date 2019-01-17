@@ -399,8 +399,8 @@ SEL_MAX_INSTANCES = 10000
 
 
 class OWLinePlot(OWWidget):
-    name = "Line Plot"
-    description = "Visualization of data profiles (e.g., time series)."
+    name = "线图"
+    description = "数据概要的可视化 (e.g., time series)."
     icon = "icons/LinePlot.svg"
     priority = 180
 
@@ -426,16 +426,16 @@ class OWLinePlot(OWWidget):
     graph_name = "graph.plotItem"
 
     class Error(OWWidget.Error):
-        not_enough_attrs = Msg("Need at least one continuous feature.")
-        no_valid_data = Msg("No plot due to no valid data.")
+        not_enough_attrs = Msg("至少需要一个连续的特性")
+        no_valid_data = Msg("由于没有有效的数据，所以没有绘图")
 
     class Warning(OWWidget.Warning):
-        no_display_option = Msg("No display option is selected.")
+        no_display_option = Msg("没有选择显示选项")
 
     class Information(OWWidget.Information):
-        hidden_instances = Msg("Instances with unknown values are not shown.")
-        too_many_features = Msg("Data has too many features. Only first {}"
-                                " are shown.".format(MAX_FEATURES))
+        hidden_instances = Msg("不显示具有未知值的实例")
+        too_many_features = Msg("数据有太多的特性。只有第一个 {}"
+                                "被展示".format(MAX_FEATURES))
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -544,7 +544,7 @@ class OWLinePlot(OWWidget):
 
         self.clear_messages()
         if self.data is not None:
-            self.infoLabel.setText("%i instances on input\n%i features" % (
+            self.infoLabel.setText("输入\n%i特征上的%i实例" % (
                 len(self.data), len(self.data.domain.attributes)))
             self.graph_variables = [var for var in self.data.domain.attributes
                                     if var.is_continuous]
@@ -743,7 +743,7 @@ class OWLinePlot(OWWidget):
         self.__groups = []
         self.graph_variables = []
         self.graph.reset()
-        self.infoLabel.setText("No data on input.")
+        self.infoLabel.setText("没有输入数据")
         self.group_vars.set_domain(None)
         self.group_view.setEnabled(False)
 

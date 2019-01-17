@@ -9,9 +9,8 @@ from Orange.widgets.widget import Input, Output
 
 
 class OWPurgeDomain(widget.OWWidget):
-    name = "Purge Domain"
-    description = "Remove redundant values and features from the dataset. " \
-                  "Sort values."
+    name = "清除域名"
+    description = "从数据集中删除冗余值和特征，按值排序。"
     icon = "icons/PurgeDomain.svg"
     category = "Data"
     keywords = ["remove", "delete", "unused"]
@@ -36,25 +35,25 @@ class OWPurgeDomain(widget.OWWidget):
     resizing_enabled = False
     buttons_area_orientation = Qt.Vertical
 
-    feature_options = (('sortValues', 'Sort categorical feature values'),
-                       ('removeValues', 'Remove unused feature values'),
-                       ('removeAttributes', 'Remove constant features'))
+    feature_options = (('sortValues', '排序分类特征值'),
+                       ('removeValues', '删除未使用的特征值'),
+                       ('removeAttributes', '删除常量特征'))
 
-    class_options = (('sortClasses', 'Sort categorical class values'),
-                     ('removeClasses', 'Remove unused class variable values'),
-                     ('removeClassAttribute', 'Remove constant class variables'))
+    class_options = (('sortClasses', '排序分类类值'),
+                     ('removeClasses', '删除未使用的类变量值'),
+                     ('removeClassAttribute', '删除常量类变量'))
 
-    meta_options = (('removeMetaAttributeValues', 'Remove unused meta attribute values'),
-                    ('removeMetaAttributes', 'Remove constant meta attributes'))
+    meta_options = (('removeMetaAttributeValues', '删除未使用的元属性值'),
+                    ('removeMetaAttributes', '删除常量元属性'))
 
-    stat_labels = (('Sorted features', 'resortedAttrs'),
-                   ('Reduced features', 'reducedAttrs'),
-                   ('Removed features', 'removedAttrs'),
-                   ('Sorted classes', 'resortedClasses'),
-                   ('Reduced classes', 'reducedClasses'),
-                   ('Removed classes', 'removedClasses'),
-                   ('Reduced metas', 'reducedMetas'),
-                   ('Removed metas', 'removedMetas'))
+    stat_labels = (('分类特征', 'resortedAttrs'),
+                   ('减少特征', 'reducedAttrs'),
+                   ('删除特征', 'removedAttrs'),
+                   ('排序的类', 'resortedClasses'),
+                   ('减少的类', 'reducedClasses'),
+                   ('删除的累', 'removedClasses'),
+                   ('减少元属性', 'reducedMetas'),
+                   ('删除元舒心', 'removedMetas'))
 
     def __init__(self):
         super().__init__()
@@ -69,35 +68,35 @@ class OWPurgeDomain(widget.OWWidget):
         self.removedMetas = "-"
         self.reducedMetas = "-"
 
-        boxAt = gui.vBox(self.controlArea, "Features")
+        boxAt = gui.vBox(self.controlArea, "特征")
         for not_first, (value, label) in enumerate(self.feature_options):
             if not_first:
                 gui.separator(boxAt, 2)
             gui.checkBox(boxAt, self, value, label,
                          callback=self.optionsChanged)
 
-        boxAt = gui.vBox(self.controlArea, "Classes", addSpace=True)
+        boxAt = gui.vBox(self.controlArea, "类", addSpace=True)
         for not_first, (value, label) in enumerate(self.class_options):
             if not_first:
                 gui.separator(boxAt, 2)
             gui.checkBox(boxAt, self, value, label,
                          callback=self.optionsChanged)
 
-        boxAt = gui.vBox(self.controlArea, "Meta attributes", addSpace=True)
+        boxAt = gui.vBox(self.controlArea, "元属性", addSpace=True)
         for not_first, (value, label) in enumerate(self.meta_options):
             if not_first:
                 gui.separator(boxAt, 2)
             gui.checkBox(boxAt, self, value, label,
                          callback=self.optionsChanged)
 
-        box3 = gui.vBox(self.controlArea, 'Statistics', addSpace=True)
+        box3 = gui.vBox(self.controlArea, '统计', addSpace=True)
         for i, (label, value) in enumerate(self.stat_labels):
             # add a separator after each group of three
             if i != 0 and i % 3 == 0:
                 gui.separator(box3, 2)
             gui.label(box3, self, "{}: %({})s".format(label, value))
 
-        gui.auto_commit(self.buttonsArea, self, "autoSend", "Apply",
+        gui.auto_commit(self.buttonsArea, self, "autoSend", "应用",
                         orientation=Qt.Horizontal)
         gui.rubber(self.controlArea)
 

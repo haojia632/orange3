@@ -7,20 +7,20 @@
 </g>
 <g>
 	<g>
-		<polygon fill="#333333" points="28.445,37.864 32.558,37.602 35.091,34.349 36.172,44.448 		"/>
+		<polygon fill="#005C9B" points="28.445,37.864 32.558,37.602 35.091,34.349 36.172,44.448 		"/>
 	</g>
-	<line fill="#333333" stroke="#333333" stroke-width="2" stroke-miterlimit="10" x1="33.97" y1="40.298" x2="15.357" y2="5.328"/>
+	<line fill="#005C9B" stroke="#005C9B" stroke-width="2" stroke-miterlimit="10" x1="33.97" y1="40.298" x2="15.357" y2="5.328"/>
 </g>
 <g>
 	<g>
-		<polygon fill="#333333" points="33.136,13.426 31.037,9.88 26.989,9.098 35.496,3.551 		"/>
+		<polygon fill="#005C9B" points="33.136,13.426 31.037,9.88 26.989,9.098 35.496,3.551 		"/>
 	</g>
-	<line fill="#333333" stroke="#333333" stroke-width="2" stroke-miterlimit="10" x1="32.798" y1="7.398" x2="10.076" y2="39.848"/>
+	<line fill="#005C9B" stroke="#005C9B" stroke-width="2" stroke-miterlimit="10" x1="32.798" y1="7.398" x2="10.076" y2="39.848"/>
 </g>
 <g>
 	<g>
-		<polygon fill="#333333" points="11.4,23.59 9.591,27.295 11.162,31.107 1.853,27.046 		"/>
+		<polygon fill="#005C9B" points="11.4,23.59 9.591,27.295 11.162,31.107 1.853,27.046 		"/>
 	</g>
-	<line fill="#333333" stroke="#333333" stroke-width="2" stroke-miterlimit="10" x1="6.55" y1="27.186" x2="46.146" y2="28.335"/>
+	<line fill="#005C9B" stroke="#005C9B" stroke-width="2" stroke-miterlimit="10" x1="6.55" y1="27.186" x2="46.146" y2="28.335"/>
 </g>
 </svg>

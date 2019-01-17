@@ -28,8 +28,8 @@ COMPRESSIONS = [
 
 
 class OWSave(widget.OWWidget):
-    name = "Save Data"
-    description = "Save data to an output file."
+    name = "保存数据"
+    description = "将数据保存到输出文件。"
     icon = "icons/Save.svg"
     category = "Data"
     keywords = []
@@ -64,7 +64,7 @@ class OWSave(widget.OWWidget):
             verticalSpacing=10,
         )
 
-        box = gui.vBox(self.controlArea, "Format")
+        box = gui.vBox(self.controlArea, "格式")
 
         gui.comboBox(
             box, self, "filetype",
@@ -72,7 +72,7 @@ class OWSave(widget.OWWidget):
             items=[item for item, _, _ in FILE_TYPES],
             sendSelectedValue=True,
         )
-        form.addRow("File type", self.controls.filetype, )
+        form.addRow("文件类型", self.controls.filetype, )
 
         gui.comboBox(
             box, self, "compression",
@@ -81,7 +81,7 @@ class OWSave(widget.OWWidget):
             sendSelectedValue=True,
         )
         gui.checkBox(
-            box, self, "compress", label="Use compression",
+            box, self, "compress", label="使用压缩",
             callback=self._update_text,
         )
 
@@ -90,12 +90,12 @@ class OWSave(widget.OWWidget):
         box.layout().addLayout(form)
 
         self.save = gui.auto_commit(
-            self.controlArea, self, "auto_save", "Save", box=False,
+            self.controlArea, self, "auto_save", "保存", box=False,
             commit=self.save_file, callback=self.adjust_label,
             disabled=True, addSpace=True
         )
         self.save_as = gui.button(
-            self.controlArea, self, "Save As...",
+            self.controlArea, self, "另存为...",
             callback=self.save_file_as, disabled=True
         )
         self.save_as.setMinimumWidth(220)

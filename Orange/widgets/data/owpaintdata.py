@@ -723,17 +723,17 @@ def _icon(name, icon_path="icons/paintdata",
 
 class OWPaintData(OWWidget):
     TOOLS = [
-        ("Brush", "Create multiple instances", AirBrushTool, _icon("brush.svg")),
-        ("Put", "Put individual instances", PutInstanceTool, _icon("put.svg")),
-        ("Select", "Select and move instances", SelectTool,
+        ("Brush", "创建多个实例", AirBrushTool, _icon("brush.svg")),
+        ("Put", "创建单个实例", PutInstanceTool, _icon("put.svg")),
+        ("Select", "选择并移动实例", SelectTool,
          _icon("select-transparent_42px.png")),
-        ("Jitter", "Jitter instances", JitterTool, _icon("jitter.svg")),
-        ("Magnet", "Attract multiple instances", MagnetTool, _icon("magnet.svg")),
-        ("Clear", "Clear the plot", ClearTool, _icon("../../../icons/Dlg_clear.png"))
+        ("Jitter", "抖动实例", JitterTool, _icon("jitter.svg")),
+        ("Magnet", "吸引多个实例", MagnetTool, _icon("magnet.svg")),
+        ("Clear", "清除情节", ClearTool, _icon("../../../icons/Dlg_clear.png"))
     ]
 
-    name = "Paint Data"
-    description = "Create data by painting data points on a plane."
+    name = "数据绘制"
+    description = "通过在平面上绘制数据点来创建数据。"
     icon = "icons/PaintData.svg"
     priority = 60
     keywords = ["create", "draw"]
@@ -812,15 +812,15 @@ class OWPaintData(OWWidget):
         self.commit()
 
     def _init_ui(self):
-        namesBox = gui.vBox(self.controlArea, "Names")
+        namesBox = gui.vBox(self.controlArea, "名称")
 
         hbox = gui.hBox(namesBox, margin=0, spacing=0)
-        gui.lineEdit(hbox, self, "attr1", "Variable X: ",
+        gui.lineEdit(hbox, self, "attr1", "变量 X: ",
                      controlWidth=80, orientation=Qt.Horizontal,
                      callback=self._attr_name_changed)
         gui.separator(hbox, 21)
         hbox = gui.hBox(namesBox, margin=0, spacing=0)
-        attr2 = gui.lineEdit(hbox, self, "attr2", "Variable Y: ",
+        attr2 = gui.lineEdit(hbox, self, "attr2", "变量 Y: ",
                              controlWidth=80, orientation=Qt.Horizontal,
                              callback=self._attr_name_changed)
         gui.separator(hbox)
@@ -829,7 +829,7 @@ class OWPaintData(OWWidget):
                      callback=self.set_dimensions)
         gui.separator(namesBox)
 
-        gui.widgetLabel(namesBox, "Labels")
+        gui.widgetLabel(namesBox, "标签")
         self.classValuesView = listView = gui.ListViewWithSizeHint(
             preferred_size=(-1, 30))
         listView.setModel(self.class_model)
@@ -838,13 +838,13 @@ class OWPaintData(OWWidget):
 
         self.addClassLabel = QAction(
             "+", self,
-            toolTip="Add new class label",
+            toolTip="添加新类标签",
             triggered=self.add_new_class_label
         )
 
         self.removeClassLabel = QAction(
             unicodedata.lookup("MINUS SIGN"), self,
-            toolTip="Remove selected class label",
+            toolTip="删除所选类标签",
             triggered=self.remove_selected_class_label
         )
 
@@ -855,7 +855,7 @@ class OWPaintData(OWWidget):
         actionsWidget.layout().setSpacing(1)
         namesBox.layout().addWidget(actionsWidget)
 
-        tBox = gui.vBox(self.controlArea, "Tools", addSpace=True)
+        tBox = gui.vBox(self.controlArea, "工具", addSpace=True)
         buttonBox = gui.hBox(tBox)
         toolsBox = gui.widgetBox(buttonBox, orientation=QGridLayout())
 
@@ -909,28 +909,27 @@ class OWPaintData(OWWidget):
             indBox, self, "brushRadius", minValue=1, maxValue=100,
             createLabel=False
         )
-        form.addRow("Radius:", slider)
+        form.addRow("半径:", slider)
 
         slider = gui.hSlider(
             indBox, self, "density", None, minValue=1, maxValue=100,
             createLabel=False
         )
 
-        form.addRow("Intensity:", slider)
+        form.addRow("强度:", slider)
 
         slider = gui.hSlider(
             indBox, self, "symbol_size", None, minValue=1, maxValue=100,
             createLabel=False, callback=self.set_symbol_size
         )
 
-        form.addRow("Symbol:", slider)
+        form.addRow("符号:", slider)
 
         self.btResetToInput = gui.button(
-            tBox, self, "Reset to Input Data", self.reset_to_input)
+            tBox, self, "重置为输入数据", self.reset_to_input)
         self.btResetToInput.setDisabled(True)
 
-        gui.auto_commit(self.left_side, self, "autocommit",
-                        "Send")
+        gui.auto_commit(self.left_side, self, "autocommit", "发送")
 
         # main area GUI
         viewbox = PaintViewBox(enableMouse=False)

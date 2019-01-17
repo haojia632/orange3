@@ -103,9 +103,8 @@ class OWMDSGraph(OWScatterPlotBase):
 
 
 class OWMDS(OWDataProjectionWidget):
-    name = "MDS"
-    description = "Two-dimensional data projection by multidimensional " \
-                  "scaling constructed from a distance matrix."
+    name = "多维标度分析"
+    description = "由距离矩阵构造的多维标度的二维数据投影。"
     icon = "icons/MDS.svg"
     keywords = ["multidimensional scaling", "multi dimensional scaling"]
 
@@ -187,9 +186,9 @@ class OWMDS(OWDataProjectionWidget):
 
     def _add_controls_optimization(self):
         box = gui.vBox(self.controlArea, box=True)
-        self.runbutton = gui.button(box, self, "Run optimization",
+        self.runbutton = gui.button(box, self, "运行优化",
                                     callback=self._toggle_run)
-        gui.comboBox(box, self, "refresh_rate", label="Refresh: ",
+        gui.comboBox(box, self, "refresh_rate", label="刷新: ",
                      orientation=Qt.Horizontal,
                      items=[t for t, _ in OWMDS.RefreshRate],
                      callback=self.__invalidate_refresh)

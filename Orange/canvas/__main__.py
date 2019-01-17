@@ -428,6 +428,8 @@ def main(argv=None):
         settings.value("startup/show-splash-screen", True, type=bool) and \
         not options.no_splash
 
+    want_splash = False
+
     if want_splash:
         pm, rect = config.splash_screen()
         splash_screen = SplashScreen(pixmap=pm, textRect=rect)
@@ -442,6 +444,8 @@ def main(argv=None):
         widget_discovery.discovery_finished.connect(splash_screen.hide)
 
     log.info("Running widget discovery process.")
+
+    options.no_discovery = False
 
     cache_filename = os.path.join(cache_dir(), "widget-registry.pck")
     if options.no_discovery:

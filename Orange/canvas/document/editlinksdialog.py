@@ -74,8 +74,10 @@ class EditLinksDialog(QDialog):
                                    QDialogButtonBox.Reset,
                                    Qt.Horizontal)
 
+        buttons.button(QDialogButtonBox.Ok).setText("确定")
+        buttons.button(QDialogButtonBox.Cancel).setText("取消")
         clear_button = buttons.button(QDialogButtonBox.Reset)
-        clear_button.setText(self.tr("Clear All"))
+        clear_button.setText(self.tr("全部清除"))
 
         buttons.accepted.connect(self.accept)
         buttons.rejected.connect(self.reject)

@@ -34,8 +34,8 @@ class SchemeInfoEdit(QWidget):
         self.desc_edit = QTextEdit(self)
         self.desc_edit.setTabChangesFocus(True)
 
-        layout.addRow(self.tr("Title"), self.name_edit)
-        layout.addRow(self.tr("Description"), self.desc_edit)
+        layout.addRow(self.tr("标题"), self.name_edit)
+        layout.addRow(self.tr("描述"), self.desc_edit)
 
         self.__schemeIsUntitled = True
 
@@ -100,19 +100,25 @@ class SchemeInfoDialog(QDialog):
         self.editor.setSizePolicy(QSizePolicy.MinimumExpanding,
                                   QSizePolicy.MinimumExpanding)
 
-        heading = self.tr("Workflow Info")
+        heading = self.tr("数据挖掘流程属性信息")
         heading = "<h3>{0}</h3>".format(heading)
         self.heading = QLabel(heading, self, objectName="heading")
 
         # Insert heading
         self.editor.layout().insertRow(0, self.heading)
 
+        
         self.buttonbox = QDialogButtonBox(
             QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
             Qt.Horizontal,
             self
             )
-
+        
+        #self.buttonBox = QDialogButtonBox(self)
+        #self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonbox.button(QDialogButtonBox.Ok).setText("确定")
+        self.buttonbox.button(QDialogButtonBox.Cancel).setText("取消")
+        
         # Insert button box
         self.editor.layout().addRow(self.buttonbox)
 
@@ -120,7 +126,7 @@ class SchemeInfoDialog(QDialog):
         check_layout = QHBoxLayout()
         check_layout.setContentsMargins(20, 10, 20, 10)
         self.__showAtNewSchemeCheck = \
-            QCheckBox(self.tr("Show when I make a New Workflow."),
+            QCheckBox(self.tr("创建新的数据挖掘流程时显示."),
                       self,
                       objectName="auto-show-check",
                       checked=False,
@@ -128,8 +134,8 @@ class SchemeInfoDialog(QDialog):
 
         check_layout.addWidget(self.__showAtNewSchemeCheck)
         check_layout.addWidget(
-            QLabel(self.tr("You can also edit Workflow Info later "
-                           "(File -> Workflow Info)."),
+            QLabel(self.tr("编辑数据挖掘流程属性信息"
+                           "(文件 -> 属性)."),
                    self,
                    objectName="auto-show-info"),
             alignment=Qt.AlignRight)

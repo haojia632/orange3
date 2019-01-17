@@ -12,8 +12,8 @@ from Orange.widgets import gui
 
 
 class OWRandomize(OWWidget):
-    name = "Randomize"
-    description = "Randomize features, class and/or metas in data table."
+    name = "随机化"
+    description = "随机化数据表中的特性、类和/或元属性。"
     icon = "icons/Random.svg"
     priority = 2100
     keywords = []
@@ -39,19 +39,19 @@ class OWRandomize(OWWidget):
         self.data = None
 
         # GUI
-        box = gui.hBox(self.controlArea, "Shuffled columns")
+        box = gui.hBox(self.controlArea, "无序列")
         box.layout().setSpacing(20)
         self.class_check = gui.checkBox(
-            box, self, "shuffle_class", "Classes",
+            box, self, "shuffle_class", "类",
             callback=self._shuffle_check_changed)
         self.attrs_check = gui.checkBox(
-            box, self, "shuffle_attrs", "Features",
+            box, self, "shuffle_attrs", "特征",
             callback=self._shuffle_check_changed)
         self.metas_check = gui.checkBox(
-            box, self, "shuffle_metas", "Metas",
+            box, self, "shuffle_metas", "元属性",
             callback=self._shuffle_check_changed)
 
-        box = gui.vBox(self.controlArea, "Shuffled rows")
+        box = gui.vBox(self.controlArea, "拖曳行")
         hbox = gui.hBox(box)
         gui.widgetLabel(hbox, "None")
         self.scope_slider = gui.hSlider(
@@ -64,11 +64,11 @@ class OWRandomize(OWWidget):
         self._set_scope_label()
         gui.separator(box, 10, 10)
         self.replicable_check = gui.checkBox(
-            box, self, "random_seed", "Replicable shuffling",
+            box, self, "random_seed", "复制拖拽",
             callback=self._shuffle_check_changed)
 
         self.apply_button = gui.auto_commit(
-            self.controlArea, self, "auto_apply", "&Apply",
+            self.controlArea, self, "auto_apply", "应用",
             box=False, commit=self.apply)
 
     @property

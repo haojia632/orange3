@@ -44,9 +44,12 @@ def ensure_local(index_url, file_path, local_cache_path,
 
 
 def format_info(n_all, n_cached):
-    plural = lambda x: '' if x == 1 else 's'
+    """
+    plural = lambda x: '' if x == 1 else ''
     return "{} dataset{}\n{} dataset{} cached".format(
         n_all, plural(n_all), n_cached if n_cached else 'No', plural(n_cached))
+    """
+    return "数据集 {}\n数据集缓存 {}".format(n_all, n_cached if n_cached else '无')
 
 
 def format_exception(error):
@@ -125,8 +128,8 @@ class Namespace(SimpleNamespace):
 
 
 class OWDataSets(widget.OWWidget):
-    name = "Datasets"
-    description = "Load a dataset from an online repository"
+    name = "数据集导入"
+    description = "从线上知识库中加载一个数据集。"
     icon = "icons/DataSets.svg"
     priority = 20
     replaces = ["orangecontrib.prototypes.widgets.owdatasets.OWDataSets"]
@@ -142,12 +145,12 @@ class OWDataSets(widget.OWWidget):
     # if schema is changed override methods: self.assign_delegates and self.create_model
     HEADER_SCHEMA = [
         ['islocal', {'label': ''}],
-        ['title', {'label': 'Title'}],
-        ['size', {'label': 'Size'}],
-        ['instances', {'label': 'Instances'}],
-        ['variables', {'label': 'Variables'}],
-        ['target', {'label': 'Target'}],
-        ['tags', {'label': 'Tags'}]
+        ['title', {'label': '标题'}],
+        ['size', {'label': '大小'}],
+        ['instances', {'label': '实例'}],
+        ['variables', {'label': '变量'}],
+        ['target', {'label': '目标'}],
+        ['tags', {'label': '标签'}]
     ]  # type: List[str, dict]
 
     class Error(widget.OWWidget.Error):
@@ -179,12 +182,12 @@ class OWDataSets(widget.OWWidget):
 
         self.__awaiting_state = None  # type: Optional[_FetchState]
 
-        box = gui.widgetBox(self.controlArea, "Info")
+        box = gui.widgetBox(self.controlArea, "信息")
 
-        self.infolabel = QLabel(text="Initializing...\n\n")
+        self.infolabel = QLabel(text="正在初始化...\n\n")
         box.layout().addWidget(self.infolabel)
 
-        gui.widgetLabel(self.mainArea, "Filter")
+        gui.widgetLabel(self.mainArea, "筛选")
         self.filterLineEdit = QLineEdit(
             textChanged=self.filter
         )
@@ -200,7 +203,7 @@ class OWDataSets(widget.OWWidget):
             editTriggers=QTreeView.NoEditTriggers,
             uniformRowHeights=True,
         )
-        box = gui.widgetBox(self.splitter, "Description", addToLayout=False)
+        box = gui.widgetBox(self.splitter, "描述", addToLayout=False)
         self.descriptionlabel = QLabel(
             wordWrap=True,
             textFormat=Qt.RichText,
@@ -225,7 +228,7 @@ class OWDataSets(widget.OWWidget):
         )
         self.mainArea.layout().addWidget(self.splitter)
         self.controlArea.layout().addStretch(10)
-        gui.auto_commit(self.controlArea, self, "auto_commit", "Send Data")
+        gui.auto_commit(self.controlArea, self, "auto_commit", "发送数据")
 
         proxy = QSortFilterProxyModel()
         proxy.setFilterKeyColumn(-1)
@@ -238,7 +241,7 @@ class OWDataSets(widget.OWWidget):
         self.assign_delegates()
 
         self.setBlocking(True)
-        self.setStatusMessage("Initializing")
+        self.setStatusMessage("正在初始化")
 
         self._executor = ThreadPoolExecutor(max_workers=1)
         f = self._executor.submit(self.list_remote)
@@ -459,7 +462,7 @@ class OWDataSets(widget.OWWidget):
                 pr.advance.connect(self.__progress_advance, Qt.QueuedConnection)
 
                 self.progressBarInit(processEvents=None)
-                self.setStatusMessage("Fetching...")
+                self.setStatusMessage("获取中...")
                 self.setBlocking(True)
 
                 f = self._executor.submit(

@@ -381,8 +381,8 @@ _default_palette_index = \
 
 
 class OWHeatMap(widget.OWWidget):
-    name = "Heat Map"
-    description = "Plot a heat map for a pair of attributes."
+    name = "热图"
+    description = "为一对属性绘制热图"
     icon = "icons/Heatmap.svg"
     priority = 260
     keywords = []
@@ -426,25 +426,25 @@ class OWHeatMap(widget.OWWidget):
 
     auto_commit = settings.Setting(True)
 
-    graph_name = "scene"
+    graph_name = "场景"
 
     class Information(widget.OWWidget.Information):
-        sampled = Msg("Data has been sampled")
-        discrete_ignored = Msg("{} categorical feature{} ignored")
+        sampled = Msg("数据已取样")
+        discrete_ignored = Msg("{} 类属特征{} 被忽略")
         row_clust = Msg("{}")
         col_clust = Msg("{}")
-        sparse_densified = Msg("Showing this data may require a lot of memory")
+        sparse_densified = Msg("显示这些数据可能需要大量内存")
 
     class Error(widget.OWWidget.Error):
-        no_continuous = Msg("No numeric features")
-        not_enough_features = Msg("Not enough features for column clustering")
-        not_enough_instances = Msg("Not enough instances for clustering")
+        no_continuous = Msg("没有数字特征")
+        not_enough_features = Msg("没有足够的特性进行列聚类")
+        not_enough_instances = Msg("没有足够的实例进行集群")
         not_enough_instances_k_means = Msg(
-            "Not enough instances for k-means merging")
-        not_enough_memory = Msg("Not enough memory to show this data")
+            "没有足够的实例进行k-means合并")
+        not_enough_memory = Msg("内存不足，无法显示此数据")
 
     class Warning(widget.OWWidget.Warning):
-        empty_clusters = Msg("Empty clusters were removed")
+        empty_clusters = Msg("删除空集群")
 
     def __init__(self):
         super().__init__()
@@ -1264,13 +1264,13 @@ class OWHeatMap(widget.OWWidget):
 
         if not rco_enabled and self.row_clustering:
             self.row_clustering = False
-            row_clust_msg = "Row clustering was disabled due to the " \
-                            "input matrix being to big"
+            row_clust_msg = "属性禁用行群集" \
+                            "输入矩阵很大"
 
         if not cco_enabled and self.col_clustering:
             self.col_clustering = False
-            col_clust_msg = "Column clustering was disabled due to " \
-                            "the input matrix being to big"
+            col_clust_msg = "由于以下原因禁用列集群" \
+                            "输入矩阵很大"
 
         self.Information.row_clust.clear()
         self.Information.col_clust.clear()

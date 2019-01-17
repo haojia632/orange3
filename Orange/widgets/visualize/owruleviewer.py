@@ -18,8 +18,8 @@ from Orange.widgets.widget import Input, Output
 
 
 class OWRuleViewer(widget.OWWidget):
-    name = "CN2 Rule Viewer"
-    description = "Review rules induced from data."
+    name = "CN2规则查看器"
+    description = "检查由数据导出的规则"
     icon = "icons/CN2RuleViewer.svg"
     priority = 1140
     keywords = []

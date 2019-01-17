@@ -941,8 +941,8 @@ PREPROCESS_ACTIONS = [
 
 
 class OWPreprocess(widget.OWWidget):
-    name = "Preprocess"
-    description = "Construct a data preprocessing pipeline."
+    name = "预处理"
+    description = "构建数据预处理管道。"
     icon = "icons/Preprocess.svg"
     priority = 2105
     keywords = ["process"]
@@ -979,7 +979,7 @@ class OWPreprocess(widget.OWWidget):
         # for mimeData delegate)
         self.preprocessors.mimeData = mimeData
 
-        box = gui.vBox(self.controlArea, "Preprocessors")
+        box = gui.vBox(self.controlArea, "预处理程序")
 
         self.preprocessorsView = view = QListView(
             selectionMode=QListView.SingleSelection,
@@ -1006,7 +1006,7 @@ class OWPreprocess(widget.OWWidget):
         self.overlay.setWidget(self.flow_view)
         self.overlay.setLayout(QVBoxLayout())
         self.overlay.layout().addWidget(
-            QLabel("Drag items from the list on the left", wordWrap=True))
+            QLabel("从左侧列表中拖动项目", wordWrap=True))
 
         self.scroll_area = QScrollArea(
             verticalScrollBarPolicy=Qt.ScrollBarAlwaysOn
@@ -1017,8 +1017,8 @@ class OWPreprocess(widget.OWWidget):
         self.mainArea.layout().addWidget(self.scroll_area)
         self.flow_view.installEventFilter(self)
 
-        box = gui.vBox(self.controlArea, "Output")
-        gui.auto_commit(box, self, "autocommit", "Send", box=False)
+        box = gui.vBox(self.controlArea, "输出")
+        gui.auto_commit(box, self, "autocommit", "发送", box=False)
 
         self._initialize()
 

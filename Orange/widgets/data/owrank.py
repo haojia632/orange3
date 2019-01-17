@@ -168,9 +168,9 @@ class TableModel(PyTableModel):
 
 
 class OWRank(OWWidget):
-    name = "Rank"
-    description = "Rank and filter data features by their relevance."
-    icon = "icons/Rank.svg"
+    name = "排序"
+    description = "根据数据特征的相关性对其进行排名和筛选。"
+    icon = "icons/Rank.svg" 
     priority = 1102
     keywords = []
 
@@ -242,7 +242,7 @@ class OWRank(OWWidget):
         for scoring_methods in (CLS_SCORES,
                                 REG_SCORES,
                                 []):
-            box = gui.vBox(None, "Scoring Methods" if scoring_methods else None)
+            box = gui.vBox(None, "评分方法" if scoring_methods else None)
             stacked.addWidget(box)
             for method in scoring_methods:
                 box.layout().addWidget(QCheckBox(
@@ -255,7 +255,7 @@ class OWRank(OWWidget):
         gui.rubber(self.controlArea)
         self.switchProblemType(ProblemType.CLASSIFICATION)
 
-        selMethBox = gui.vBox(self.controlArea, "Select Attributes", addSpace=True)
+        selMethBox = gui.vBox(self.controlArea, "选择属性", addSpace=True)
 
         grid = QGridLayout()
         grid.setContentsMargins(6, 0, 6, 0)
@@ -269,10 +269,10 @@ class OWRank(OWWidget):
                 b.setToolTip(toolTip)
             return b
 
-        b1 = button(self.tr("None"), OWRank.SelectNone)
-        b2 = button(self.tr("All"), OWRank.SelectAll)
-        b3 = button(self.tr("Manual"), OWRank.SelectManual)
-        b4 = button(self.tr("Best ranked:"), OWRank.SelectNBest)
+        b1 = button(self.tr("没有"), OWRank.SelectNone)
+        b2 = button(self.tr("全部"), OWRank.SelectAll)
+        b3 = button(self.tr("手工"), OWRank.SelectManual)
+        b4 = button(self.tr("最高排名:"), OWRank.SelectNBest)
 
         s = gui.spin(selMethBox, self, "nSelected", 1, 100,
                      callback=lambda: self.setSelectionMethod(OWRank.SelectNBest))
@@ -287,7 +287,7 @@ class OWRank(OWWidget):
 
         selMethBox.layout().addLayout(grid)
 
-        gui.auto_commit(selMethBox, self, "auto_apply", "Send", box=False)
+        gui.auto_commit(selMethBox, self, "auto_apply", "发送", box=False)
 
         self.resize(690, 500)
 

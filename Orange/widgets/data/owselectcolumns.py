@@ -98,9 +98,8 @@ class VariablesListItemModel(VariableListModel):
 
 class OWSelectAttributes(widget.OWWidget):
     # pylint: disable=too-many-instance-attributes
-    name = "Select Columns"
-    description = "Select columns from the data table and assign them to " \
-                  "data features, classes or meta variables."
+    name = "选择列"
+    description = "从数据表中选择列，并分配数据特性、目标变量或元属性。"
     icon = "icons/SelectColumns.svg"
     priority = 100
     keywords = ["filter"]
@@ -148,7 +147,7 @@ class OWSelectAttributes(widget.OWWidget):
         layout = QGridLayout()
         self.controlArea.setLayout(layout)
         layout.setContentsMargins(4, 4, 4, 4)
-        box = gui.vBox(self.controlArea, "Available Variables",
+        box = gui.vBox(self.controlArea, "可用变量",
                        addToLayout=False)
 
         self.available_attrs = VariablesListItemModel()
@@ -167,7 +166,7 @@ class OWSelectAttributes(widget.OWWidget):
         box.layout().addWidget(self.available_attrs_view)
         layout.addWidget(box, 0, 0, 3, 1)
 
-        box = gui.vBox(self.controlArea, "Features", addToLayout=False)
+        box = gui.vBox(self.controlArea, "特征", addToLayout=False)
         self.used_attrs = VariablesListItemModel()
         filter_edit, self.used_attrs_view = variables_filter(
             parent=self, model=self.used_attrs,
@@ -190,7 +189,7 @@ class OWSelectAttributes(widget.OWWidget):
         box.layout().addWidget(self.used_attrs_view)
         layout.addWidget(box, 0, 2, 1, 1)
 
-        box = gui.vBox(self.controlArea, "Target Variable", addToLayout=False)
+        box = gui.vBox(self.controlArea, "目标变量", addToLayout=False)
         self.class_attrs = VariablesListItemModel()
         self.class_attrs_view = VariablesListItemView(
             acceptedType=(Orange.data.DiscreteVariable,
@@ -203,7 +202,7 @@ class OWSelectAttributes(widget.OWWidget):
         box.layout().addWidget(self.class_attrs_view)
         layout.addWidget(box, 1, 2, 1, 1)
 
-        box = gui.vBox(self.controlArea, "Meta Attributes", addToLayout=False)
+        box = gui.vBox(self.controlArea, "元属性", addToLayout=False)
         self.meta_attrs = VariablesListItemModel()
         self.meta_attrs_view = VariablesListItemView(
             acceptedType=Orange.data.Variable)
@@ -217,42 +216,42 @@ class OWSelectAttributes(widget.OWWidget):
         bbox = gui.vBox(self.controlArea, addToLayout=False, margin=0)
         layout.addWidget(bbox, 0, 1, 1, 1)
 
-        self.up_attr_button = gui.button(bbox, self, "Up",
+        self.up_attr_button = gui.button(bbox, self, "向上",
                                          callback=partial(self.move_up, self.used_attrs_view))
         self.move_attr_button = gui.button(bbox, self, ">",
                                            callback=partial(self.move_selected,
                                                             self.used_attrs_view)
                                           )
-        self.down_attr_button = gui.button(bbox, self, "Down",
+        self.down_attr_button = gui.button(bbox, self, "向下",
                                            callback=partial(self.move_down, self.used_attrs_view))
 
         bbox = gui.vBox(self.controlArea, addToLayout=False, margin=0)
         layout.addWidget(bbox, 1, 1, 1, 1)
 
-        self.up_class_button = gui.button(bbox, self, "Up",
+        self.up_class_button = gui.button(bbox, self, "向上",
                                           callback=partial(self.move_up, self.class_attrs_view))
         self.move_class_button = gui.button(bbox, self, ">",
                                             callback=partial(self.move_selected,
                                                              self.class_attrs_view,
                                                              exclusive=False)
                                            )
-        self.down_class_button = gui.button(bbox, self, "Down",
+        self.down_class_button = gui.button(bbox, self, "向下",
                                             callback=partial(self.move_down, self.class_attrs_view))
 
         bbox = gui.vBox(self.controlArea, addToLayout=False, margin=0)
         layout.addWidget(bbox, 2, 1, 1, 1)
-        self.up_meta_button = gui.button(bbox, self, "Up",
+        self.up_meta_button = gui.button(bbox, self, "向上",
                                          callback=partial(self.move_up, self.meta_attrs_view))
         self.move_meta_button = gui.button(bbox, self, ">",
                                            callback=partial(self.move_selected,
                                                             self.meta_attrs_view)
                                           )
-        self.down_meta_button = gui.button(bbox, self, "Down",
+        self.down_meta_button = gui.button(bbox, self, "向下",
                                            callback=partial(self.move_down, self.meta_attrs_view))
 
-        autobox = gui.auto_commit(None, self, "auto_commit", "Send")
+        autobox = gui.auto_commit(None, self, "auto_commit", "发送")
         layout.addWidget(autobox, 3, 0, 1, 3)
-        reset = gui.button(None, self, "Reset", callback=self.reset, width=120)
+        reset = gui.button(None, self, "重置", callback=self.reset, width=120)
         autobox.layout().insertWidget(0, reset)
         autobox.layout().insertStretch(1, 20)
 

@@ -29,7 +29,7 @@ class PreviewDialog(QDialog):
         layout.setContentsMargins(0, 0, 0, 0)
         self.setContentsMargins(0, 0, 0, 0)
 
-        heading = self.tr("Preview")
+        heading = self.tr("预览")
         heading = "<h3>{0}</h3>".format(heading)
         self.__heading = QLabel(heading, self,
                                 objectName="heading")
@@ -45,6 +45,9 @@ class PreviewDialog(QDialog):
 
         # Set the Open dialog as disabled until the current index changes
         self.__buttons.button(QDialogButtonBox.Open).setEnabled(False)
+
+        self.__buttons.button(QDialogButtonBox.Open).setText("打开")
+        self.__buttons.button(QDialogButtonBox.Cancel).setText("取消")
 
         # The QDialogButtonsWidget messes with the layout if it is
         # contained directly in the QDialog. So we create an extra
