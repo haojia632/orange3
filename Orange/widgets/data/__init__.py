@@ -1,4 +1,4 @@
-NAME = "Data"
+NAME = "数据"
 
 ID = "orange.widgets.data"
 

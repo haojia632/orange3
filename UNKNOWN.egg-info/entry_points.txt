@@ -1,0 +1,6 @@
+[gui_scripts]
+orange-canvas = Orange.canvas.__main__:main
+
+[orange.canvas.help]
+html-index = Orange.widgets:WIDGET_HELP_PATH
+

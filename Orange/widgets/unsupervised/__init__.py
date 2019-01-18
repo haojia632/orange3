@@ -9,7 +9,7 @@ Unsupervised learning.
 
 # Category description for the widget registry
 
-NAME = "Unsupervised"
+NAME = "非监督学习"
 
 DESCRIPTION = "Unsupervised learning."
 
