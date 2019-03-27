@@ -21,8 +21,7 @@ class Column:
     tpe = 1
     place = 2
     values = 3
-    add = 4
-    not_valid = 5
+    not_valid = 4
 
 
 class Place:
@@ -35,12 +34,11 @@ class Place:
 class VarTableModel(QAbstractTableModel):
     DISCRETE_VALUE_DISPLAY_LIMIT = 20
 
-    places = "特征", "目标", "元特征", "去除"
-    typenames = "类别", "数值", "文本", "时间"
+    places = "feature", "target", "meta", "skip"
+    typenames = "categorical", "numeric", "text", "datetime"
     vartypes = DiscreteVariable, ContinuousVariable, StringVariable, TimeVariable
     name2type = dict(zip(typenames, vartypes))
     type2name = dict(zip(vartypes, typenames))
-    haojia = "郝佳1", "郝佳2", "郝佳3"
 
     def __init__(self, variables, *args):
         super().__init__(*args)
@@ -65,8 +63,6 @@ class VarTableModel(QAbstractTableModel):
                 return self.type2name[val]
             if col == Column.place:
                 return self.places[val]
-            if col == Column.add:
-                return self.haojia[val]
             else:
                 return val
         if role == Qt.DecorationRole:
@@ -102,8 +98,8 @@ class VarTableModel(QAbstractTableModel):
             return True
 
     def headerData(self, i, orientation, role=Qt.DisplayRole):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole and i < 5:
-            return ("名称", "类型", "角色", "值", "添加")[i]
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole and i < 4:
+            return ("名称", "类型", "角色", "值")[i]
         if role == Qt.TextAlignmentRole:
             return Qt.AlignLeft
         return super().headerData(i, orientation, role)
@@ -151,9 +147,8 @@ class ComboDelegate(HorizontalGridDelegate):
 class VarTypeDelegate(ComboDelegate):
     def setEditorData(self, combo, index):
         combo.clear()
-        no_numeric = True
-        # not self.view.model().variables[
-            # index.row()][Column.not_valid]
+        no_numeric = not self.view.model().variables[
+            index.row()][Column.not_valid]
         if no_numeric:
             # Do not allow selection of numeric and datetime
             items = [i for i in self.items if i not in ("numeric", "datetime")]
@@ -172,13 +167,6 @@ class PlaceDelegate(ComboDelegate):
             index.row()][Column.tpe].is_primitive()
         combo.addItems(self.items[2 * to_meta:])
         combo.setCurrentIndex(self.items.index(index.data()) - 2 * to_meta)
-
-class NewDelegate(ComboDelegate):
-    def setEditorData(self, combo, index):
-        combo.clear()
-        combo.addItems(self.items)
-        combo.setCurrentIndex(self.items.index(index.data()))
-
 
 
 class DomainEditor(QTableView):
@@ -216,9 +204,6 @@ class DomainEditor(QTableView):
         self.setItemDelegateForColumn(Column.tpe, self.vartype_delegate)
         self.place_delegate = PlaceDelegate(self, VarTableModel.places)
         self.setItemDelegateForColumn(Column.place, self.place_delegate)
-
-        self.new_delegate = NewDelegate(self,VarTableModel.haojia)
-        self.setItemDelegateForColumn(Column.add,self.new_delegate)
 
     @staticmethod
     def _is_missing(x):

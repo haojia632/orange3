@@ -1144,7 +1144,7 @@ class CanvasMainWindow(QMainWindow):
         document, updates the recent scheme list and the loaded scheme path
         property.
         """
-        new_scheme = self.new_scheme_from(filename)
+        new_scheme = self.(filename)
         if new_scheme is not None:
             self.set_new_scheme(new_scheme)
 
@@ -1168,7 +1168,7 @@ class CanvasMainWindow(QMainWindow):
         curr_scheme.save_to(buffer, pretty=True, pickle_fallback=True)
         return buffer.getvalue().decode("utf-8")
 
-    def new_scheme_from(self, filename):
+    def (self, filename):
         """Create and return a new :class:`widgetsscheme.WidgetsScheme`
         from a saved `filename`. Return `None` if an error occurs.
 

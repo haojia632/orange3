@@ -81,7 +81,7 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
     keywords = ["file", "load", "read", "open"]
 
     class Outputs:
-        data = Output("数据", Table, doc="Attribute-valued dataset read from the input file.")
+        data = Output("Data", Table, doc="Attribute-valued dataset read from the input file.")
 
     want_main_area = False
 
@@ -144,7 +144,6 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
 
         rb_button = gui.appendRadioButton(vbox, "文件:", addToLayout=False)
         layout.addWidget(rb_button, 0, 0, Qt.AlignVCenter)
-
 
         box = gui.hBox(None, addToLayout=False, margin=0)
         box.setSizePolicy(Policy.MinimumExpanding, Policy.Fixed)
