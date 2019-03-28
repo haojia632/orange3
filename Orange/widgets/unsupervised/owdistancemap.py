@@ -236,24 +236,24 @@ class DistanceMapItem(pg.ImageItem):
 
 
 _color_palettes = sorted(colorbrewer.colorSchemes["sequential"].items()) + \
-                  [("Blue-Yellow", {2: [(0, 0, 255), (255, 255, 0)]})]
+                  [("蓝-黄", {2: [(0, 0, 255), (255, 255, 0)]})]
 _default_colormap_index = len(_color_palettes) - 1
 
 
 class OWDistanceMap(widget.OWWidget):
-    name = "Distance Map"
-    description = "Visualize a distance matrix."
+    name = "距离地图"
+    description = "可视化距离矩阵。"
     icon = "icons/DistanceMap.svg"
     priority = 1200
     keywords = []
 
     class Inputs:
-        distances = Input("Distances", Orange.misc.DistMatrix)
+        distances = Input("距离", Orange.misc.DistMatrix)
 
     class Outputs:
-        selected_data = Output("Selected Data", Orange.data.Table, default=True)
+        selected_data = Output("被选数据", Orange.data.Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Orange.data.Table)
-        features = Output("Features", widget.AttributeList, dynamic=False)
+        features = Output("特征", widget.AttributeList, dynamic=False)
 
     settingsHandler = settings.PerfectDomainContextHandler()
 
@@ -293,11 +293,11 @@ class OWDistanceMap(widget.OWWidget):
         self._selection = None
 
         self.sorting_cb = gui.comboBox(
-            self.controlArea, self, "sorting", box="Element Sorting",
-            items=["None", "Clustering", "Clustering with ordered leaves"],
+            self.controlArea, self, "sorting", box="排序",
+            items=["无", "聚类", "使用有序叶子进行聚类"],
             callback=self._invalidate_ordering)
 
-        box = gui.vBox(self.controlArea, "Colors")
+        box = gui.vBox(self.controlArea, "颜色")
         self.colormap_cb = gui.comboBox(
             box, self, "colormap", callback=self._update_color)
         self.colormap_cb.setIconSize(QSize(64, 16))
@@ -318,13 +318,13 @@ class OWDistanceMap(widget.OWWidget):
 #                         createLabel=False, callback=self._update_color)
 #         )
         form.addRow(
-            "Low:",
+            "低:",
             gui.hSlider(box, self, "color_low", minValue=0.0, maxValue=1.0,
                         step=0.05, ticks=True, intOnly=False,
                         createLabel=False, callback=self._update_color)
         )
         form.addRow(
-            "High:",
+            "高:",
             gui.hSlider(box, self, "color_high", minValue=0.0, maxValue=1.0,
                         step=0.05, ticks=True, intOnly=False,
                         createLabel=False, callback=self._update_color)
@@ -332,14 +332,14 @@ class OWDistanceMap(widget.OWWidget):
         box.layout().addLayout(form)
 
         self.annot_combo = gui.comboBox(
-            self.controlArea, self, "annotation_idx", box="Annotations",
+            self.controlArea, self, "annotation_idx", box="注解",
             callback=self._invalidate_annotations, contentsLength=12)
         self.annot_combo.setModel(itemmodels.VariableListModel())
-        self.annot_combo.model()[:] = ["None", "Enumeration"]
+        self.annot_combo.model()[:] = ["无", "列举"]
         self.controlArea.layout().addStretch()
 
         gui.auto_commit(self.controlArea, self, "autocommit",
-                        "Send Selected")
+                        "选中发送")
 
         self.view = pg.GraphicsView(background="w")
         self.mainArea.layout().addWidget(self.view)

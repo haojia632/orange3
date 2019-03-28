@@ -33,20 +33,20 @@ DECOMPOSITIONS = [
 
 
 class OWPCA(widget.OWWidget):
-    name = "PCA"
-    description = "Principal component analysis with a scree-diagram."
+    name = "主成分分析"
+    description = "主成分分析与斯克里图"
     icon = "icons/PCA.svg"
     priority = 3050
     keywords = ["principal component analysis", "linear transformation"]
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        transformed_data = Output("Transformed data", Table)
-        components = Output("Components", Table)
+        transformed_data = Output("转化数据", Table)
+        components = Output("组件", Table)
         pca = Output("PCA", PCA, dynamic=False)
-        preprocessor = Output("Preprocessor", Preprocess)
+        preprocessor = Output("预处理器", Preprocess)
 
     settingsHandler = settings.DomainContextHandler()
 
@@ -85,7 +85,7 @@ class OWPCA(widget.OWWidget):
         self._init_projector()
 
         # Components Selection
-        box = gui.vBox(self.controlArea, "Components Selection")
+        box = gui.vBox(self.controlArea, "成分选择")
         form = QFormLayout()
         box.layout().addLayout(form)
 
@@ -103,8 +103,8 @@ class OWPCA(widget.OWWidget):
         )
         self.variance_spin.setSuffix("%")
 
-        form.addRow("Components:", self.components_spin)
-        form.addRow("Variance covered:", self.variance_spin)
+        form.addRow("成分:", self.components_spin)
+        form.addRow("覆盖的差异:", self.variance_spin)
 
         # Incremental learning
         self.sampling_box = gui.vBox(self.controlArea, "Incremental learning")
@@ -138,33 +138,33 @@ class OWPCA(widget.OWWidget):
         self.decomposition_box = gui.radioButtons(
             self.controlArea, self,
             "decomposition_idx", [d.name for d in DECOMPOSITIONS],
-            box="Decomposition", callback=self._update_decomposition
+            box="分解", callback=self._update_decomposition
         )
 
         # Options
-        self.options_box = gui.vBox(self.controlArea, "Options")
+        self.options_box = gui.vBox(self.controlArea, "选项")
         self.normalize_box = gui.checkBox(
             self.options_box, self, "normalize",
-            "Normalize data", callback=self._update_normalize
+            "标准数据", callback=self._update_normalize
         )
 
         self.maxp_spin = gui.spin(
             self.options_box, self, "maxp", 1, MAX_COMPONENTS,
-            label="Show only first", callback=self._setup_plot,
+            label="只显示第一", callback=self._setup_plot,
             keyboardTracking=False
         )
 
         self.controlArea.layout().addStretch()
 
-        gui.auto_commit(self.controlArea, self, "auto_commit", "Apply",
-                        checkbox_label="Apply automatically")
+        gui.auto_commit(self.controlArea, self, "auto_commit", "应用",
+                        checkbox_label="自动应用")
 
         self.plot = pg.PlotWidget(background="w")
 
         axis = self.plot.getAxis("bottom")
-        axis.setLabel("Principal Components")
+        axis.setLabel("主要成分")
         axis = self.plot.getAxis("left")
-        axis.setLabel("Proportion of variance")
+        axis.setLabel("差异比例")
         self.plot_horlabels = []
         self.plot_horlines = []
 

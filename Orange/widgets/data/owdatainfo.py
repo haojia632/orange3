@@ -26,7 +26,7 @@ class OWDataInfo(widget.OWWidget):
     keywords = ["information", "inspect"]
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     want_main_area = False
 
@@ -35,10 +35,20 @@ class OWDataInfo(widget.OWWidget):
 
         self._clear_fields()
 
-        for box in ("Data Set Name", "Data Set Size", "Features", "Targets",
-                    "Meta Attributes", "Location", "Data Attributes"):
+        boxs = [("Data Set Name", "数据集名称"), 
+                ("Data Set Size", "数据集大小"),
+                ("Features", "特征"),
+                ("Targets", "目标"),
+                ("Meta Attributes", "元特征"),
+                ("Location", "位置"),
+                ("Data Attributes", "数据属性"),
+               ]
+
+        for i, (box, label) in enumerate(boxs):
+        # for box in ("Data Set Name", "Data Set Size", "Features", "Targets",
+        #             "Meta Attributes", "Location", "Data Attributes"):
             name = box.lower().replace(" ", "_")
-            bo = gui.vBox(self.controlArea, box,
+            bo = gui.vBox(self.controlArea, label,
                           addSpace=False and box != "Meta Attributes")
             gui.label(bo, self, "%%(%s)s" % name)
 
@@ -89,13 +99,13 @@ class OWDataInfo(widget.OWWidget):
 
         def pack_counts(s, include_non_primitive=False):
             if not s:
-                return "None"
+                return "无"
             return pack_table(
                 (name, n_or_none(self._count(s, type_)))
                 for name, type_ in (
-                    ("Categorical", DiscreteVariable),
-                    ("Numeric", ContinuousVariable),
-                    ("Text", StringVariable))[:2 + include_non_primitive]
+                    ("类别", DiscreteVariable),
+                    ("数字", ContinuousVariable),
+                    ("文本", StringVariable))[:2 + include_non_primitive]
             )
 
         domain = data.domain
@@ -110,13 +120,13 @@ class OWDataInfo(widget.OWWidget):
         else:
             sparseness = ""
         self.data_set_size = pack_table((
-            ("Rows", '~{}'.format(data.approx_len())),
-            ("Columns", len(domain)+len(domain.metas)))) + sparseness
+            ("行", '~{}'.format(data.approx_len())),
+            ("列", len(domain)+len(domain.metas)))) + sparseness
 
         def update_size():
             self.data_set_size = pack_table((
-                ("Rows", len(data)),
-                ("Columns", len(domain)+len(domain.metas)))) + sparseness
+                ("行", len(data)),
+                ("列", len(domain)+len(domain.metas)))) + sparseness
 
         threading.Thread(target=update_size).start()
 
@@ -126,24 +136,20 @@ class OWDataInfo(widget.OWWidget):
         self.meta_attributes = pack_counts(domain.metas, True)
         if class_var:
             if class_var.is_continuous:
-                self.targets = "Numeric target variable"
+                self.targets = "数值目标变量"
             else:
-                self.targets = "Categorical outcome with {} values"\
-                               .format(len(class_var.values))
+                self.targets = "{}个值的分类结果".format(len(class_var.values))
         elif domain.class_vars:
             disc_class = self._count(domain.class_vars, DiscreteVariable)
             cont_class = self._count(domain.class_vars, ContinuousVariable)
             if not cont_class:
-                self.targets = "Multi-target data,\n{} categorical targets"\
-                               .format(n_or_none(disc_class))
+                self.targets = "多目标数据, {} 个分类目标".format(n_or_none(disc_class))
             elif not disc_class:
-                self.targets = "Multi-target data,\n{} numeric targets"\
-                               .format(n_or_none(cont_class))
+                self.targets = "多目标数据,{} 个数字目标".format(n_or_none(cont_class))
             else:
-                self.targets = "<p>Multi-target data</p>\n" + \
-                               pack_counts(domain.class_vars)
+                self.targets = "<p>多目标数据，</p>" + pack_counts(domain.class_vars)
         else:
-            self.targets = "None"
+            self.targets = "无"
 
         if data.attributes:
             self.data_attributes = pack_table(data.attributes.items())
@@ -162,11 +168,11 @@ class OWDataInfo(widget.OWWidget):
                 '{}={}'.format(key, value)
                 for key, value in data.connection_params.items()
                 if value is not None and key != 'password')
-            self.location = "Table '{}', using connection:\n{}"\
+            self.location = "表 '{}', 连接:\n{}"\
                             .format(data.table_name, connection_string)
             dd["Rows"] = data.approx_len()
         else:
-            self.location = "Data is stored in memory"
+            self.location = "内存数据"
             dd["Rows"] = len(data)
 
         def join_if(items):

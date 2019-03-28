@@ -39,7 +39,7 @@ from Orange.widgets.widget import Input, Output, Msg
 __all__ = ["OWHierarchicalClustering"]
 
 
-LINKAGE = ["Single", "Average", "Weighted", "Complete", "Ward"]
+LINKAGE = ["单一", "平均", "加权平均", "完成", "抵制"]
 
 
 def dendrogram_layout(tree, expand_leaves=False):
@@ -790,18 +790,17 @@ if typing.TYPE_CHECKING:
 
 
 class OWHierarchicalClustering(widget.OWWidget):
-    name = "Hierarchical Clustering"
-    description = "Display a dendrogram of a hierarchical clustering " \
-                  "constructed from the input distance matrix."
+    name = "分层聚类"
+    description = "显示从输入距离矩阵构造的层次聚类的树形图。"
     icon = "icons/HierarchicalClustering.svg"
     priority = 2100
     keywords = []
 
     class Inputs:
-        distances = Input("Distances", Orange.misc.DistMatrix)
+        distances = Input("距离", Orange.misc.DistMatrix)
 
     class Outputs:
-        selected_data = Output("Selected Data", Orange.data.Table, default=True)
+        selected_data = Output("被选数据", Orange.data.Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Orange.data.Table)
 
     settingsHandler = _DomainContextHandler()
@@ -809,11 +808,11 @@ class OWHierarchicalClustering(widget.OWWidget):
     #: Selected linkage
     linkage = settings.Setting(1)
     #: Index of the selected annotation item (variable, ...)
-    annotation = settings.ContextSetting("Enumeration")
+    annotation = settings.ContextSetting("列举")
     #: Out-of-context setting for the case when the "Name" option is available
-    annotation_if_names = settings.Setting("Name")
+    annotation_if_names = settings.Setting("无")
     #: Out-of-context setting for the case with just "Enumerate" and "None"
-    annotation_if_enumerate = settings.Setting("Enumerate")
+    annotation_if_enumerate = settings.Setting("枚举")
     #: Selected tree pruning (none/max depth)
     pruning = settings.Setting(0)
     #: Maximum depth when max depth pruning is selected
@@ -830,7 +829,7 @@ class OWHierarchicalClustering(widget.OWWidget):
 
     append_clusters = settings.Setting(True)
     cluster_role = settings.Setting(2)
-    cluster_name = settings.Setting("Cluster")
+    cluster_name = settings.Setting("簇聚")
     autocommit = settings.Setting(True)
 
     graph_name = "scene"
@@ -838,8 +837,8 @@ class OWHierarchicalClustering(widget.OWWidget):
     #: Cluster variable domain role
     AttributeRole, ClassRole, MetaRole = 0, 1, 2
 
-    cluster_roles = ["Attribute", "Class variable", "Meta variable"]
-    basic_annotations = ["None", "Enumeration"]
+    cluster_roles = ["属性", "类变量", "元变量"]
+    basic_annotations = ["无", "列举"]
 
     class Error(widget.OWWidget.Error):
         not_finite_distances = Msg("Some distances are infinite")
@@ -858,13 +857,13 @@ class OWHierarchicalClustering(widget.OWWidget):
         self.cutoff_height = 0.0
 
         gui.comboBox(
-            self.controlArea, self, "linkage", items=LINKAGE, box="Linkage",
+            self.controlArea, self, "linkage", items=LINKAGE, box="连锁",
             callback=self._invalidate_clustering)
 
         model = itemmodels.VariableListModel()
         model[:] = self.basic_annotations
 
-        box = gui.widgetBox(self.controlArea, "Annotations")
+        box = gui.widgetBox(self.controlArea, "注释")
         self.label_cb = combobox.ComboBoxSearch(
             minimumContentsLength=14,
             sizeAdjustPolicy=QComboBox.AdjustToMinimumContentsLengthWithIcon
@@ -877,12 +876,12 @@ class OWHierarchicalClustering(widget.OWWidget):
         self.label_cb.setModel(model)
 
         box = gui.radioButtons(
-            self.controlArea, self, "pruning", box="Pruning",
+            self.controlArea, self, "pruning", box="修剪",
             callback=self._invalidate_pruning)
         grid = QGridLayout()
         box.layout().addLayout(grid)
         grid.addWidget(
-            gui.appendRadioButton(box, "None", addToLayout=False),
+            gui.appendRadioButton(box, "无", addToLayout=False),
             0, 0
         )
         self.max_depth_spin = gui.spin(
@@ -892,29 +891,29 @@ class OWHierarchicalClustering(widget.OWWidget):
         )
 
         grid.addWidget(
-            gui.appendRadioButton(box, "Max depth:", addToLayout=False),
+            gui.appendRadioButton(box, "最大深度:", addToLayout=False),
             1, 0)
         grid.addWidget(self.max_depth_spin, 1, 1)
 
         self.selection_box = gui.radioButtons(
             self.controlArea, self, "selection_method",
-            box="Selection",
+            box="选择",
             callback=self._selection_method_changed)
 
         grid = QGridLayout()
         self.selection_box.layout().addLayout(grid)
         grid.addWidget(
             gui.appendRadioButton(
-                self.selection_box, "Manual", addToLayout=False),
+                self.selection_box, "手册", addToLayout=False),
             0, 0
         )
         grid.addWidget(
             gui.appendRadioButton(
-                self.selection_box, "Height ratio:", addToLayout=False),
+                self.selection_box, "高度比:", addToLayout=False),
             1, 0
         )
         self.cut_ratio_spin = gui.spin(
-            self.selection_box, self, "cut_ratio", 0, 100, step=1e-1,
+            self.selection_box, self, "削减比率", 0, 100, step=1e-1,
             spinType=float, callback=self._selection_method_changed
         )
         self.cut_ratio_spin.setSuffix("%")
@@ -923,7 +922,7 @@ class OWHierarchicalClustering(widget.OWWidget):
 
         grid.addWidget(
             gui.appendRadioButton(
-                self.selection_box, "Top N:", addToLayout=False),
+                self.selection_box, "前N个:", addToLayout=False),
             2, 0
         )
         self.top_n_spin = gui.spin(self.selection_box, self, "top_n", 1, 20,
@@ -931,7 +930,7 @@ class OWHierarchicalClustering(widget.OWWidget):
         grid.addWidget(self.top_n_spin, 2, 1)
 
         self.zoom_slider = gui.hSlider(
-            self.controlArea, self, "zoom_factor", box="Zoom",
+            self.controlArea, self, "zoom_factor", box="放大",
             minValue=-6, maxValue=3, step=1, ticks=True, createLabel=False,
             callback=self.__update_font_scale)
 
@@ -952,8 +951,8 @@ class OWHierarchicalClustering(widget.OWWidget):
 
         self.controlArea.layout().addStretch()
 
-        box = gui.vBox(self.controlArea, "Output")
-        gui.checkBox(box, self, "append_clusters", "Append cluster IDs",
+        box = gui.vBox(self.controlArea, "输出")
+        gui.checkBox(box, self, "append_clusters", "附加群集ID",
                      callback=self._invalidate_output)
 
         ibox = gui.indentedBox(box)
@@ -969,14 +968,14 @@ class OWHierarchicalClustering(widget.OWWidget):
             labelAlignment=Qt.AlignLeft,
             spacing=8
         )
-        form.addRow("Name:", name_edit)
-        form.addRow("Place:", cb)
+        form.addRow("名称:", name_edit)
+        form.addRow("位置:", cb)
 
         ibox.layout().addSpacing(5)
         ibox.layout().addLayout(form)
         ibox.layout().addSpacing(5)
 
-        gui.auto_commit(box, self, "autocommit", "Send Selected", "Send Automatically",
+        gui.auto_commit(box, self, "autocommit", "选中发送", "自动发送",
                         box=False)
 
         self.scene = QGraphicsScene()

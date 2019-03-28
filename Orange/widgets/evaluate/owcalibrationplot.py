@@ -35,18 +35,18 @@ PlotCurve = namedtuple(
 
 
 class OWCalibrationPlot(widget.OWWidget):
-    name = "Calibration Plot"
-    description = "Calibration plot based on evaluation of classifiers."
+    name = "校准图"
+    description = "基于分类器评估的校准图。"
     icon = "icons/CalibrationPlot.svg"
     priority = 1030
     keywords = []
 
     class Inputs:
-        evaluation_results = Input("Evaluation Results", Orange.evaluation.Results)
+        evaluation_results = Input("评估结果", Orange.evaluation.Results)
 
     class Warning(widget.OWWidget.Warning):
         empty_input = widget.Msg(
-            "Empty result on input. Nothing to display.")
+            "输入结果为空。 无内容显示。")
 
     target_index = settings.Setting(0)
     selected_classifiers = settings.Setting([])
@@ -62,15 +62,15 @@ class OWCalibrationPlot(widget.OWWidget):
         self.colors = []
         self._curve_data = {}
 
-        box = gui.vBox(self.controlArea, "Plot")
-        tbox = gui.vBox(box, "Target Class")
+        box = gui.vBox(self.controlArea, "制图")
+        tbox = gui.vBox(box, "目标类")
         tbox.setFlat(True)
 
         self.target_cb = gui.comboBox(
             tbox, self, "target_index", callback=self._replot,
             contentsLength=8)
 
-        cbox = gui.vBox(box, "Classifier")
+        cbox = gui.vBox(box, "分类器")
         cbox.setFlat(True)
 
         self.classifiers_list_box = gui.listBox(
@@ -78,7 +78,7 @@ class OWCalibrationPlot(widget.OWWidget):
             selectionMode=QListWidget.MultiSelection,
             callback=self._replot)
 
-        gui.checkBox(box, self, "display_rug", "Show rug",
+        gui.checkBox(box, self, "display_rug", "显示小块",
                      callback=self._on_display_rug_changed)
 
         self.plotview = pg.GraphicsView(background="w")
@@ -87,10 +87,10 @@ class OWCalibrationPlot(widget.OWWidget):
         self.plot.hideButtons()
 
         axis = self.plot.getAxis("bottom")
-        axis.setLabel("Predicted Probability")
+        axis.setLabel("预测概率")
 
         axis = self.plot.getAxis("left")
-        axis.setLabel("Observed Average")
+        axis.setLabel("观测平均值")
 
         self.plot.setRange(xRange=(0.0, 1.0), yRange=(0.0, 1.0), padding=0.05)
         self.plotview.setCentralItem(self.plot)

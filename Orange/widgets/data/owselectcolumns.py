@@ -105,12 +105,12 @@ class OWSelectAttributes(widget.OWWidget):
     keywords = ["filter"]
 
     class Inputs:
-        data = Input("Data", Table, default=True)
-        features = Input("Features", AttributeList)
+        data = Input("数据", Table, default=True)
+        features = Input("特征", AttributeList)
 
     class Outputs:
-        data = Output("Data", Table)
-        features = Output("Features", AttributeList, dynamic=False)
+        data = Output("数据", Table)
+        features = Output("特征", AttributeList, dynamic=False)
 
     want_main_area = False
     want_control_area = True
@@ -202,7 +202,7 @@ class OWSelectAttributes(widget.OWWidget):
         box.layout().addWidget(self.class_attrs_view)
         layout.addWidget(box, 1, 2, 1, 1)
 
-        box = gui.vBox(self.controlArea, "元属性", addToLayout=False)
+        box = gui.vBox(self.controlArea, "元特征", addToLayout=False)
         self.meta_attrs = VariablesListItemModel()
         self.meta_attrs_view = VariablesListItemView(
             acceptedType=Orange.data.Variable)

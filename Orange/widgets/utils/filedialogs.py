@@ -47,7 +47,7 @@ def dialog_formats():
     """
     Return readable file types for QFileDialogs.
     """
-    return ("所有可读文件 ({});;".format(
+    return ("All readable files ({});;".format(
         '*' + ' *'.join(FileFormat.readers.keys())) +
             ";;".join("{} (*{})".format(f.DESCRIPTION, ' *'.join(f.EXTENSIONS))
                       for f in sorted(set(FileFormat.readers.values()),
@@ -107,7 +107,7 @@ def open_filename_dialog_save(start_dir, start_filter, file_formats):
 
 
 def open_filename_dialog(start_dir, start_filter, file_formats,
-                         add_all=True, title="打开...", dialog=None):
+                         add_all=True, title="Open...", dialog=None):
     """
     Open file dialog with file formats.
 
@@ -133,7 +133,7 @@ def open_filename_dialog(start_dir, start_filter, file_formats,
         for f in file_formats:
             all_extensions.update(f.EXTENSIONS)
         file_formats.insert(0, None)
-        filters.insert(0, "所有可读文件 (*{})".format(
+        filters.insert(0, "All readable files (*{})".format(
             ' *'.join(sorted(all_extensions))))
 
     if start_filter not in filters:

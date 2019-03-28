@@ -408,7 +408,7 @@ class OWDataProjectionWidget(OWProjectionWidgetBase):
         self.control_area_stretch.layout().addStretch(100)
         self.gui.box_zoom_select(area)
         gui.auto_commit(
-            area, self, "auto_commit", "选择发送", "自动发送")
+            area, self, "auto_commit", "选中发送", "自动发送")
 
     @property
     def effective_variables(self):

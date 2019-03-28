@@ -14,8 +14,8 @@ from Orange.widgets.utils.widgetpreview import WidgetPreview
 
 class OWTreeLearner(OWBaseLearner):
     """Tree algorithm with forward pruning."""
-    name = "Tree"
-    description = "A tree algorithm with forward pruning."
+    name = "决策树"
+    description = "一种前向修剪的树算法。"
     icon = "icons/Tree.svg"
     replaces = [
         "Orange.widgets.classify.owclassificationtree.OWClassificationTree",
@@ -41,21 +41,21 @@ class OWTreeLearner(OWBaseLearner):
     sufficient_majority = Setting(95)
 
     spin_boxes = (
-        ("Min. number of instances in leaves: ",
+        ("叶子中实例数量最小值: ",
          "limit_min_leaf", "min_leaf", 1, 1000),
-        ("Do not split subsets smaller than: ",
+        ("不要拆分子集小于: ",
          "limit_min_internal", "min_internal", 1, 1000),
-        ("Limit the maximal tree depth to: ",
+        ("最大树深度限制为: ",
          "limit_depth", "max_depth", 1, 1000))
 
     classification_spin_boxes = (
-        ("Stop when majority reaches [%]: ",
+        ("多数到达时停止 [%]: ",
          "limit_majority", "sufficient_majority", 51, 100),)
 
     def add_main_layout(self):
-        box = gui.widgetBox(self.controlArea, 'Parameters')
+        box = gui.widgetBox(self.controlArea, '参数')
         # the checkbox is put into vBox for alignemnt with other checkboxes
-        gui.checkBox(gui.vBox(box), self, "binary_trees", "Induce binary tree",
+        gui.checkBox(gui.vBox(box), self, "binary_trees", "诱导二叉树",
                      callback=self.settings_changed)
         for label, check, setting, fromv, tov in self.spin_boxes:
             gui.spin(box, self, setting, fromv, tov, label=label,

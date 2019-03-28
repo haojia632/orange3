@@ -31,14 +31,14 @@ class OWConcatenate(widget.OWWidget):
     keywords = ["append", "join", "extend"]
 
     class Inputs:
-        primary_data = Input("Primary Data", Orange.data.Table)
-        additional_data = Input("Additional Data",
+        primary_data = Input("主要数据", Orange.data.Table)
+        additional_data = Input("附加数据",
                                 Orange.data.Table,
                                 multiple=True,
                                 default=True)
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     #: Domain merging operations
     MergeUnion, MergeIntersection = 0, 1
@@ -53,7 +53,7 @@ class OWConcatenate(widget.OWWidget):
     #: Selected "Source ID" domain role
     source_column_role = settings.Setting(0)
     #: User specified name for the "Source ID" attr
-    source_attr_name = settings.Setting("Source ID")
+    source_attr_name = settings.Setting("资源 ID")
 
     want_main_area = False
     resizing_enabled = False
@@ -61,7 +61,7 @@ class OWConcatenate(widget.OWWidget):
     domain_opts = ("所有表中出现的属性的联合",
                    "所有表中属性的交集")
 
-    id_roles = ("Class attribute", "Attribute", "Meta attribute")
+    id_roles = ("类属性", "属性", "元属性")
 
     auto_commit = Setting(True)
 

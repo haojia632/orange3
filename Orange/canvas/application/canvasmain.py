@@ -764,15 +764,15 @@ class CanvasMainWindow(QMainWindow):
 
         # Options menu
         self.options_menu = QMenu(self.tr("&选项"), self)
-#        self.options_menu.addAction("Add-ons")
-#        self.options_menu.addAction("Developers")
-#        self.options_menu.addAction("Run Discovery")
-#        self.options_menu.addAction("Show Canvas Log")
-#        self.options_menu.addAction("Attach Python Console")
+    #    self.options_menu.addAction("Add-ons")
+    #    self.options_menu.addAction("Developers")
+    #    self.options_menu.addAction("Run Discovery")
+    #    self.options_menu.addAction("Show Canvas Log")
+    #    self.options_menu.addAction("Attach Python Console")
         self.options_menu.addSeparator()
         self.options_menu.addAction(self.canvas_settings_action)
         self.options_menu.addAction(self.reset_widget_settings_action)
-        self.options_menu.addAction(self.canvas_addons_action)
+        # self.options_menu.addAction(self.canvas_addons_action)
 
         if sys.platform == "darwin":
             # Mac OS X native look and feel.
@@ -784,12 +784,12 @@ class CanvasMainWindow(QMainWindow):
         menu_bar.addMenu(self.options_menu)
 
         # Help menu.
-        self.help_menu = QMenu(self.tr("&帮助"), self)
-        self.help_menu.addAction(self.about_action)
-        self.help_menu.addAction(self.welcome_action)
-        self.help_menu.addAction(self.tutorials_action)
-        self.help_menu.addAction(self.examples_action)
-        menu_bar.addMenu(self.help_menu)
+        #self.help_menu = QMenu(self.tr("&帮助"), self)
+        #self.help_menu.addAction(self.about_action)
+        #self.help_menu.addAction(self.welcome_action)
+        #self.help_menu.addAction(self.tutorials_action)
+        #self.help_menu.addAction(self.examples_action)
+        #menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(menu_bar)
 
@@ -1144,7 +1144,7 @@ class CanvasMainWindow(QMainWindow):
         document, updates the recent scheme list and the loaded scheme path
         property.
         """
-        new_scheme = self.(filename)
+        new_scheme = self.new_scheme_from(filename)
         if new_scheme is not None:
             self.set_new_scheme(new_scheme)
 
@@ -1168,7 +1168,7 @@ class CanvasMainWindow(QMainWindow):
         curr_scheme.save_to(buffer, pretty=True, pickle_fallback=True)
         return buffer.getvalue().decode("utf-8")
 
-    def (self, filename):
+    def new_scheme_from(self, filename):
         """Create and return a new :class:`widgetsscheme.WidgetsScheme`
         from a saved `filename`. Return `None` if an error occurs.
 
@@ -1595,14 +1595,14 @@ class CanvasMainWindow(QMainWindow):
             settings.value("startup/show-welcome-screen", True, type=bool)
         )
 
-        status = dialog.exec_()
+        #status = dialog.exec_()
 
         settings.setValue("startup/show-welcome-screen",
                           dialog.showAtStartup())
 
         dialog.deleteLater()
 
-        return status
+        return 0
 
     def scheme_properties_dialog(self):
         """Return an empty `SchemeInfo` dialog instance.

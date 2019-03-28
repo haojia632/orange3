@@ -43,13 +43,13 @@ def select_rows(view, row_indices, command=QItemSelectionModel.ClearAndSelect):
 
 
 class OWCorrespondenceAnalysis(widget.OWWidget):
-    name = "Correspondence Analysis"
-    description = "Correspondence analysis for categorical multivariate data."
+    name = "对应分析"
+    description = "分类多元数据的对应分析"
     icon = "icons/CorrespondenceAnalysis.svg"
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     Invalidate = QEvent.registerEventType()
 
@@ -70,7 +70,7 @@ class OWCorrespondenceAnalysis(widget.OWWidget):
         self.component_x = 0
         self.component_y = 1
 
-        box = gui.vBox(self.controlArea, "Variables")
+        box = gui.vBox(self.controlArea, "变量")
         self.varlist = itemmodels.VariableListModel()
         self.varview = view = QListView(
             selectionMode=QListView.MultiSelection,
@@ -81,19 +81,19 @@ class OWCorrespondenceAnalysis(widget.OWWidget):
 
         box.layout().addWidget(view)
 
-        axes_box = gui.vBox(self.controlArea, "Axes")
-        box = gui.vBox(axes_box, "Axis X", margin=0)
+        axes_box = gui.vBox(self.controlArea, "轴线")
+        box = gui.vBox(axes_box, "X轴", margin=0)
         box.setFlat(True)
         self.axis_x_cb = gui.comboBox(
             box, self, "component_x", callback=self._component_changed)
 
-        box = gui.vBox(axes_box, "Axis Y", margin=0)
+        box = gui.vBox(axes_box, "Y轴", margin=0)
         box.setFlat(True)
         self.axis_y_cb = gui.comboBox(
             box, self, "component_y", callback=self._component_changed)
 
         self.infotext = gui.widgetLabel(
-            gui.vBox(self.controlArea, "Contribution to Inertia"), "\n"
+            gui.vBox(self.controlArea, "对惯性的贡献"), "\n"
         )
 
         gui.rubber(self.controlArea)

@@ -81,7 +81,7 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
     keywords = ["file", "load", "read", "open"]
 
     class Outputs:
-        data = Output("Data", Table, doc="Attribute-valued dataset read from the input file.")
+        data = Output("数据", Table, doc="Attribute-valued dataset read from the input file.")
 
     want_main_area = False
 
@@ -144,6 +144,7 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
 
         rb_button = gui.appendRadioButton(vbox, "文件:", addToLayout=False)
         layout.addWidget(rb_button, 0, 0, Qt.AlignVCenter)
+
 
         box = gui.hBox(None, addToLayout=False, margin=0)
         box.setSizePolicy(Policy.MinimumExpanding, Policy.Fixed)
@@ -404,31 +405,31 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
         if descs:
             text += "<p>{}</p>".format("<br/>".join(descs))
         # Instances
-        text += "<p>{} instance(s)".format(len(table))
+        text += "<p>条目数： {} 条".format(len(table))
         # Attributes
-        missing_attr = "({:.1f}% missing values)".format(table.get_nan_frequency_attribute() * 100) \
-            if table.has_missing_attribute() else "(no missing values)"
-        text += "<br/>{} feature(s) {}".format(len(domain.attributes), missing_attr)
+        missing_attr = "({:.1f}% 缺失值)".format(table.get_nan_frequency_attribute() * 100) \
+            if table.has_missing_attribute() else "(无缺失值)"
+        text += "<br/>特征： {} 个 {}".format(len(domain.attributes), missing_attr)
         # Classes
-        missing_class = "({:.1f}% missing values)".format(table.get_nan_frequency_class() * 100) \
-            if table.has_missing_class() else "(no missing values)"
+        missing_class = "({:.1f}% 缺失值)".format(table.get_nan_frequency_class() * 100) \
+            if table.has_missing_class() else "(无缺失值)"
         if domain.has_continuous_class:
-            text += "<br/>Regression; numerical class {}".format(missing_class)
+            text += "<br/>回归： 数值类 {}".format(missing_class)
         elif domain.has_discrete_class:
-            text += "<br/>Classification; categorical class with {} values {}".format(
+            text += "<br/>分类： 类别数 {} 个， {}".format(
                 len(domain.class_var.values), missing_class)
         elif table.domain.class_vars:
-            text += "<br/>Multi-target; {} target variables {}".format(
+            text += "<br/>多目标： {} 目标变量 {}".format(
                 len(table.domain.class_vars), missing_class)
         else:
-            text += "<br/>Data has no target variable."
+            text += "<br/>数据没有目标变量。"
         # Metas
-        text += "<br/>{} meta attribute(s)".format(len(domain.metas))
+        text += "<br/>元特征： {} 个".format(len(domain.metas))
         text += "</p>"
 
         if 'Timestamp' in table.domain:
             # Google Forms uses this header to timestamp responses
-            text += '<p>First entry: {}<br/>Last entry: {}</p>'.format(
+            text += '<p>第一条目: {}<br/>最后条目: {}</p>'.format(
                 table[0, 'Timestamp'], table[-1, 'Timestamp'])
         return text
 
@@ -518,5 +519,14 @@ class OWFile(widget.OWWidget, RecentPathsWComboMixin):
         self.update_file_list(key, value, oldvalue)
 
 
-if __name__ == "__main__":  # pragma: no cover
-    WidgetPreview(OWFile).run()
+#if __name__ == "__main__":  # pragma: no cover
+#   WidgetPreview(OWFile).run()
+
+if __name__ == "__main__":
+    import sys
+    from AnyQt.QtWidgets import QApplication
+    a = QApplication(sys.argv)
+    ow = OWFile()
+    ow.show()
+    a.exec_()
+    ow.saveSettings()

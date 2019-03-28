@@ -49,7 +49,7 @@ def format_info(n_all, n_cached):
     return "{} dataset{}\n{} dataset{} cached".format(
         n_all, plural(n_all), n_cached if n_cached else 'No', plural(n_cached))
     """
-    return "数据集 {}\n数据集缓存 {}".format(n_all, n_cached if n_cached else '无')
+    return "数据集：{}\n数据集缓存：{}".format(n_all, n_cached if n_cached else '无')
 
 
 def format_exception(error):
@@ -147,21 +147,20 @@ class OWDataSets(widget.OWWidget):
         ['islocal', {'label': ''}],
         ['title', {'label': '标题'}],
         ['size', {'label': '大小'}],
-        ['instances', {'label': '实例'}],
+        ['instances', {'label': '条目数'}],
         ['variables', {'label': '变量'}],
         ['target', {'label': '目标'}],
         ['tags', {'label': '标签'}]
     ]  # type: List[str, dict]
 
     class Error(widget.OWWidget.Error):
-        no_remote_datasets = Msg("Could not fetch dataset list")
+        no_remote_datasets = Msg("无法获取数据集列表")
 
     class Warning(widget.OWWidget.Warning):
-        only_local_datasets = Msg("Could not fetch datasets list, only local "
-                                  "cached datasets are shown")
+        only_local_datasets = Msg("无法获取数据集列表，仅显示本地缓存数据集")
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     #: Selected dataset id
     selected_id = settings.Setting(None)   # type: Optional[str]
@@ -606,10 +605,10 @@ def description_html(datainfo):
     html.append("<p>{}</p>".format(datainfo.description))
     seealso = make_html_list(datainfo.seealso)
     if seealso:
-        html.append("<small><b>See Also</b>\n" + seealso + "</small>")
+        html.append("<small><b>参阅</b>\n" + seealso + "</small>")
     refs = make_html_list(datainfo.references)
     if refs:
-        html.append("<small><b>References</b>\n" + refs + "</small>")
+        html.append("<small><b>参考</b>\n" + refs + "</small>")
     return "\n".join(html)
 
 

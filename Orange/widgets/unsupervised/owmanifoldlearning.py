@@ -89,7 +89,7 @@ class ManifoldParametersEditor(QWidget, gui.OWComponent):
 
 
 class TSNEParametersEditor(ManifoldParametersEditor):
-    _metrics = ("euclidean", "manhattan", "chebyshev", "jaccard")
+    _metrics = ("欧氏", "曼哈顿", "切比雪夫", "杰卡德")
     metric_index = Setting(0)
     metric_values = [(x, x.capitalize()) for x in _metrics]
 
@@ -99,30 +99,30 @@ class TSNEParametersEditor(ManifoldParametersEditor):
     n_iter = Setting(1000)
 
     initialization_index = Setting(0)
-    initialization_values = [("pca", "PCA"), ("random", "Random")]
+    initialization_values = [("pca", "PCA"), ("random", "随机")]
 
     def __init__(self, parent):
         super().__init__(parent)
 
         self.metric_combo = self._create_combo_parameter(
-            "metric", "Metric:")
+            "metric", "指标:")
         self.perplexity_spin = self._create_spin_parameter(
-            "perplexity", 1, 100, "Perplexity:")
+            "perplexity", 1, 100, "Perplexity指标:")
         self.early_exaggeration_spin = self._create_spin_parameter(
-            "early_exaggeration", 1, 100, "Early exaggeration:")
+            "early_exaggeration", 1, 100, "前期铺垫:")
         self.lr_spin = self._create_spin_parameter(
-            "learning_rate", 1, 1000, "Learning rate:")
+            "learning_rate", 1, 1000, "学习率:")
         self.n_iter_spin = self._create_spin_parameter(
-            "n_iter", 250, 1e5, "Max iterations:")
+            "n_iter", 250, 1e5, "最大迭代次数:")
         self.init_radio = self._create_radio_parameter(
-            "initialization", "Initialization:")
+            "initialization", "初始化:")
 
 
 class MDSParametersEditor(ManifoldParametersEditor):
     max_iter = Setting(300)
     init_type_index = Setting(0)
     init_type_values = (("PCA", "PCA (Torgerson)"),
-                        ("random", "Random"))
+                        ("random", "随机"))
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -172,18 +172,18 @@ class SpectralEmbeddingParametersEditor(ManifoldParametersEditor):
 
 
 class OWManifoldLearning(OWWidget):
-    name = "Manifold Learning"
-    description = "Nonlinear dimensionality reduction."
+    name = "流形学习"
+    description = "非线性维数约简。"
     icon = "icons/Manifold.svg"
     priority = 2200
     keywords = []
     settings_version = 2
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        transformed_data = Output("Transformed data", Table, dynamic=False)
+        transformed_data = Output("转化数据", Table, dynamic=False)
 
     MANIFOLD_METHODS = (TSNE, MDS, Isomap, LocallyLinearEmbedding,
                         SpectralEmbedding)
@@ -227,13 +227,13 @@ class OWManifoldLearning(OWWidget):
         self.data = None
 
         # GUI
-        method_box = gui.vBox(self.controlArea, "Method")
+        method_box = gui.vBox(self.controlArea, "方法")
         self.manifold_methods_combo = gui.comboBox(
             method_box, self, "manifold_method_index",
             items=[m.name for m in self.MANIFOLD_METHODS],
             callback=self.manifold_method_changed)
 
-        self.params_box = gui.vBox(self.controlArea, "Parameters")
+        self.params_box = gui.vBox(self.controlArea, "参数")
 
         self.tsne_editor = TSNEParametersEditor(self)
         self.mds_editor = MDSParametersEditor(self)
@@ -250,13 +250,13 @@ class OWManifoldLearning(OWWidget):
         self.params_widget = self.parameter_editors[self.manifold_method_index]
         self.params_widget.show()
 
-        output_box = gui.vBox(self.controlArea, "Output")
+        output_box = gui.vBox(self.controlArea, "输出")
         self.n_components_spin = gui.spin(
-            output_box, self, "n_components", 1, 10, label="Components:",
+            output_box, self, "n_components", 1, 10, label="组件:",
             alignment=Qt.AlignRight, callbackOnReturn=True,
             callback=self.settings_changed)
         self.apply_button = gui.auto_commit(
-            output_box, self, "auto_apply", "&Apply",
+            output_box, self, "auto_apply", "应用",
             box=False, commit=self.apply)
 
     def manifold_method_changed(self):

@@ -265,18 +265,18 @@ class MosaicVizRank(VizRankDialog, OWComponent):
 
 
 class OWMosaicDisplay(OWWidget):
-    name = "镶嵌显示"
+    name = "马赛克展示"
     description = "在镶嵌图中显示数据"
     icon = "icons/MosaicDisplay.svg"
     priority = 220
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table, default=True)
-        data_subset = Input("Data Subset", Table)
+        data = Input("数据", Table, default=True)
+        data_subset = Input("数据子集", Table)
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True)
+        selected_data = Output("被选数据", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     settingsHandler = DomainContextHandler()
@@ -333,7 +333,7 @@ class OWMosaicDisplay(OWWidget):
             order=DomainModel.MIXED, valid_types=DomainModel.PRIMITIVE)
         self.model_234 = DomainModel(
             order=DomainModel.MIXED, valid_types=DomainModel.PRIMITIVE,
-            placeholder="(None)")
+            placeholder="(无)")
         self.attr_combos = [
             gui.comboBox(
                 box, self, value="variable{}".format(i),
@@ -342,18 +342,18 @@ class OWMosaicDisplay(OWWidget):
                 model=self.model_1 if i == 1 else self.model_234)
             for i in range(1, 5)]
         self.vizrank, self.vizrank_button = MosaicVizRank.add_vizrank(
-            box, self, "Find Informative Mosaics", self.set_attr)
+            box, self, "查找信息丰富的马赛克", self.set_attr)
 
-        box2 = gui.vBox(self.controlArea, box="Interior Coloring")
+        box2 = gui.vBox(self.controlArea, box="内部着色")
         self.color_model = DomainModel(
             order=DomainModel.MIXED, valid_types=DomainModel.PRIMITIVE,
-            placeholder="(Pearson residuals)")
+            placeholder="(皮尔逊残差)")
         self.cb_attr_color = gui.comboBox(
             box2, self, value="variable_color",
             orientation=Qt.Horizontal, contentsLength=12, labelWidth=50,
             callback=self.set_color_data, model=self.color_model)
         self.bar_button = gui.checkBox(
-            box2, self, 'use_boxes', label='Compare with total',
+            box2, self, 'use_boxes', label='总计比较',
             callback=self.update_graph)
         gui.rubber(self.controlArea)
 
@@ -939,7 +939,7 @@ class OWMosaicDisplay(OWWidget):
     @classmethod
     def migrate_context(cls, context, version):
         if version < 2:
-            settings.migrate_str_to_variable(context, none_placeholder="(None)")
+            settings.migrate_str_to_variable(context, none_placeholder="(无)")
 
 
 def get_conditional_distribution(data, attrs):

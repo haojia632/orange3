@@ -267,8 +267,8 @@ class OWRadvizGraph(OWGraphWithAnchors):
 
 
 class OWRadviz(OWAnchorProjectionWidget):
-    name = "Radviz"
-    description = "显示Radviz投影"
+    name = "圆坐标系投影"
+    description = "显示圆坐标系投影"
     icon = "icons/Radviz.svg"
     priority = 241
     keywords = ["viz"]
@@ -290,7 +290,7 @@ class OWRadviz(OWAnchorProjectionWidget):
         self.model_other = VariableListModel(enable_dnd=True)
 
         self.vizrank, self.btn_vizrank = RadvizVizRank.add_vizrank(
-            None, self, "Suggest features", self.vizrank_set_attrs
+            None, self, "建议特征", self.vizrank_set_attrs
         )
         super().__init__()
 

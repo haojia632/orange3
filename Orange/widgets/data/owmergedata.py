@@ -30,11 +30,11 @@ class OWMergeData(widget.OWWidget):
     keywords = ["join"]
 
     class Inputs:
-        data = Input("Data", Orange.data.Table, default=True, replaces=["Data A"])
-        extra_data = Input("Extra Data", Orange.data.Table, replaces=["Data B"])
+        data = Input("数据", Orange.data.Table, default=True, replaces=["Data A"])
+        extra_data = Input("额外数据", Orange.data.Table, replaces=["Data B"])
 
     class Outputs:
-        data = Output("Data",
+        data = Output("数据",
                       Orange.data.Table,
                       replaces=["Merged Data A+B", "Merged Data B+A", "Merged Data"])
 
@@ -102,7 +102,7 @@ class OWMergeData(widget.OWWidget):
             cb.setFixedWidth(190)
             vbox.layout().addSpacing(6)
 
-        add_option("添加额外的数据列", "by matching", "with", "augment",
+        add_option("添加额外的数据列", "通过匹配", "和", "augment",
                    self.model, self.extra_model_unique)
         add_option("查找匹配行", "where",
                    "equals", "merge",

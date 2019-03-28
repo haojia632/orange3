@@ -40,17 +40,16 @@ _ItemSet = namedtuple("_ItemSet", ["key", "name", "title", "items"])
 
 class OWVennDiagram(widget.OWWidget):
     name = "维恩图"
-    description = "数据实例重叠的图形可视化" \
-                  "从输入数据集的集合"
+    description = "数据实例重叠的图形可视化，从输入数据集的集合"
     icon = "icons/VennDiagram.svg"
     priority = 280
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table, multiple=True)
+        data = Input("数据", Orange.data.Table, multiple=True)
 
     class Outputs:
-        selected_data = Output("Selected Data", Orange.data.Table, default=True)
+        selected_data = Output("被选数据", Orange.data.Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Orange.data.Table)
 
     inputhints: dict
@@ -86,19 +85,19 @@ class OWVennDiagram(widget.OWWidget):
         self.itemsets = OrderedDict()
 
         # GUI
-        box = gui.vBox(self.controlArea, "Info")
-        self.info = gui.widgetLabel(box, "No data on input.\n")
+        box = gui.vBox(self.controlArea, "信息")
+        self.info = gui.widgetLabel(box, "没有输入数据。\n")
 
         self.identifiersBox = gui.radioButtonsInBox(
             self.controlArea, self, "useidentifiers", [],
-            box="Data Instance Identifiers",
+            box="数据实例标识符",
             callback=self._on_useidentifiersChanged
         )
         self.useequalityButton = gui.appendRadioButton(
-            self.identifiersBox, "Use instance equality"
+            self.identifiersBox, "使用实例相等"
         )
         self.useidentifiersButton = rb = gui.appendRadioButton(
-            self.identifiersBox, "Use identifiers"
+            self.identifiersBox, "使用标识符"
         )
         self.inputsBox = gui.indentedBox(
             self.identifiersBox, sep=gui.checkButtonOffsetHint(rb)
@@ -106,7 +105,7 @@ class OWVennDiagram(widget.OWWidget):
         self.inputsBox.setEnabled(bool(self.useidentifiers))
 
         for i in range(5):
-            box = gui.vBox(self.inputsBox, "Dataset #%i" % (i + 1),
+            box = gui.vBox(self.inputsBox, "数据集 #%i" % (i + 1),
                            addSpace=False)
             box.setFlat(True)
             model = itemmodels.VariableListModel(parent=self)
@@ -123,10 +122,10 @@ class OWVennDiagram(widget.OWWidget):
 
         gui.rubber(self.controlArea)
 
-        box = gui.vBox(self.controlArea, "Output")
-        gui.checkBox(box, self, "output_duplicates", "Output duplicates",
+        box = gui.vBox(self.controlArea, "输出")
+        gui.checkBox(box, self, "output_duplicates", "输出重复项",
                      callback=lambda: self.commit())
-        gui.auto_commit(box, self, "autocommit", "Send Selection", "Send Automatically", box=False)
+        gui.auto_commit(box, self, "autocommit", "选中发送", "自动发送", box=False)
 
         # Main area view
         self.scene = QGraphicsScene()

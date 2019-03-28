@@ -132,21 +132,21 @@ class State(enum.Enum):
 
 
 class OWTestLearners(OWWidget):
-    name = "Test & Score"
-    description = "Cross-validation accuracy estimation."
-    icon = "icons/TestLearners1.svg"
+    name = "测试和评分"
+    description = "交叉验证精度估计。"
+    icon = "icons/TestLearners.svg"
     priority = 100
     keywords = []
 
     class Inputs:
-        train_data = Input("Data", Table, default=True)
-        test_data = Input("Test Data", Table)
-        learner = Input("Learner", Learner, multiple=True)
-        preprocessor = Input("Preprocessor", Preprocess)
+        train_data = Input("数据", Table, default=True)
+        test_data = Input("测试数据", Table)
+        learner = Input("学习器", Learner, multiple=True)
+        preprocessor = Input("预处理器", Preprocess)
 
     class Outputs:
-        predictions = Output("Predictions", Table)
-        evaluations_results = Output("Evaluation Results", Results)
+        predictions = Output("预测数据", Table)
+        evaluations_results = Output("评估结果", Results)
 
     settings_version = 3
     UserAdviceMessages = [
@@ -241,20 +241,20 @@ class OWTestLearners(OWWidget):
         self.__task = None  # type: Optional[Task]
         self.__executor = ThreadExecutor()
 
-        sbox = gui.vBox(self.controlArea, "Sampling")
+        sbox = gui.vBox(self.controlArea, "抽样")
         rbox = gui.radioButtons(
             sbox, self, "resampling", callback=self._param_changed)
 
-        gui.appendRadioButton(rbox, "Cross validation")
+        gui.appendRadioButton(rbox, "交叉验证")
         ibox = gui.indentedBox(rbox)
         gui.comboBox(
-            ibox, self, "n_folds", label="Number of folds: ",
+            ibox, self, "n_folds", label="褶皱数: ",
             items=[str(x) for x in self.NFolds], maximumContentsLength=3,
             orientation=Qt.Horizontal, callback=self.kfold_changed)
         gui.checkBox(
-            ibox, self, "cv_stratified", "Stratified",
+            ibox, self, "cv_stratified", "分层",
             callback=self.kfold_changed)
-        gui.appendRadioButton(rbox, "Cross validation by feature")
+        gui.appendRadioButton(rbox, "按特征交叉验证")
         ibox = gui.indentedBox(rbox)
         self.feature_model = DomainModel(
             order=DomainModel.METAS, valid_types=DiscreteVariable)
@@ -262,27 +262,27 @@ class OWTestLearners(OWWidget):
             ibox, self, "fold_feature", model=self.feature_model,
             orientation=Qt.Horizontal, callback=self.fold_feature_changed)
 
-        gui.appendRadioButton(rbox, "Random sampling")
+        gui.appendRadioButton(rbox, "随机抽样")
         ibox = gui.indentedBox(rbox)
         gui.comboBox(
-            ibox, self, "n_repeats", label="Repeat train/test: ",
+            ibox, self, "n_repeats", label="重复训练/测试: ",
             items=[str(x) for x in self.NRepeats], maximumContentsLength=3,
             orientation=Qt.Horizontal, callback=self.shuffle_split_changed)
         gui.comboBox(
-            ibox, self, "sample_size", label="Training set size: ",
+            ibox, self, "sample_size", label="训练集大小: ",
             items=["{} %".format(x) for x in self.SampleSizes],
             maximumContentsLength=5, orientation=Qt.Horizontal,
             callback=self.shuffle_split_changed)
         gui.checkBox(
-            ibox, self, "shuffle_stratified", "Stratified",
+            ibox, self, "shuffle_stratified", "分层",
             callback=self.shuffle_split_changed)
 
-        gui.appendRadioButton(rbox, "Leave one out")
+        gui.appendRadioButton(rbox, "留一个")
 
-        gui.appendRadioButton(rbox, "Test on train data")
-        gui.appendRadioButton(rbox, "Test on test data")
+        gui.appendRadioButton(rbox, "测试训练数据")
+        gui.appendRadioButton(rbox, "测试测试数据")
 
-        self.cbox = gui.vBox(self.controlArea, "Target Class")
+        self.cbox = gui.vBox(self.controlArea, "目标类")
         self.class_selection_combo = gui.comboBox(
             self.cbox, self, "class_selection", items=[],
             sendSelectedValue=True, valueType=str,
@@ -303,11 +303,11 @@ class OWTestLearners(OWWidget):
         header.customContextMenuRequested.connect(self.show_column_chooser)
 
         self.result_model = QStandardItemModel(self)
-        self.result_model.setHorizontalHeaderLabels(["Method"])
+        self.result_model.setHorizontalHeaderLabels(["方法"])
         self.view.setModel(self.result_model)
         self.view.setItemDelegate(ItemDelegate())
 
-        box = gui.vBox(self.mainArea, "Evaluation Results")
+        box = gui.vBox(self.mainArea, "评价结果")
         box.layout().addWidget(self.view)
 
     def sizeHint(self):

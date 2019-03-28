@@ -948,11 +948,11 @@ class OWPreprocess(widget.OWWidget):
     keywords = ["process"]
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        preprocessor = Output("Preprocessor", preprocess.preprocess.Preprocess, dynamic=False)
-        preprocessed_data = Output("Preprocessed Data", Orange.data.Table)
+        preprocessor = Output("预处理器", preprocess.preprocess.Preprocess, dynamic=False)
+        preprocessed_data = Output("预处理数据", Orange.data.Table)
 
     storedsettings = settings.Setting({})
     autocommit = settings.Setting(True)

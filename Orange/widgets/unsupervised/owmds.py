@@ -109,7 +109,7 @@ class OWMDS(OWDataProjectionWidget):
     keywords = ["multidimensional scaling", "multi dimensional scaling"]
 
     class Inputs(OWDataProjectionWidget.Inputs):
-        distances = Input("Distances", DistMatrix)
+        distances = Input("距离", DistMatrix)
 
     settings_version = 3
 

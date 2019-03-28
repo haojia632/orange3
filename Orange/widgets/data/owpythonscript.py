@@ -372,22 +372,22 @@ class OWPythonScript(widget.OWWidget):
     keywords = ["file", "program"]
 
     class Inputs:
-        data = Input("Data", Table, replaces=["in_data"],
+        data = Input("数据", Table, replaces=["in_data"],
                      default=True, multiple=True)
-        learner = Input("Learner", Learner, replaces=["in_learner"],
+        learner = Input("学习器", Learner, replaces=["in_learner"],
                         default=True, multiple=True)
-        classifier = Input("Classifier", Model, replaces=["in_classifier"],
+        classifier = Input("分类", Model, replaces=["in_classifier"],
                            default=True, multiple=True)
-        object = Input("Object", object, replaces=["in_object"],
+        object = Input("宾语", object, replaces=["in_object"],
                        default=False, multiple=True)
 
     class Outputs:
-        data = Output("Data", Table, replaces=["out_data"])
-        learner = Output("Learner", Learner, replaces=["out_learner"])
-        classifier = Output("Classifier", Model, replaces=["out_classifier"])
-        object = Output("Object", object, replaces=["out_object"])
+        data = Output("数据", Table, replaces=["out_data"])
+        learner = Output("学习器", Learner, replaces=["out_learner"])
+        classifier = Output("分类", Model, replaces=["out_classifier"])
+        object = Output("宾语", object, replaces=["out_object"])
 
-    signal_names = ("data", "learner", "classifier", "object")
+    signal_names = ("数据", "学习器", "分类", "宾语")
 
     libraryListSource = \
         Setting([Script("Hello world", "print('Hello world')\n")])

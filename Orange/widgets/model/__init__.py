@@ -1,6 +1,6 @@
 """Learners"""
 
-NAME = '监督学习'
+NAME = '监督学习模型'
 
 DESCRIPTION = 'Prediction.'
 

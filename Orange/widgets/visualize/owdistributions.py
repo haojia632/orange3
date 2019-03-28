@@ -137,13 +137,13 @@ class DistributionBarItem(pg.GraphicsObject):
 
 class OWDistributions(widget.OWWidget):
     name = "直方图"
-    description = "在图形中显示数据特性的值分布"
+    description = "在图形中显示数据特性的值分布。"
     icon = "icons/Distribution.svg"
     priority = 120
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table, doc="Set the input dataset")
+        data = Input("数据", Orange.data.Table, doc="Set the input dataset")
 
     settingsHandler = settings.DomainContextHandler(
         match_values=settings.DomainContextHandler.MATCH_VALUES_ALL)
@@ -195,11 +195,11 @@ class OWDistributions(widget.OWWidget):
         gui.separator(self.controlArea, 4, 4)
 
         box2 = gui.hBox(box)
-        self.l_smoothing_l = gui.widgetLabel(box2, "Smooth")
+        self.l_smoothing_l = gui.widgetLabel(box2, "平滑")
         gui.hSlider(box2, self, "smoothing_index",
                     minValue=0, maxValue=len(self.smoothing_facs) - 1,
                     callback=self._on_set_smoothing, createLabel=False)
-        self.l_smoothing_r = gui.widgetLabel(box2, "Precise")
+        self.l_smoothing_r = gui.widgetLabel(box2, "精确")
 
         gui.checkBox(
             gui.indentedBox(box, sep=4),

@@ -24,10 +24,10 @@ class OWContinuize(widget.OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     want_main_area = False
     buttons_area_orientation = Qt.Vertical
@@ -43,27 +43,27 @@ class OWContinuize(widget.OWWidget):
     autosend = Setting(True)
 
     multinomial_treats = (
-        ("Target or first value as base", Continuize.FirstAsBase),
-        ("Most frequent value as base", Continuize.FrequentAsBase),
-        ("One attribute per value", Continuize.Indicators),
-        ("Ignore multinomial attributes", Continuize.RemoveMultinomial),
-        ("Remove categorical attributes", Continuize.Remove),
-        ("Treat as ordinal", Continuize.AsOrdinal),
-        ("Divide by number of values", Continuize.AsNormalizedOrdinal))
+        ("目标或第一个值作为基础", Continuize.FirstAsBase),
+        ("最常见的值作为基础", Continuize.FrequentAsBase),
+        ("每个值一个属性", Continuize.Indicators),
+        ("忽略多项属性", Continuize.RemoveMultinomial),
+        ("删除分类属性", Continuize.Remove),
+        ("视为序数", Continuize.AsOrdinal),
+        ("除以值的数量", Continuize.AsNormalizedOrdinal))
 
     continuous_treats = (
-        ("Leave them as they are", Continuize.Leave),
-        ("Normalize by span", Normalize.NormalizeBySpan),
-        ("Normalize by standard deviation", Normalize.NormalizeBySD))
+        ("保持原样", Continuize.Leave),
+        ("按范围标准化", Normalize.NormalizeBySpan),
+        ("按标准偏差归一化", Normalize.NormalizeBySD))
 
     class_treats = (
-        ("Leave it as it is", Continuize.Leave),
-        ("Treat as ordinal", Continuize.AsOrdinal),
-        ("Divide by number of values", Continuize.AsNormalizedOrdinal),
-        ("One class per value", Continuize.Indicators),
+        ("保持原状", Continuize.Leave),
+        ("视为序数", Continuize.AsOrdinal),
+        ("除以值的数量", Continuize.AsNormalizedOrdinal),
+        ("每个值一个类", Continuize.Indicators),
     )
 
-    value_ranges = ["From -1 to 1", "From 0 to 1"]
+    value_ranges = ["从  -1 到 1", "从 0 到 1"]
 
     def __init__(self):
         super().__init__()

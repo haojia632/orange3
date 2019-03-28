@@ -199,18 +199,18 @@ class DistanceMatrixContextHandler(ContextHandler):
 
 
 class OWDistanceMatrix(widget.OWWidget):
-    name = "Distance Matrix"
-    description = "View distance matrix."
+    name = "距离矩阵"
+    description = "查看距离矩阵"
     icon = "icons/DistanceMatrix.svg"
     priority = 200
     keywords = []
 
     class Inputs:
-        distances = Input("Distances", DistMatrix)
+        distances = Input("距离", DistMatrix)
 
     class Outputs:
-        distances = Output("Distances", DistMatrix, dynamic=False)
-        table = Output("Selected Data", Table, replaces=["Table"])
+        distances = Output("距离", DistMatrix, dynamic=False)
+        table = Output("被选数据", Table, replaces=["Table"])
 
     settingsHandler = DistanceMatrixContextHandler()
     auto_commit = Setting(True)
@@ -244,14 +244,14 @@ class OWDistanceMatrix(widget.OWWidget):
         settings_box = gui.hBox(self.mainArea)
 
         self.annot_combo = gui.comboBox(
-            settings_box, self, "annotation_idx", label="Labels: ",
+            settings_box, self, "annotation_idx", label="标签: ",
             orientation=Qt.Horizontal,
             callback=self._invalidate_annotations, contentsLength=12)
         self.annot_combo.setModel(VariableListModel())
-        self.annot_combo.model()[:] = ["None", "Enumeration"]
+        self.annot_combo.model()[:] = ["无", "列举"]
         gui.rubber(settings_box)
         acb = gui.auto_commit(settings_box, self, "auto_commit",
-                              "Send Selected", "Send Automatically", box=None)
+                              "选中发送", "自动发送", box=None)
         acb.setFixedWidth(200)
         # Signal must be connected after self.commit is redirected
         selmodel.selectionChanged.connect(self.commit)

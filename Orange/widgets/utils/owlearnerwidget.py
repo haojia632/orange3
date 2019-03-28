@@ -81,12 +81,12 @@ class OWBaseLearner(OWWidget, metaclass=OWBaseLearnerMeta):
         outdated_learner = Msg("Press Apply to submit changes.")
 
     class Inputs:
-        data = Input("Data", Table)
-        preprocessor = Input("Preprocessor", Preprocess)
+        data = Input("数据", Table)
+        preprocessor = Input("预处理器", Preprocess)
 
     class Outputs:
-        learner = Output("Learner", Learner, dynamic=False)
-        model = Output("Model", Model, dynamic=False,
+        learner = Output("学习器", Learner, dynamic=False)
+        model = Output("模型", Model, dynamic=False,
                        replaces=["Classifier", "Predictor"])
 
     OUTPUT_MODEL_NAME = Outputs.model.name  # Attr for backcompat w/ self.send() code
@@ -226,7 +226,7 @@ class OWBaseLearner(OWWidget, metaclass=OWBaseLearnerMeta):
             if type(self).add_classification_layout is not \
                     OWBaseLearner.add_classification_layout:
                 classification_box = gui.widgetBox(
-                    self.controlArea, 'Classification')
+                    self.controlArea, '分类')
                 self.add_classification_layout(classification_box)
             # Only add a regression section if the method is overridden
             if type(self).add_regression_layout is not \
@@ -263,13 +263,13 @@ class OWBaseLearner(OWWidget, metaclass=OWBaseLearnerMeta):
 
     def add_learner_name_widget(self):
         self.name_line_edit = gui.lineEdit(
-            self.controlArea, self, 'learner_name', box='Name',
+            self.controlArea, self, 'learner_name', box='名称',
             tooltip='The name will identify this model in other widgets',
             orientation=Qt.Horizontal, callback=self.learner_name_changed)
 
     def add_bottom_buttons(self):
         self.apply_button = gui.auto_commit(
-            self.controlArea, self, 'auto_apply', '&Apply',
+            self.controlArea, self, 'auto_apply', '&应用',
             box=True, commit=self.apply)
 
     def send(self, signalName, value, id=None):

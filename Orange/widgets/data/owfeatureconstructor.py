@@ -112,12 +112,12 @@ class FeatureEditor(QFrame):
         )
         layout.setContentsMargins(0, 0, 0, 0)
         self.nameedit = QLineEdit(
-            placeholderText="Name...",
+            placeholderText="名字...",
             sizePolicy=QSizePolicy(QSizePolicy.Minimum,
                                    QSizePolicy.Fixed)
         )
         self.expressionedit = QLineEdit(
-            placeholderText="Expression..."
+            placeholderText="表达式..."
         )
 
         self.attrs_model = itemmodels.VariableListModel(
@@ -336,10 +336,10 @@ class OWFeatureConstructor(OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     want_main_area = False
 

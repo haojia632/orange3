@@ -373,25 +373,25 @@ Parts.levels = property(lambda self: self.span)
 
 
 _color_palettes = (sorted(colorbrewer.colorSchemes["sequential"].items()) +
-                   [("Blue-Yellow", {2: [(0, 0, 255), (255, 255, 0)]}),
-                    ("Green-Black-Red", {3: [(0, 255, 0), (0, 0, 0),
+                   [("蓝-黄", {2: [(0, 0, 255), (255, 255, 0)]}),
+                    ("绿-黑-红", {3: [(0, 255, 0), (0, 0, 0),
                                              (255, 0, 0)]})])
 _default_palette_index = \
-    [name for name, _, in _color_palettes].index("Blue-Yellow")
+    [name for name, _, in _color_palettes].index("蓝-黄")
 
 
 class OWHeatMap(widget.OWWidget):
     name = "热图"
-    description = "为一对属性绘制热图"
+    description = "为一对属性绘制热图。"
     icon = "icons/Heatmap.svg"
     priority = 260
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True)
+        selected_data = Output("被选数据", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     settingsHandler = settings.DomainContextHandler()
@@ -472,12 +472,12 @@ class OWHeatMap(widget.OWWidget):
         #: the indices which merge the input_data into the heatmap row i
         self.merge_indices = None
 
-        self.annotation_vars = ['(None)']
+        self.annotation_vars = ['(无)']
         self.__rows_cache = {}
         self.__columns_cache = {}
 
         # GUI definition
-        colorbox = gui.vBox(self.controlArea, "Color")
+        colorbox = gui.vBox(self.controlArea, "颜色")
         self.color_cb = gui.comboBox(colorbox, self, "palette_index")
         self.color_cb.setIconSize(QSize(64, 16))
         palettes = _color_palettes + self.user_palettes
@@ -512,60 +512,60 @@ class OWHeatMap(widget.OWWidget):
             createLabel=False, callback=self.update_color_schema
         )
 
-        form.addRow("Low:", lowslider)
-        form.addRow("High:", highslider)
-        form.addRow("Gamma:", gammaslider)
+        form.addRow("低:", lowslider)
+        form.addRow("高:", highslider)
+        form.addRow("伽玛:", gammaslider)
 
         colorbox.layout().addLayout(form)
 
-        mergebox = gui.vBox(self.controlArea, "Merge",)
-        gui.checkBox(mergebox, self, "merge_kmeans", "Merge by k-means",
+        mergebox = gui.vBox(self.controlArea, "合并",)
+        gui.checkBox(mergebox, self, "merge_kmeans", "k-means合并",
                      callback=self.update_sorting_examples)
         ibox = gui.indentedBox(mergebox)
         gui.spin(ibox, self, "merge_kmeans_k", minv=5, maxv=500,
-                 label="Clusters:", keyboardTracking=False,
+                 label="聚类:", keyboardTracking=False,
                  callbackOnReturn=True, callback=self.update_merge)
 
-        cluster_box = gui.vBox(self.controlArea, "Cluster")
+        cluster_box = gui.vBox(self.controlArea, "聚类")
         self.col_check = gui.checkBox(
-            cluster_box, self, "col_clustering", "Columns",
+            cluster_box, self, "col_clustering", "列",
             callback=self.update_clustering_examples)
         self.row_check = gui.checkBox(
-            cluster_box, self, "row_clustering", "Rows",
+            cluster_box, self, "row_clustering", "行",
             callback=self.update_clustering_examples)
 
-        box = gui.vBox(self.controlArea, 'Annotation && Legends')
+        box = gui.vBox(self.controlArea, '注释和图例')
 
-        gui.checkBox(box, self, 'legend', 'Show legend',
+        gui.checkBox(box, self, 'legend', '显示铭文',
                      callback=self.update_legend)
 
-        gui.checkBox(box, self, 'averages', 'Stripes with averages',
+        gui.checkBox(box, self, 'averages', '带平均线的条纹',
                      callback=self.update_averages_stripe)
 
-        annotbox = gui.vBox(box, "Row Annotations", addSpace=False)
+        annotbox = gui.vBox(box, "行注释", addSpace=False)
         annotbox.setFlat(True)
         self.annotations_cb = gui.comboBox(
             annotbox, self, "annotation_index", contentsLength=12,
             items=self.annotation_vars, callback=self.update_annotations)
 
-        posbox = gui.vBox(box, "Column Labels Position", addSpace=False)
+        posbox = gui.vBox(box, "列标签位置", addSpace=False)
         posbox.setFlat(True)
 
         gui.comboBox(
             posbox, self, "column_label_pos",
-            items=["None", "Top", "Bottom", "Top and Bottom"],
+            items=["无", "顶", "底", "顶和底"],
             callback=self.update_column_annotations)
 
         gui.checkBox(self.controlArea, self, "keep_aspect",
-                     "Keep aspect ratio", box="Resize",
+                     "保持纵横比", box="调整大小",
                      callback=self.__aspect_mode_changed)
 
         gui.rubber(self.controlArea)
         gui.auto_commit(self.controlArea,
                         self,
                         "auto_commit",
-                        "Send Selection",
-                        "Send Automatically"
+                        "选中发送",
+                        "自动发送"
                        )
 
         # Scene with heatmap

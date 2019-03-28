@@ -109,7 +109,7 @@ class VizRankDialog(QDialog, ProgressBarMixin, WidgetMessagesMixin):
         self._worker = None
 
         self.filter = QLineEdit()
-        self.filter.setPlaceholderText("Filter ...")
+        self.filter.setPlaceholderText("过滤...")
         self.filter.textChanged.connect(self.filter_changed)
         self.layout().addWidget(self.filter)
         # Remove focus from line edit

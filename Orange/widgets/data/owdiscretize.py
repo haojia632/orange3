@@ -130,10 +130,10 @@ class OWDiscretize(widget.OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table, doc="Input data table")
+        data = Input("数据", Orange.data.Table, doc="Input data table")
 
     class Outputs:
-        data = Output("Data", Orange.data.Table, doc="Table with discretized features")
+        data = Output("数据", Orange.data.Table, doc="Table with discretized features")
 
     settingsHandler = settings.DomainContextHandler()
     saved_var_states = settings.ContextSetting({})
@@ -170,12 +170,12 @@ class OWDiscretize(widget.OWWidget):
         rb.layout().setStretch(0, 1)
         rb.layout().setStretch(1, 1)
         options = self.options = [
-            self.tr("Default"),
-            self.tr("Leave numeric"),
-            self.tr("Entropy-MDL discretization"),
-            self.tr("Equal-frequency discretization"),
-            self.tr("Equal-width discretization"),
-            self.tr("Remove numeric variables")
+            self.tr("默认"),
+            self.tr("保留数字"),
+            self.tr("熵-MDL离散化"),
+            self.tr("等频离散化"),
+            self.tr("等宽离散化"),
+            self.tr("删除数字变量")
         ]
 
         for opt in options[1:]:
@@ -188,7 +188,7 @@ class OWDiscretize(widget.OWWidget):
         def _intbox(widget, attr, callback):
             box = gui.indentedBox(widget)
             s = gui.spin(
-                box, self, attr, minv=2, maxv=10, label="Num. of intervals:",
+                box, self, attr, minv=2, maxv=10, label="间隔数：",
                 callback=callback)
             s.setMaximumWidth(60)
             s.setAlignment(Qt.AlignRight)
@@ -228,7 +228,7 @@ class OWDiscretize(widget.OWWidget):
 
         self.k_specific = _intbox(controlbox, "k", self._disc_method_changed)
 
-        gui.appendRadioButton(controlbox, "Remove attribute")
+        gui.appendRadioButton(controlbox, "删除属性")
 
         gui.rubber(controlbox)
         controlbox.setEnabled(False)

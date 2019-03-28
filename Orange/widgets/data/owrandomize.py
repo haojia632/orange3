@@ -19,10 +19,10 @@ class OWRandomize(OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data = Output("Data", Table)
+        data = Output("数据", Table)
 
     resizing_enabled = False
     want_main_area = False
@@ -48,16 +48,16 @@ class OWRandomize(OWWidget):
             box, self, "shuffle_attrs", "特征",
             callback=self._shuffle_check_changed)
         self.metas_check = gui.checkBox(
-            box, self, "shuffle_metas", "元属性",
+            box, self, "shuffle_metas", "元特征",
             callback=self._shuffle_check_changed)
 
         box = gui.vBox(self.controlArea, "拖曳行")
         hbox = gui.hBox(box)
-        gui.widgetLabel(hbox, "None")
+        gui.widgetLabel(hbox, "无")
         self.scope_slider = gui.hSlider(
             hbox, self, "scope_prop", minValue=0, maxValue=100, width=140,
             createLabel=False, callback=self._scope_slider_changed)
-        gui.widgetLabel(hbox, "All")
+        gui.widgetLabel(hbox, "所有")
         self.scope_label = gui.widgetLabel(
             box, "", alignment=Qt.AlignCenter,
             sizePolicy=(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed))

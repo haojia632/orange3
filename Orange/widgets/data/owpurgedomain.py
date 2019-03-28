@@ -16,10 +16,10 @@ class OWPurgeDomain(widget.OWWidget):
     keywords = ["remove", "delete", "unused"]
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data = Output("Data", Table)
+        data = Output("数据", Table)
 
     removeValues = Setting(1)
     removeAttributes = Setting(1)
@@ -82,7 +82,7 @@ class OWPurgeDomain(widget.OWWidget):
             gui.checkBox(boxAt, self, value, label,
                          callback=self.optionsChanged)
 
-        boxAt = gui.vBox(self.controlArea, "元属性", addSpace=True)
+        boxAt = gui.vBox(self.controlArea, "元特征", addSpace=True)
         for not_first, (value, label) in enumerate(self.meta_options):
             if not_first:
                 gui.separator(boxAt, 2)

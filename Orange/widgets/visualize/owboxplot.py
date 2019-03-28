@@ -133,13 +133,13 @@ class OWBoxPlot(widget.OWWidget):
     display_changed call display_changed_disc that draws everything.
     """
     name = "箱形图"
-    description = "在方框图中可视化特征值的分布"
+    description = "在方框图中可视化特征值的分布。"
     icon = "icons/BoxPlot.svg"
     priority = 100
     keywords = ["whisker"]
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
         selected_data = Output("所选数据", Orange.data.Table, default=True)
@@ -220,7 +220,7 @@ class OWBoxPlot(widget.OWWidget):
             tooltip="由𝜒²或方差对子群排序",
             callback=self.apply_sorting)
         self.group_vars = DomainModel(
-            placeholder="None", separators=False,
+            placeholder="无", separators=False,
             valid_types=Orange.data.DiscreteVariable)
         self.group_view = view = gui.listView(
             self.controlArea, self, "group_var", box="子群",
@@ -261,7 +261,7 @@ class OWBoxPlot(widget.OWWidget):
         gui.rubber(box)
 
         gui.auto_commit(self.controlArea, self, "auto_commit",
-                        "选择发送", "自动发送")
+                        "选中发送", "自动发送")
 
         gui.vBox(self.mainArea, addSpace=True)
         self.box_scene = QGraphicsScene()

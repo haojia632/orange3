@@ -54,15 +54,14 @@ PlotCurve = namedtuple(
 
 
 class OWLiftCurve(widget.OWWidget):
-    name = "Lift Curve"
-    description = "Construct and display a lift curve " \
-                  "from the evaluation of classifiers."
+    name = "升力曲线"
+    description = "根据分类器的评估结果，构建并显示提升曲线。"
     icon = "icons/LiftCurve.svg"
     priority = 1020
     keywords = []
 
     class Inputs:
-        evaluation_results = Input("Evaluation Results", Orange.evaluation.Results)
+        evaluation_results = Input("评估结果", Orange.evaluation.Results)
 
     target_index = settings.Setting(0)
     selected_classifiers = settings.Setting([])
@@ -84,15 +83,15 @@ class OWLiftCurve(widget.OWWidget):
         self.colors = []
         self._curve_data = {}
 
-        box = gui.vBox(self.controlArea, "Plot")
-        tbox = gui.vBox(box, "Target Class")
+        box = gui.vBox(self.controlArea, "制图")
+        tbox = gui.vBox(box, "目标类")
         tbox.setFlat(True)
 
         self.target_cb = gui.comboBox(
             tbox, self, "target_index", callback=self._on_target_changed,
             contentsLength=8)
 
-        cbox = gui.vBox(box, "Classifiers")
+        cbox = gui.vBox(box, "分类器")
         cbox.setFlat(True)
         self.classifiers_list_box = gui.listBox(
             cbox, self, "selected_classifiers", "classifier_names",
@@ -100,7 +99,7 @@ class OWLiftCurve(widget.OWWidget):
             callback=self._on_classifiers_changed)
 
         gui.checkBox(box, self, "display_convex_hull",
-                     "Show lift convex hull", callback=self._replot)
+                     "显示提升凸壳", callback=self._replot)
 
         self.plotview = pg.GraphicsView(background="w")
         self.plotview.setFrameStyle(QtWidgets.QFrame.StyledPanel)
@@ -117,12 +116,12 @@ class OWLiftCurve(widget.OWWidget):
         axis = self.plot.getAxis("bottom")
         axis.setTickFont(tickfont)
         axis.setPen(pen)
-        axis.setLabel("P Rate")
+        axis.setLabel("P 率")
 
         axis = self.plot.getAxis("left")
         axis.setTickFont(tickfont)
         axis.setPen(pen)
-        axis.setLabel("TP Rate")
+        axis.setLabel("TP 率")
 
         self.plot.showGrid(True, True, alpha=0.1)
         self.plot.setRange(xRange=(0.0, 1.0), yRange=(0.0, 1.0), padding=0.05)

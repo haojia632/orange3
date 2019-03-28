@@ -70,18 +70,17 @@ class SieveRank(VizRankDialogAttrPair):
 
 class OWSieveDiagram(OWWidget):
     name = "筛图"
-    description = "可视化观察到的和期望的频率 " \
-                  "对于值的组合"
+    description = "可视化观察到的和期望的频率对于值的组合"
     icon = "icons/SieveDiagram.svg"
     priority = 200
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table, default=True)
-        features = Input("Features", AttributeList)
+        data = Input("数据", Table, default=True)
+        features = Input("特征", AttributeList)
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True)
+        selected_data = Output("被选数据", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     graph_name = "画布"
@@ -117,7 +116,7 @@ class OWSieveDiagram(OWWidget):
         gui.widgetLabel(self.attr_box, "\u2715", sizePolicy=fixed_size)
         gui.comboBox(value="attr_y", **combo_args)
         self.vizrank, self.vizrank_button = SieveRank.add_vizrank(
-            self.attr_box, self, "Score Combinations", self.set_attr)
+            self.attr_box, self, "分数组合", self.set_attr)
         self.vizrank_button.setSizePolicy(*fixed_size)
 
         self.canvas = QGraphicsScene()

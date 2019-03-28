@@ -723,13 +723,12 @@ def _icon(name, icon_path="icons/paintdata",
 
 class OWPaintData(OWWidget):
     TOOLS = [
-        ("Brush", "创建多个实例", AirBrushTool, _icon("brush.svg")),
-        ("Put", "创建单个实例", PutInstanceTool, _icon("put.svg")),
-        ("Select", "选择并移动实例", SelectTool,
-         _icon("select-transparent_42px.png")),
-        ("Jitter", "抖动实例", JitterTool, _icon("jitter.svg")),
-        ("Magnet", "吸引多个实例", MagnetTool, _icon("magnet.svg")),
-        ("Clear", "清除情节", ClearTool, _icon("../../../icons/Dlg_clear.png"))
+        ("Brush", "创建多个实例", AirBrushTool, _icon("brush.svg"), "多个"),
+        ("Put", "创建单个实例", PutInstanceTool, _icon("put.svg"), "单个"),
+        ("Select", "选中并移动实例", SelectTool, _icon("select-transparent_42px.png"), "选中"),
+        ("Jitter", "抖动实例", JitterTool, _icon("jitter.svg"), "抖动"),
+        ("Magnet", "吸引多个实例", MagnetTool, _icon("magnet.svg"), "吸引"),
+        ("Clear", "清除情节", ClearTool, _icon("../../../icons/Dlg_clear.png"), "清除")
     ]
 
     name = "数据绘制"
@@ -739,10 +738,10 @@ class OWPaintData(OWWidget):
     keywords = ["create", "draw"]
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     autocommit = Setting(True)
     table_name = Setting("Painted data")
@@ -863,13 +862,14 @@ class OWPaintData(OWWidget):
         self.toolActions.setExclusive(True)
         self.toolButtons = []
 
-        for i, (name, tooltip, tool, icon) in enumerate(self.TOOLS):
+        for i, (name, tooltip, tool, icon, label) in enumerate(self.TOOLS):
             action = QAction(
                 name, self,
                 toolTip=tooltip,
                 checkable=tool.checkable,
                 icon=QIcon(icon),
             )
+            action.setText(label)
             action.triggered.connect(partial(self.set_current_tool, tool))
 
             button = QToolButton(
@@ -878,6 +878,7 @@ class OWPaintData(OWWidget):
                 sizePolicy=QSizePolicy(QSizePolicy.MinimumExpanding,
                                        QSizePolicy.Fixed)
             )
+
             button.setDefaultAction(action)
             self.toolButtons.append((button, tool))
 

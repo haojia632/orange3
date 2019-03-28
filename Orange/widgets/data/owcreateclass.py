@@ -131,16 +131,16 @@ class OWCreateClass(widget.OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data = Output("Data", Table)
+        data = Output("数据", Table)
 
     want_main_area = False
 
     settingsHandler = DomainContextHandler()
     attribute = ContextSetting(None)
-    class_name = ContextSetting("class")
+    class_name = ContextSetting("类")
     rules = ContextSetting({})
     match_beginning = ContextSetting(False)
     case_sensitive = ContextSetting(False)
@@ -149,11 +149,11 @@ class OWCreateClass(widget.OWWidget):
                     DiscreteVariable: ValueFromDiscreteSubstring}
 
     class Warning(widget.OWWidget.Warning):
-        no_nonnumeric_vars = Msg("Data contains only numeric variables.")
+        no_nonnumeric_vars = Msg("数据仅包含数字变量。")
 
     class Error(widget.OWWidget.Error):
-        class_name_duplicated = Msg("Class name duplicated.")
-        class_name_empty = Msg("Class name should not be empty.")
+        class_name_duplicated = Msg("类名重复。")
+        class_name_empty = Msg("类名不应为空。")
 
     def __init__(self):
         super().__init__()

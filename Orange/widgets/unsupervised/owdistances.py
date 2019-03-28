@@ -26,16 +26,16 @@ METRICS = [
 
 
 class OWDistances(OWWidget):
-    name = "Distances"
-    description = "Compute a matrix of pairwise distances."
+    name = "距离"
+    description = "计算成对距离的矩阵。"
     icon = "icons/Distance.svg"
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        distances = Output("Distances", Orange.misc.DistMatrix, dynamic=False)
+        distances = Output("距离", Orange.misc.DistMatrix, dynamic=False)
 
     settings_version = 2
 
@@ -66,17 +66,17 @@ class OWDistances(OWWidget):
 
         self.data = None
 
-        gui.radioButtons(self.controlArea, self, "axis", ["Rows", "Columns"],
-                         box="Distances between", callback=self._invalidate
+        gui.radioButtons(self.controlArea, self, "axis", ["行", "列"],
+                         box="之间距离", callback=self._invalidate
                         )
-        box = gui.widgetBox(self.controlArea, "Distance Metric")
+        box = gui.widgetBox(self.controlArea, "距离尺度")
         self.metrics_combo = gui.comboBox(
             box, self, "metric_idx",
             items=[m[0] for m in METRICS],
             callback=self._metric_changed
         )
         self.normalization_check = gui.checkBox(
-            box, self, "normalized_dist", "Normalized",
+            box, self, "normalized_dist", "正常",
             callback=self._invalidate,
             tooltip=("All dimensions are (implicitly) scaled to a common"
                      "scale to normalize the influence across the domain.")
@@ -84,7 +84,7 @@ class OWDistances(OWWidget):
         _, metric = METRICS[self.metric_idx]
         self.normalization_check.setEnabled(metric.supports_normalization)
 
-        gui.auto_commit(self.controlArea, self, "autocommit", "Apply")
+        gui.auto_commit(self.controlArea, self, "autocommit", "应用")
         self.layout().setSizeConstraint(self.layout().SetFixedSize)
 
     @Inputs.data

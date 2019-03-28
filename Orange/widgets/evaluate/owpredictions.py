@@ -43,19 +43,19 @@ PredictorSlot = namedtuple(
 
 
 class OWPredictions(OWWidget):
-    name = "Predictions"
+    name = "预测"
     icon = "icons/Predictions.svg"
     priority = 200
-    description = "Display the predictions of models for an input dataset."
+    description = "显示输入数据集的模型预测。"
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
-        predictors = Input("Predictors", Model, multiple=True)
+        data = Input("数据", Orange.data.Table)
+        predictors = Input("预测模型", Model, multiple=True)
 
     class Outputs:
-        predictions = Output("Predictions", Orange.data.Table)
-        evaluation_results = Output("Evaluation Results",
+        predictions = Output("预测数据", Orange.data.Table)
+        evaluation_results = Output("评估结果",
                                     Orange.evaluation.Results,
                                     dynamic=False)
 
@@ -99,21 +99,21 @@ class OWPredictions(OWWidget):
         #: List of (discrete) class variable's values
         self.class_values = []  # type: List[str]
 
-        box = gui.vBox(self.controlArea, "Info")
+        box = gui.vBox(self.controlArea, "信息")
         self.infolabel = gui.widgetLabel(
-            box, "No data on input.\nPredictors: 0\nTask: N/A")
+            box, "没有输入数据。\n预测因子: 0\n任务: N/A")
         self.infolabel.setMinimumWidth(150)
-        gui.button(box, self, "Restore Original Order",
+        gui.button(box, self, "恢复原始顺序",
                    callback=self._reset_order,
-                   tooltip="Show rows in the original order")
+                   tooltip="按原始顺序显示行")
 
         self.classification_options = box = gui.vBox(
-            self.controlArea, "Show", spacing=-1, addSpace=False)
+            self.controlArea, "显示", spacing=-1, addSpace=False)
 
-        gui.checkBox(box, self, "show_predictions", "Predicted class",
+        gui.checkBox(box, self, "show_predictions", "预测类",
                      callback=self._update_prediction_delegate)
         b = gui.checkBox(box, self, "show_probabilities",
-                         "Predicted probabilities for:",
+                         "预测概率:",
                          callback=self._update_prediction_delegate)
         ibox = gui.indentedBox(box, sep=gui.checkButtonOffsetHint(b),
                                addSpace=False)
@@ -121,22 +121,22 @@ class OWPredictions(OWWidget):
                     callback=self._update_prediction_delegate,
                     selectionMode=QListWidget.MultiSelection,
                     addSpace=False)
-        gui.checkBox(box, self, "draw_dist", "Draw distribution bars",
+        gui.checkBox(box, self, "draw_dist", "绘制分布条",
                      callback=self._update_prediction_delegate)
 
-        box = gui.vBox(self.controlArea, "Data View")
-        gui.checkBox(box, self, "show_attrs", "Show full dataset",
+        box = gui.vBox(self.controlArea, "数据视图")
+        gui.checkBox(box, self, "show_attrs", "显示完整数据集",
                      callback=self._update_column_visibility)
 
-        box = gui.vBox(self.controlArea, "Output", spacing=-1)
+        box = gui.vBox(self.controlArea, "输出", spacing=-1)
         self.checkbox_class = gui.checkBox(
-            box, self, "output_attrs", "Original data",
+            box, self, "output_attrs", "原始数据",
             callback=self.commit)
         self.checkbox_class = gui.checkBox(
-            box, self, "output_predictions", "Predictions",
+            box, self, "output_predictions", "预测",
             callback=self.commit)
         self.checkbox_prob = gui.checkBox(
-            box, self, "output_probabilities", "Probabilities",
+            box, self, "output_probabilities", "可能性",
             callback=self.commit)
 
         gui.rubber(self.controlArea)

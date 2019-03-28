@@ -48,7 +48,7 @@ class DisplayFormatDelegate(QStyledItemDelegate):
 
 
 class AsDefault(impute.BaseImputeMethod):
-    name = "Default (above)"
+    name = "默认（上图）"
     short_name = ""
     format = "{var.name}"
     columns_only = True
@@ -132,15 +132,15 @@ class OWImpute(OWWidget):
     keywords = ["substitute", "missing"]
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
-        learner = Input("Learner", Learner)
+        data = Input("数据", Orange.data.Table)
+        learner = Input("学习器", Learner)
 
     class Outputs:
-        data = Output("Data", Orange.data.Table)
+        data = Output("数据", Orange.data.Table)
 
     class Error(OWWidget.Error):
-        imputation_failed = Msg("Imputation failed for '{}'")
-        model_based_imputer_sparse = Msg("Model based imputer does not work for sparse data")
+        imputation_failed = Msg("估算失败于 '{}'")
+        model_based_imputer_sparse = Msg("基于模型的缺失值处理器不适用于稀疏数据")
 
     settingsHandler = settings.DomainContextHandler()
 

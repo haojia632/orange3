@@ -62,8 +62,8 @@ class OWtSNEGraph(OWScatterPlotBase):
 
 
 class OWtSNE(OWDataProjectionWidget):
-    name = "t-SNE"
-    description = "Two-dimensional data projection with t-SNE."
+    name = "T-SNE"
+    description = "利用T-SNE进行二维数据投影。"
     icon = "icons/TSNE.svg"
     priority = 920
     keywords = ["tsne"]
@@ -83,7 +83,7 @@ class OWtSNE(OWDataProjectionWidget):
     Running, Finished, Waiting, Paused = 1, 2, 3, 4
 
     class Outputs(OWDataProjectionWidget.Outputs):
-        preprocessor = Output("Preprocessor", Preprocess)
+        preprocessor = Output("预处理器", Preprocess)
 
     class Error(OWDataProjectionWidget.Error):
         not_enough_rows = Msg("Input data needs at least 2 rows")
@@ -124,10 +124,10 @@ class OWtSNE(OWDataProjectionWidget):
             box, self, "perplexity", 1, 500, step=1, alignment=Qt.AlignRight,
             callback=self._params_changed
         )
-        form.addRow("Perplexity:", self.perplexity_spin)
+        form.addRow("困惑度:", self.perplexity_spin)
         self.perplexity_spin.setEnabled(not self.multiscale)
         form.addRow(gui.checkBox(
-            box, self, "multiscale", label="Preserve global structure",
+            box, self, "multiscale", label="保留总体结构",
             callback=self._multiscale_changed
         ))
 

@@ -405,15 +405,15 @@ class OWTreeViewer2D(OWWidget):
         layout.addRow(
             "深度: ",
             gui.comboBox(box, self, 'max_tree_depth',
-                         items=["Unlimited"] + [
-                             "{} levels".format(x) for x in range(2, 10)],
+                         items=["无限"] + [
+                             "{} 级".format(x) for x in range(2, 10)],
                          addToLayout=False, sendSelectedValue=False,
                          callback=self.toggle_tree_depth, sizePolicy=policy))
         layout.addRow(
             "边界宽度: ",
             gui.comboBox(box, self, 'line_width_method',
-                         items=['Fixed', 'Relative to root',
-                                'Relative to parent'],
+                         items=['固定', '相对于根',
+                                '相对于父级'],
                          addToLayout=False,
                          callback=self.toggle_line_width, sizePolicy=policy))
         gui.rubber(self.controlArea)

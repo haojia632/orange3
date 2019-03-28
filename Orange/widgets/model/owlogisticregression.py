@@ -11,8 +11,8 @@ from Orange.widgets.utils.widgetpreview import WidgetPreview
 
 
 class OWLogisticRegression(OWBaseLearner):
-    name = "Logistic Regression"
-    description = "The logistic regression classification algorithm with " \
+    name = "Logistic回归"
+    description = "具有LASSO（l1）或ridge（l2）正则化的logistic回归分类算法。" \
                   "LASSO (L1) or ridge (L2) regularization."
     icon = "icons/LogisticRegression.svg"
     replaces = [
@@ -24,7 +24,7 @@ class OWLogisticRegression(OWBaseLearner):
     LEARNER = LogisticRegressionLearner
 
     class Outputs(OWBaseLearner.Outputs):
-        coefficients = Output("Coefficients", Table, explicit=True)
+        coefficients = Output("系数", Table, explicit=True)
 
     penalty_type = settings.Setting(1)
     C_index = settings.Setting(61)
@@ -47,17 +47,17 @@ class OWLogisticRegression(OWBaseLearner):
     def add_main_layout(self):
         box = gui.widgetBox(self.controlArea, box=True)
         self.penalty_combo = gui.comboBox(
-            box, self, "penalty_type", label="Regularization type: ",
+            box, self, "penalty_type", label="正则化类型: ",
             items=self.penalty_types, orientation=Qt.Horizontal,
             addSpace=4, callback=self.settings_changed)
-        gui.widgetLabel(box, "Strength:")
+        gui.widgetLabel(box, "强度:")
         box2 = gui.hBox(gui.indentedBox(box))
-        gui.widgetLabel(box2, "Weak").setStyleSheet("margin-top:6px")
+        gui.widgetLabel(box2, "弱").setStyleSheet("margin-top:6px")
         self.c_slider = gui.hSlider(
             box2, self, "C_index", minValue=0, maxValue=len(self.C_s) - 1,
             callback=lambda: (self.set_c(), self.settings_changed()),
             createLabel=False)
-        gui.widgetLabel(box2, "Strong").setStyleSheet("margin-top:6px")
+        gui.widgetLabel(box2, "强").setStyleSheet("margin-top:6px")
         box2 = gui.hBox(box)
         box2.layout().setAlignment(Qt.AlignCenter)
         self.c_label = gui.widgetLabel(box2)

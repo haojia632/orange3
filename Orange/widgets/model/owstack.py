@@ -9,18 +9,19 @@ from Orange.widgets.widget import Input
 
 
 class OWStackedLearner(OWBaseLearner):
-    name = "Stacking"
-    description = "Stack multiple models."
+    name = "堆叠"
+    description = "堆叠多个模型。"
     icon = "icons/Stacking.svg"
     priority = 100
 
     LEARNER = StackedFitter
 
-    learner_name = Setting("Stack")
+
+    learner_name = Setting("堆叠")
 
     class Inputs(OWBaseLearner.Inputs):
-        learners = Input("Learners", Learner, multiple=True)
-        aggregate = Input("Aggregate", Learner)
+        learners = Input("学习器", Learner, multiple=True)
+        aggregate = Input("并集", Learner)
 
     def __init__(self):
         self.learners = OrderedDict()

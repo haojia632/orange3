@@ -562,16 +562,15 @@ class NomogramItem(QGraphicsWidget):
 
 
 class OWNomogram(OWWidget):
-    name = "Nomogram"
-    description = " 朴素贝叶斯可视化的诺莫图" \
-                  " 和逻辑回归分类器"
+    name = "列线图"
+    description = "朴素贝叶斯可视化的诺莫图和逻辑回归分类器"
     icon = "icons/Nomogram.svg"
     priority = 2000
     keywords = []
 
     class Inputs:
-        classifier = Input("Classifier", Model)
-        data = Input("Data", Table)
+        classifier = Input("分类器", Model)
+        data = Input("数据", Table)
 
     MAX_N_ATTRS = 1000
     POINT_SCALE = 0
@@ -616,7 +615,7 @@ class OWNomogram(OWWidget):
         self.repaint = False
 
         # GUI
-        box = gui.vBox(self.controlArea, "Target class")
+        box = gui.vBox(self.controlArea, "目标类")
         self.class_combo = gui.comboBox(
             box, self, "target_class_index", callback=self._class_combo_changed,
             contentsLength=12)
@@ -627,18 +626,18 @@ class OWNomogram(OWWidget):
                     " sum to 1 and therefore could be normalized.")
 
         self.scale_radio = gui.radioButtons(
-            self.controlArea, self, "scale", ["Point scale", "Log odds ratios"],
-            box="Scale", callback=self.update_scene)
+            self.controlArea, self, "scale", ["点量表", "记录比值比"],
+            box="规模", callback=self.update_scene)
 
-        box = gui.vBox(self.controlArea, "Display features")
+        box = gui.vBox(self.controlArea, "显示特征")
         grid = QGridLayout()
         radio_group = gui.radioButtonsInBox(
             box, self, "display_index", [], orientation=grid,
             callback=self.update_scene)
         radio_all = gui.appendRadioButton(
-            radio_group, "All", addToLayout=False)
+            radio_group, "所有", addToLayout=False)
         radio_best = gui.appendRadioButton(
-            radio_group, "Best ranked:", addToLayout=False)
+            radio_group, "最佳排名:", addToLayout=False)
         spin_box = gui.hBox(None, margin=0)
         self.n_spin = gui.spin(
             spin_box, self, "n_attributes", 1, self.MAX_N_ATTRS, label=" ",
@@ -648,12 +647,12 @@ class OWNomogram(OWWidget):
         grid.addWidget(spin_box, 2, 2)
 
         self.sort_combo = gui.comboBox(
-            box, self, "sort_index", label="Rank by:", items=SortBy.items(),
+            box, self, "sort_index", label="排名靠前:", items=SortBy.items(),
             orientation=Qt.Horizontal, callback=self.update_scene)
 
         self.cont_feature_dim_combo = gui.comboBox(
-            box, self, "cont_feature_dim_index", label="Numeric features: ",
-            items=["1D projection", "2D curve"], orientation=Qt.Horizontal,
+            box, self, "cont_feature_dim_index", label="数字特征: ",
+            items=["1维投影", "二维曲线"], orientation=Qt.Horizontal,
             callback=self.update_scene)
 
         gui.rubber(self.controlArea)

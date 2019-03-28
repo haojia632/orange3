@@ -12,16 +12,16 @@ from Orange.widgets.widget import Output
 
 
 class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
-    name = "Distance File"
+    name = "距离公式文件"
     id = "orange.widgets.unsupervised.distancefile"
-    description = "Read distances from a file."
+    description = "从文件读取距离。"
     icon = "icons/DistanceFile.svg"
     priority = 10
     category = "Data"
     keywords = ["load", "read", "open"]
 
     class Outputs:
-        distances = Output("Distances", DistMatrix, dynamic=False)
+        distances = Output("距离", DistMatrix, dynamic=False)
 
     want_main_area = False
     resizing_enabled = False
@@ -31,7 +31,7 @@ class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
         RecentPathsWComboMixin.__init__(self)
         self.loaded_file = ""
 
-        vbox = gui.vBox(self.controlArea, "Distance File", addSpace=True)
+        vbox = gui.vBox(self.controlArea, "距离公式文件", addSpace=True)
         box = gui.hBox(vbox)
         self.file_combo.setMinimumWidth(300)
         box.layout().addWidget(self.file_combo)
@@ -43,12 +43,12 @@ class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
             QSizePolicy.Maximum, QSizePolicy.Fixed)
 
         button = gui.button(
-            box, self, "Reload", callback=self.reload, default=True)
+            box, self, "重新加载", callback=self.reload, default=True)
         button.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
         button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
-        box = gui.vBox(self.controlArea, "Info", addSpace=True)
-        self.infoa = gui.widgetLabel(box, 'No data loaded.')
+        box = gui.vBox(self.controlArea, "信息", addSpace=True)
+        self.infoa = gui.widgetLabel(box, '没有可加载数据。')
         self.warnings = gui.widgetLabel(box, ' ')
         #Set word wrap, so long warnings won't expand the widget
         self.warnings.setWordWrap(True)
@@ -57,7 +57,7 @@ class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
 
         box = gui.hBox(self.controlArea)
         gui.button(
-            box, self, "Browse documentation datasets",
+            box, self, "浏览文档数据集",
             callback=lambda: self.browse_file(True), autoDefault=False)
         box.layout().addSpacing(200)
 
@@ -87,7 +87,7 @@ class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
             start_file = self.last_path() or os.path.expanduser("~/")
 
         filename, _ = QFileDialog.getOpenFileName(
-            self, 'Open Distance File', start_file, "(*.dst)")
+            self, '打开距离文件', start_file, "(*.dst)")
         if not filename:
             return
         self.add_path(filename)
@@ -105,7 +105,7 @@ class OWDistanceFile(widget.OWWidget, RecentPathsWComboMixin):
                 fn = os.path.join(".", basename)
                 self.information("Loading '{}' from the current directory."
                                  .format(basename))
-        if fn == "(none)":
+        if fn == "(无)":
             self.Outputs.distances.send(None)
             self.infoa.setText("No data loaded")
             self.infob.setText("")

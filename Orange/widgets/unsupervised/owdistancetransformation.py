@@ -9,16 +9,16 @@ from Orange.widgets.widget import Input, Output
 
 
 class OWDistanceTransformation(widget.OWWidget):
-    name = "Distance Transformation"
-    description = "Transform distances according to selected criteria."
+    name = "距离转换"
+    description = "根据所选标准变换距离。"
     icon = "icons/DistancesTransformation.svg"
     keywords = []
 
     class Inputs:
-        distances = Input("Distances", DistMatrix)
+        distances = Input("距离", DistMatrix)
 
     class Outputs:
-        distances = Output("Distances", DistMatrix, dynamic=False)
+        distances = Output("距离", DistMatrix, dynamic=False)
 
     want_main_area = False
     resizing_enabled = False
@@ -29,17 +29,17 @@ class OWDistanceTransformation(widget.OWWidget):
     autocommit = settings.Setting(True)
 
     normalization_options = (
-        ("No normalization", lambda x: x),
-        ("To interval [0, 1]", lambda x: scale(x, min=0, max=1)),
-        ("To interval [-1, 1]", lambda x: scale(x, min=-1, max=1)),
-        ("Sigmoid function: 1/(1+exp(-X))", lambda x: 1/(1+np.exp(-x))),
+        ("无标准", lambda x: x),
+        ("区间 [0, 1]", lambda x: scale(x, min=0, max=1)),
+        ("区间 [-1, 1]", lambda x: scale(x, min=-1, max=1)),
+        ("S型函数: 1/(1+exp(-X))", lambda x: 1/(1+np.exp(-x))),
     )
 
     inversion_options = (
-        ("No inversion", lambda x: x),
+        ("无转换", lambda x: x),
         ("-X", lambda x: -x),
         ("1 - X", lambda x: 1-x),
-        ("max(X) - X", lambda x: np.max(x) - x),
+        ("最大(X) - X", lambda x: np.max(x) - x),
         ("1/X", lambda x: 1/x),
     )
 
@@ -49,16 +49,16 @@ class OWDistanceTransformation(widget.OWWidget):
         self.data = None
 
         gui.radioButtons(self.controlArea, self, "normalization_method",
-                         box="Normalization",
+                         box="标准",
                          btnLabels=[x[0] for x in self.normalization_options],
                          callback=self._invalidate)
 
         gui.radioButtons(self.controlArea, self, "inversion_method",
-                         box="Inversion",
+                         box="转换",
                          btnLabels=[x[0] for x in self.inversion_options],
                          callback=self._invalidate)
 
-        gui.auto_commit(self.controlArea, self, "autocommit", "Apply")
+        gui.auto_commit(self.controlArea, self, "autocommit", "应用")
 
     @Inputs.distances
     def set_data(self, data):

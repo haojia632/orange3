@@ -26,11 +26,11 @@ class OWDataSampler(OWWidget):
     _MAX_SAMPLE_SIZE = 2 ** 31 - 1
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data_sample = Output("Data Sample", Table, default=True)
-        remaining_data = Output("Remaining Data", Table)
+        data_sample = Output("数据样本", Table, default=True)
+        remaining_data = Output("剩余数据", Table)
 
     want_main_area = False
     resizing_enabled = False
@@ -53,13 +53,13 @@ class OWDataSampler(OWWidget):
 
     class Warning(OWWidget.Warning):
         could_not_stratify = Msg("Stratification failed\n{}")
-        bigger_sample = Msg('Sample is bigger than input')
+        bigger_sample = Msg('样本大于输入')
 
     class Error(OWWidget.Error):
-        too_many_folds = Msg("Number of folds exceeds data size")
-        sample_larger_than_data = Msg("Sample must be smaller than data")
-        not_enough_to_stratify = Msg("Data is too small to stratify")
-        no_data = Msg("Dataset is empty")
+        too_many_folds = Msg("折叠数超过数据大小")
+        sample_larger_than_data = Msg("样本必须小于数据")
+        not_enough_to_stratify = Msg("数据太小，无法分层")
+        no_data = Msg("数据集为空")
 
     def __init__(self):
         super().__init__()
@@ -89,15 +89,15 @@ class OWDataSampler(OWWidget):
             callback=set_sampling_type(self.FixedProportion),
             addSpace=12)
 
-        gui.appendRadioButton(sampling, "固定样品大小")
+        gui.appendRadioButton(sampling, "固定样本大小")
         ibox = gui.indentedBox(sampling)
         self.sampleSizeSpin = gui.spin(
-            ibox, self, "sampleSizeNumber", label="实例: ",
+            ibox, self, "sampleSizeNumber", label="数据: ",
             minv=1, maxv=self._MAX_SAMPLE_SIZE,
             callback=set_sampling_type(self.FixedSize),
             controlWidth=90)
         gui.checkBox(
-            ibox, self, "replacement", "更换样品",
+            ibox, self, "replacement", "更换样本",
             callback=set_sampling_type(self.FixedSize),
             addSpace=12)
 
@@ -107,7 +107,7 @@ class OWDataSampler(OWWidget):
             labelAlignment=Qt.AlignLeft,
             fieldGrowthPolicy=QFormLayout.AllNonFixedFieldsGrow)
         ibox = gui.indentedBox(sampling, addSpace=True, orientation=form)
-        form.addRow("Number of folds:",
+        form.addRow("褶皱数目:",
                     gui.spin(
                         ibox, self, "number_of_folds", 2, 100,
                         addToLayout=False,
@@ -115,7 +115,7 @@ class OWDataSampler(OWWidget):
         self.selected_fold_spin = gui.spin(
             ibox, self, "selectedFold", 1, self.number_of_folds,
             addToLayout=False, callback=self.fold_changed)
-        form.addRow("Selected fold:", self.selected_fold_spin)
+        form.addRow("选择褶皱:", self.selected_fold_spin)
 
         gui.appendRadioButton(sampling, "引导程序")
 
@@ -142,7 +142,7 @@ class OWDataSampler(OWWidget):
             callback=self.settings_changed)
         self.cb_stratify = gui.checkBox(
             self.options_box, self, "stratify",
-            "分层样品（如果可能）", callback=self.settings_changed)
+            "分层样本（如果可能）", callback=self.settings_changed)
         self.cb_sql_dl = gui.checkBox(
             self.options_box, self, "sql_dl", "Download data to local memory",
             callback=self.settings_changed)
@@ -178,14 +178,14 @@ class OWDataSampler(OWWidget):
             self.cb_stratify.setVisible(not sql)
             self.cb_sql_dl.setVisible(sql)
             self.dataInfoLabel.setText(
-                '{}{} instances in input dataset.'.format(*(
+                '输入数据集中有 {}{} 条数据。'.format(*(
                     ('~', dataset.approx_len()) if sql else
                     ('', len(dataset)))))
             if not sql:
                 self._update_sample_max_size()
                 self.updateindices()
         else:
-            self.dataInfoLabel.setText('No data on input.')
+            self.dataInfoLabel.setText('没有输入数据。')
             self.outputInfoLabel.setText('')
             self.indices = None
             self.clear_messages()
@@ -224,13 +224,12 @@ class OWDataSampler(OWWidget):
                     self.FixedProportion, self.FixedSize, self.Bootstrap):
                 remaining, sample = self.indices
                 self.outputInfoLabel.setText(
-                    'Outputting %d instance%s.' %
-                    (len(sample), "s" * (len(sample) != 1)))
+                    '输出 %d 条数据。' % (len(sample))
+                )
             elif self.sampling_type == self.CrossValidation:
                 remaining, sample = self.indices[self.selectedFold - 1]
                 self.outputInfoLabel.setText(
-                    'Outputting fold %d, %d instance%s.' %
-                    (self.selectedFold, len(sample), "s" * (len(sample) != 1))
+                    '输出褶皱 %d, %d 条数据。' % (self.selectedFold, len(sample))
                 )
             sample = self.data[sample]
             other = self.data[remaining]

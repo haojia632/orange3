@@ -245,9 +245,8 @@ class OWLinProjGraph(OWGraphWithAnchors):
 
 
 class OWLinearProjection(OWAnchorProjectionWidget):
-    name = "Linear Projection"
-    description = "数据的多轴投影 " \
-                  "一个二维平面"
+    name = "线性投影"
+    description = "数据的多轴投影一个二维平面。"
     icon = "icons/LinearProjection.svg"
     priority = 240
     keywords = []
@@ -276,7 +275,7 @@ class OWLinearProjection(OWAnchorProjectionWidget):
         self.model_other = VariableListModel(enable_dnd=True)
 
         self.vizrank, self.btn_vizrank = LinearProjectionVizRank.add_vizrank(
-            None, self, "Suggest Features", self.__vizrank_set_attrs)
+            None, self, "建议特征", self.__vizrank_set_attrs)
 
         super().__init__()
 

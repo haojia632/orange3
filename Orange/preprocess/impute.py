@@ -68,7 +68,7 @@ class BaseImputeMethod(Reprable):
 
 
 class DoNotImpute(BaseImputeMethod):
-    name = "Don't impute"
+    name = "不属于"
     short_name = "leave"
     description = ""
 
@@ -77,7 +77,7 @@ class DoNotImpute(BaseImputeMethod):
 
 
 class DropInstances(BaseImputeMethod):
-    name = "Remove instances with unknown values"
+    name = "删除具有未知值的实例"
     short_name = "drop"
     description = ""
 
@@ -87,7 +87,7 @@ class DropInstances(BaseImputeMethod):
 
 
 class Average(BaseImputeMethod):
-    name = "Average/Most frequent"
+    name = "平均/高频"
     short_name = "average"
     description = "Replace with average/mode of the column"
 
@@ -118,7 +118,7 @@ class ImputeSql(Reprable):
 
 
 class Default(BaseImputeMethod):
-    name = "Value"
+    name = "值"
     short_name = "value"
     description = ""
     columns_only = True
@@ -172,7 +172,7 @@ class ReplaceUnknownsModel(Reprable):
 
 
 class Model(BaseImputeMethod):
-    _name = "Model-based imputer"
+    _name = "基于模型的imputer"
     short_name = "model"
     description = ""
     format = BaseImputeMethod.format + " ({self.learner.name})"
@@ -230,7 +230,7 @@ class IsDefined(Transformation):
 
 
 class AsValue(BaseImputeMethod):
-    name = "As a distinct value"
+    name = "作为一个独特的值"
     short_name = "new value"
     description = ""
 
@@ -319,7 +319,7 @@ class ReplaceUnknownsRandom(Transformation):
 
 
 class Random(BaseImputeMethod):
-    name = "Random values"
+    name = "随机值"
     short_name = "random"
     description = "Replace with a random value"
 

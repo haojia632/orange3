@@ -16,15 +16,15 @@ class OWSelectByDataIndex(widget.OWWidget):
     priority = 1112
 
     class Inputs:
-        data = Input("Data", Table)
-        data_subset = Input("Data Subset", Table)
+        data = Input("数据", Table)
+        data_subset = Input("数据子集", Table)
 
     class Outputs:
-        matching_data = Output("Matching Data", Table, replaces=["Data"], default=True)
-        non_matching_data = Output("Unmatched Data", Table)
+        matching_data = Output("匹配数据", Table, replaces=["Data"], default=True)
+        non_matching_data = Output("未匹配数据", Table)
         # avoiding the default annotated output name (Data), as it was used
         # for Matching Data previously
-        annotated_data = Output("Annotated Data", Table)
+        annotated_data = Output("带注释的数据", Table)
 
     want_main_area = False
     resizing_enabled = False

@@ -24,7 +24,7 @@ def save_plot(data, file_formats, filename=""):
         return
     try:
         writer.write(filename, data)
-    except OSError as e:
+    except Exception as e:
         mb = QMessageBox(
             None,
             windowTitle="Error",

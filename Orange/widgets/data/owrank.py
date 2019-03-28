@@ -55,13 +55,13 @@ ScoreMeta = namedtuple("score_meta", ["name", "shortname", "scorer", 'problem_ty
 
 # Default scores.
 CLS_SCORES = [
-    ScoreMeta("Information Gain", "Info. gain",
+    ScoreMeta("信息增益", "Info. gain",
               score.InfoGain, ProblemType.CLASSIFICATION, False),
-    ScoreMeta("Information Gain Ratio", "Gain ratio",
+    ScoreMeta("信息增益比率", "Gain ratio",
               score.GainRatio, ProblemType.CLASSIFICATION, True),
-    ScoreMeta("Gini Decrease", "Gini",
+    ScoreMeta("基尼减少", "Gini",
               score.Gini, ProblemType.CLASSIFICATION, True),
-    ScoreMeta("ANOVA", "ANOVA",
+    ScoreMeta("方差分析", "ANOVA",
               score.ANOVA, ProblemType.CLASSIFICATION, False),
     ScoreMeta("χ²", "χ²",
               score.Chi2, ProblemType.CLASSIFICATION, False),
@@ -177,13 +177,13 @@ class OWRank(OWWidget):
     buttons_area_orientation = Qt.Vertical
 
     class Inputs:
-        data = Input("Data", Table)
-        scorer = Input("Scorer", score.Scorer, multiple=True)
+        data = Input("数据", Table)
+        scorer = Input("权值", score.Scorer, multiple=True)
 
     class Outputs:
-        reduced_data = Output("Reduced Data", Table, default=True)
-        scores = Output("Scores", Table)
-        features = Output("Features", AttributeList, dynamic=False)
+        reduced_data = Output("减少数据", Table, default=True)
+        scores = Output("权值", Table)
+        features = Output("特征", AttributeList, dynamic=False)
 
     SelectNone, SelectAll, SelectManual, SelectNBest = range(4)
 

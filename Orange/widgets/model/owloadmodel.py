@@ -16,15 +16,15 @@ from Orange.widgets.widget import Msg, Output
 
 
 class OWLoadModel(widget.OWWidget):
-    name = "Load Model"
-    description = "Load a model from an input file."
+    name = "导入模型"
+    description = "从输入文件加载模型。"
     priority = 3050
     replaces = ["Orange.widgets.classify.owloadclassifier.OWLoadClassifier"]
     icon = "icons/LoadModel.svg"
     keywords = ["file", "open"]
 
     class Outputs:
-        model = Output("Model", Model)
+        model = Output("模型", Model)
 
     #: List of recent filenames.
     history = Setting([])
@@ -44,7 +44,7 @@ class OWLoadModel(widget.OWWidget):
         self.selectedIndex = -1
 
         box = gui.widgetBox(
-            self.controlArea, self.tr("File"), orientation=QHBoxLayout()
+            self.controlArea, self.tr("文件"), orientation=QHBoxLayout()
         )
 
         self.filesCB = gui.comboBox(
@@ -59,7 +59,7 @@ class OWLoadModel(widget.OWWidget):
         self.loadbutton.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
 
         self.reloadbutton = gui.button(
-            box, self, "Reload", callback=self.reload, default=True)
+            box, self, "重新加载", callback=self.reload, default=True)
         self.reloadbutton.setIcon(
             self.style().standardIcon(QStyle.SP_BrowserReload))
         self.reloadbutton.setSizePolicy(QSizePolicy.Maximum,
@@ -90,7 +90,7 @@ class OWLoadModel(widget.OWWidget):
             startdir = os.path.dirname(self.filename)
 
         filename, _ = QFileDialog.getOpenFileName(
-            self, self.tr("Open"), directory=startdir, filter=self.FILTER)
+            self, self.tr("打开"), directory=startdir, filter=self.FILTER)
 
         if filename:
             self.load(filename)

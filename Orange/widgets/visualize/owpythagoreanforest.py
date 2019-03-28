@@ -156,8 +156,8 @@ class ClickToClearSelectionListView(QListView):
 
 
 class OWPythagoreanForest(OWWidget):
-    name = 'Pythagorean Forest'
-    description = '毕达哥拉斯森林用于可视化随机森林'
+    name = '毕达哥拉斯森林'
+    description = '毕达哥拉斯森林用于可视化随机森林。'
     icon = 'icons/PythagoreanForest.svg'
     settings_version = 2
     keywords = ["fractal"]
@@ -165,10 +165,10 @@ class OWPythagoreanForest(OWWidget):
     priority = 1001
 
     class Inputs:
-        random_forest = Input("Random forest", RandomForestModel)
+        random_forest = Input("随机森林", RandomForestModel)
 
     class Outputs:
-        tree = Output("Tree", TreeModel)
+        tree = Output("树", TreeModel)
 
     # Enable the save as feature
     graph_name = '场景'
@@ -180,9 +180,9 @@ class OWPythagoreanForest(OWWidget):
     zoom = settings.Setting(200)
 
     SIZE_CALCULATION = [
-        ('Normal', lambda x: x),
-        ('Square root', lambda x: sqrt(x)),
-        ('Logarithmic', lambda x: log(x + 1)),
+        ('正常', lambda x: x),
+        ('平方根', lambda x: sqrt(x)),
+        ('对数', lambda x: log(x + 1)),
     ]
 
     @classmethod
@@ -205,25 +205,25 @@ class OWPythagoreanForest(OWWidget):
 
         # CONTROL AREA
         # Tree info area
-        box_info = gui.widgetBox(self.controlArea, 'Forest')
+        box_info = gui.widgetBox(self.controlArea, '森林')
         self.ui_info = gui.widgetLabel(box_info)
 
         # Display controls area
-        box_display = gui.widgetBox(self.controlArea, 'Display')
+        box_display = gui.widgetBox(self.controlArea, '显示')
         self.ui_depth_slider = gui.hSlider(
-            box_display, self, 'depth_limit', label='Depth', ticks=False,
+            box_display, self, 'depth_limit', label='深度', ticks=False,
         )  # type: QSlider
         self.ui_target_class_combo = gui.comboBox(
-            box_display, self, 'target_class_index', label='Target class',
+            box_display, self, 'target_class_index', label='目标类',
             orientation=Qt.Horizontal, items=[], contentsLength=8,
         )  # type: gui.OrangeComboBox
         self.ui_size_calc_combo = gui.comboBox(
-            box_display, self, 'size_calc_idx', label='Size',
+            box_display, self, 'size_calc_idx', label='大小',
             orientation=Qt.Horizontal,
             items=list(zip(*self.SIZE_CALCULATION))[0], contentsLength=8,
         )  # type: gui.OrangeComboBox
         self.ui_zoom_slider = gui.hSlider(
-            box_display, self, 'zoom', label='Zoom', ticks=False, minValue=100,
+            box_display, self, 'zoom', label='缩放', ticks=False, minValue=100,
             maxValue=400, createLabel=False, intOnly=False,
         )  # type: QSlider
 

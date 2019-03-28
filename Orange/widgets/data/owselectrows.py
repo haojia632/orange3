@@ -79,11 +79,11 @@ class OWSelectRows(widget.OWWidget):
     keywords = ["filter"]
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        matching_data = Output("Matching Data", Table, default=True)
-        unmatched_data = Output("Unmatched Data", Table)
+        matching_data = Output("匹配数据", Table, default=True)
+        unmatched_data = Output("未匹配数据", Table)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     want_main_area = False
@@ -428,7 +428,7 @@ class OWSelectRows(widget.OWWidget):
         elif variables:
             self.add_row()
 
-        self.update_info(data, self.data_in_variables, "In: ")
+        self.update_info(data, self.data_in_variables, "输入：")
         self.unconditional_commit()
 
     def conditions_changed(self):
@@ -556,19 +556,17 @@ class OWSelectRows(widget.OWWidget):
         self.match_desc = report.describe_data_brief(matching_output)
         self.nonmatch_desc = report.describe_data_brief(non_matching_output)
 
-        self.update_info(matching_output, self.data_out_rows, "Out: ")
+        self.update_info(matching_output, self.data_out_rows, "输出：")
 
     def update_info(self, data, lab1, label):
         def sp(s, capitalize=True):
-            return s and s or ("No" if capitalize else "no"), "s" * (s != 1)
+            return s and s or ("无" if capitalize else "无")
 
         if data is None:
             lab1.setText("")
         else:
-            lab1.setText(label + "~%s row%s, %s variable%s" %
-                         (sp(data.approx_len()) +
-                          sp(len(data.domain.variables) +
-                             len(data.domain.metas)))
+            lab1.setText(label + "~%s 行数据, %s 个变量" %
+                         (sp(data.approx_len()) , sp(len(data.domain.variables) + len(data.domain.metas)))
                         )
 
     def send_report(self):

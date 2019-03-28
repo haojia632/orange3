@@ -616,7 +616,7 @@ class OWPlotGUI:
 
     def label_only_selected_check_box(self, widget):
         self._check_box(widget=widget, value="label_only_selected",
-                        label="Label only selection and subset",
+                        label="Label only selected points",
                         cb_name=self._plot.update_labels)
 
     def filled_symbols_check_box(self, widget):
@@ -887,7 +887,7 @@ class OWPlotGUI:
         return c
 
     def box_zoom_select(self, parent):
-        box_zoom_select = gui.vBox(parent, "Zoom/Select")
+        box_zoom_select = gui.vBox(parent, "缩放/选择")
         zoom_select_toolbar = self.zoom_select_toolbar(
             box_zoom_select, nomargin=True,
             buttons=[self.StateButtonsBegin,

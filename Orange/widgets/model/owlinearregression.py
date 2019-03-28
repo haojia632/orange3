@@ -15,9 +15,8 @@ from Orange.widgets.widget import Output
 
 
 class OWLinearRegression(OWBaseLearner):
-    name = "Linear Regression"
-    description = "A linear regression algorithm with optional L1 (LASSO), " \
-                  "L2 (ridge) or L1L2 (elastic net) regularization."
+    name = "线性回归"
+    description = "一种线性回归算法，具有可选的L1 (LASSO)、L2 (ridge)或L1L2 (elastic net)正则化。"
     icon = "icons/LinearRegression.svg"
     replaces = [
         "Orange.widgets.regression.owlinearregression.OWLinearRegression",
@@ -28,11 +27,11 @@ class OWLinearRegression(OWBaseLearner):
     LEARNER = LinearRegressionLearner
 
     class Outputs(OWBaseLearner.Outputs):
-        coefficients = Output("Coefficients", Table, explicit=True)
+        coefficients = Output("系数", Table, explicit=True)
 
     #: Types
-    REGULARIZATION_TYPES = ["No regularization", "Ridge regression (L2)",
-                            "Lasso regression (L1)", "Elastic net regression"]
+    REGULARIZATION_TYPES = ["没有规范化", "Ridge回归（L2）",
+                            "Lasso回归 (L1)", "弹性网络回归"]
     OLS, Ridge, Lasso, Elastic = 0, 1, 2, 3
 
     ridge = settings.Setting(False)
@@ -52,14 +51,14 @@ class OWLinearRegression(OWBaseLearner):
                         range(100, 1001, 100)))
 
     def add_main_layout(self):
-        box = gui.hBox(self.controlArea, "Regularization")
+        box = gui.hBox(self.controlArea, "正则化")
         gui.radioButtons(box, self, "reg_type",
                          btnLabels=self.REGULARIZATION_TYPES,
                          callback=self._reg_type_changed)
 
         gui.separator(box, 20, 20)
         self.alpha_box = box2 = gui.vBox(box, margin=10)
-        gui.widgetLabel(box2, "Regularization strength:")
+        gui.widgetLabel(box2, "正则化强度:")
         gui.hSlider(
             box2, self, "alpha_index",
             minValue=0, maxValue=len(self.alphas) - 1,
@@ -71,7 +70,7 @@ class OWLinearRegression(OWBaseLearner):
 
         gui.separator(box2, 10, 10)
         box4 = gui.vBox(box2, margin=0)
-        gui.widgetLabel(box4, "Elastic net mixing:")
+        gui.widgetLabel(box4, "弹性净混合:")
         box5 = gui.hBox(box4)
         gui.widgetLabel(box5, "L1")
         self.l2_ratio_slider = gui.hSlider(
@@ -100,7 +99,7 @@ class OWLinearRegression(OWBaseLearner):
         self.apply()
 
     def _set_alpha_label(self):
-        self.alpha_label.setText("Alpha: {}".format(self.alphas[self.alpha_index]))
+        self.alpha_label.setText("初始: {}".format(self.alphas[self.alpha_index]))
 
     def _alpha_changed(self):
         self._set_alpha_label()

@@ -16,10 +16,10 @@ class OWTranspose(OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data = Output("Data", Table, dynamic=False)
+        data = Output("数据", Table, dynamic=False)
 
     GENERIC, FROM_META_ATTR = range(2)
 
@@ -49,10 +49,10 @@ class OWTranspose(OWWidget):
         edit = gui.lineEdit(
             gui.indentedBox(box, gui.checkButtonOffsetHint(button)), self,
             "feature_name",
-            placeholderText="Type a prefix ...", toolTip="自定义特征名称")
+            placeholderText="输入前缀......", toolTip="自定义特征名称")
         edit.editingFinished.connect(self._apply_editing)
 
-        self.meta_button = gui.appendRadioButton(box, "来自元属性:")
+        self.meta_button = gui.appendRadioButton(box, "来自元特征:")
         self.feature_model = DomainModel(
             order=DomainModel.METAS, valid_types=StringVariable,
             alphabetical=True)

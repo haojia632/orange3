@@ -14,11 +14,11 @@ class OWTransform(OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table, default=True)
-        preprocessor = Input("Preprocessor", Preprocess)
+        data = Input("数据", Table, default=True)
+        preprocessor = Input("预处理器", Preprocess)
 
     class Outputs:
-        transformed_data = Output("Transformed Data", Table)
+        transformed_data = Output("转化数据", Table)
 
     class Error(OWWidget.Error):
         pp_error = Msg("An error occurred while transforming data.\n{}")

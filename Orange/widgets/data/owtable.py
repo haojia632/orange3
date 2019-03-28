@@ -366,7 +366,7 @@ TableSlot = namedtuple("TableSlot", ["input_id", "table", "summary", "view"])
 
 class OWDataTable(widget.OWWidget):
     name = "数据表"
-    description = "显示电子表格中的数据集。"
+    description = "显示表格中的数据集。"
     icon = "icons/Table.svg"
     priority = 50
     keywords = []
@@ -374,10 +374,10 @@ class OWDataTable(widget.OWWidget):
     buttons_area_orientation = Qt.Vertical
 
     class Inputs:
-        data = Input("Data", Table, multiple=True)
+        data = Input("数据", Table, multiple=True)
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True)
+        selected_data = Output("选择数据", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     show_distributions = Setting(False)
@@ -746,7 +746,7 @@ class OWDataTable(widget.OWWidget):
 
     def set_info(self, summary):
         if summary is None:
-            self.info_ex.setText("No data on input.")
+            self.info_ex.setText("没有输入数据。")
             self.info_attr.setText("")
             self.info_class.setText("")
             self.info_meta.setText("")
@@ -983,15 +983,15 @@ def format_summary(summary):
     text = []
     if isinstance(summary, ApproxSummary):
         if summary.len.done():
-            text += ["{} instances".format(summary.len.result())]
+            text += ["条目数：{}".format(summary.len.result())]
         else:
-            text += ["~{} instances".format(summary.approx_len)]
+            text += ["条目数：~{}".format(summary.approx_len)]
 
     elif isinstance(summary, Summary):
-        text += ["{} instances".format(summary.len)]
+        text += ["条目数：{}".format(summary.len)]
 
         if sum(p.nans for p in [summary.X, summary.Y, summary.M]) == 0:
-            text[-1] += " (no missing values)"
+            text[-1] += " (无缺失值)"
 
     def format_part(part):
         if isinstance(part, NotAvailable):
@@ -1002,8 +1002,8 @@ def format_summary(summary):
         if isinstance(part, DenseArray):
             total = part.nans + part.non_nans
             miss = ("%.1f%%" % (100 * part.nans / total) if part.nans > 0
-                    else "no")
-            return " (%s missing values)" % miss
+                    else "无")
+            return " (%s缺失值)" % miss
         elif isinstance(part, (SparseArray, SparseBoolArray)):
             text = " ({}, density {:.2f}%)"
             tag = "sparse" if isinstance(part, SparseArray) else "tags"
@@ -1015,29 +1015,29 @@ def format_summary(summary):
 
     def sp(n):
         if n == 0:
-            return "No", "s"
+            return "0", "个"
         elif n == 1:
             return str(n), ''
         else:
-            return str(n), 's'
+            return str(n), '个'
 
-    text += [("%s feature%s" % sp(len(summary.domain.attributes)))
+    text += [("特征：%s %s" % sp(len(summary.domain.attributes)))
              + format_part(summary.X)]
 
     if not summary.domain.class_vars:
-        text += ["No target variable."]
+        text += ["没有目标变量。"]
     else:
         if len(summary.domain.class_vars) > 1:
             c_text = "%s outcome%s" % sp(len(summary.domain.class_vars))
         elif summary.domain.has_continuous_class:
-            c_text = "Continuous target variable"
+            c_text = "连续目标变量"
         else:
-            c_text = "Discrete class with %s value%s" % sp(
+            c_text = "离散类： %s %s" % sp(
                 len(summary.domain.class_var.values))
         c_text += format_part(summary.Y)
         text += [c_text]
 
-    text += [("%s meta attribute%s" % sp(len(summary.domain.metas)))
+    text += [("元特征：%s %s" % sp(len(summary.domain.metas)))
              + format_part(summary.M)]
 
     return text

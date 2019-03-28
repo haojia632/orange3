@@ -13,15 +13,15 @@ from Orange.widgets.widget import Input
 
 
 class OWSaveModel(widget.OWWidget):
-    name = "Save Model"
-    description = "Save a trained model to an output file."
+    name = "保存模型"
+    description = "将经过训练的模型保存到输出文件。"
     icon = "icons/SaveModel.svg"
     replaces = ["Orange.widgets.classify.owsaveclassifier.OWSaveClassifier"]
     priority = 3000
     keywords = []
 
     class Inputs:
-        model = Input("Model", Model)
+        model = Input("模型", Model)
 
     #: Current (last selected) filename or None.
     filename = Setting(None)
@@ -40,7 +40,7 @@ class OWSaveModel(widget.OWWidget):
         #: input model
         self.model = None
 
-        box = gui.hBox(self.controlArea, self.tr("File"))
+        box = gui.hBox(self.controlArea, self.tr("文件"))
         self.filesCB = gui.comboBox(box, self, "selectedIndex",
                                     callback=self._on_recent)
         self.filesCB.setMinimumContentsLength(20)
@@ -56,7 +56,7 @@ class OWSaveModel(widget.OWWidget):
         button.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
 
         self.savebutton = gui.button(
-            self.controlArea, self, "Save", callback=self.savecurrent,
+            self.controlArea, self, "保存", callback=self.savecurrent,
             default=True
         )
         self.savebutton.setEnabled(False)
@@ -112,7 +112,7 @@ class OWSaveModel(widget.OWWidget):
             startdir = os.path.dirname(self.filename)
 
         filename, _ = QFileDialog.getSaveFileName(
-            self, self.tr("Save"), directory=startdir, filter=self.FILTER
+            self, self.tr("保存"), directory=startdir, filter=self.FILTER
         )
         if filename:
             if not filename.endswith(self.FILE_EXT):

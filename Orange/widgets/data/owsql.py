@@ -50,7 +50,7 @@ class OWSql(OWWidget):
     keywords = ["load"]
 
     class Outputs:
-        data = Output("Data", Table, doc="Attribute-valued dataset read from the input file.")
+        data = Output("数据", Table, doc="Attribute-valued dataset read from the input file.")
 
     settings_version = 2
 

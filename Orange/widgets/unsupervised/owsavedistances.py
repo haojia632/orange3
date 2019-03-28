@@ -17,7 +17,7 @@ class OWSaveDistances(widget.OWWidget):
     keywords = ["distance matrix", "save"]
 
     class Inputs:
-        distances = Input("Distances", DistMatrix)
+        distances = Input("距离", DistMatrix)
 
     want_main_area = False
     resizing_enabled = False

@@ -35,10 +35,10 @@ class OWSave(widget.OWWidget):
     keywords = []
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Error(widget.OWWidget.Error):
-        unsupported_extension = widget.Msg("Selected extension is not supported.")
+        unsupported_extension = widget.Msg("不支持所选扩展名。")
 
     want_main_area = False
     resizing_enabled = False

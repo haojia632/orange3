@@ -39,19 +39,18 @@ ROW_NAMES_WIDTH = 200
 
 
 class OWSilhouettePlot(widget.OWWidget):
-    name = "Silhouette Plot"
-    description = "可视化地评估集群质量和" \
-                  "集群成员的程度"
+    name = "轮廓图"
+    description = "可视化地评估集群质量和集群成员的程度"
 
     icon = "icons/SilhouettePlot.svg"
     priority = 300
     keywords = []
 
     class Inputs:
-        data = Input("Data", Orange.data.Table)
+        data = Input("数据", Orange.data.Table)
 
     class Outputs:
-        selected_data = Output("Selected Data", Orange.data.Table, default=True)
+        selected_data = Output("被选数据", Orange.data.Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Orange.data.Table)
 
     replaces = [
@@ -75,9 +74,9 @@ class OWSilhouettePlot(widget.OWWidget):
     add_scores = settings.Setting(False)
     auto_commit = settings.Setting(True)
 
-    Distances = [("Euclidean", Orange.distance.Euclidean),
-                 ("Manhattan", Orange.distance.Manhattan),
-                 ("Cosine", Orange.distance.Cosine)]
+    Distances = [("欧几里德", Orange.distance.Euclidean),
+                 ("曼哈顿", Orange.distance.Manhattan),
+                 ("余弦", Orange.distance.Cosine)]
 
     graph_name = "场景"
     buttons_area_orientation = Qt.Vertical
@@ -112,32 +111,32 @@ class OWSilhouettePlot(widget.OWWidget):
         self._silplot = None     # type: Optional[SilhouettePlot]
 
         gui.comboBox(
-            self.controlArea, self, "distance_idx", box="Distance",
+            self.controlArea, self, "distance_idx", box="距离",
             items=[name for name, _ in OWSilhouettePlot.Distances],
             orientation=Qt.Horizontal, callback=self._invalidate_distances)
 
-        box = gui.vBox(self.controlArea, "Cluster Label")
+        box = gui.vBox(self.controlArea, "聚类标签")
         self.cluster_var_cb = gui.comboBox(
             box, self, "cluster_var_idx", contentsLength=14, addSpace=4,
             callback=self._invalidate_scores
         )
         gui.checkBox(
-            box, self, "group_by_cluster", "Group by cluster",
+            box, self, "group_by_cluster", "按聚类分组",
             callback=self._replot)
         self.cluster_var_model = itemmodels.VariableListModel(parent=self)
         self.cluster_var_cb.setModel(self.cluster_var_model)
 
-        box = gui.vBox(self.controlArea, "Bars")
-        gui.widgetLabel(box, "Bar width:")
+        box = gui.vBox(self.controlArea, "条")
+        gui.widgetLabel(box, "条宽度:")
         gui.hSlider(
             box, self, "bar_size", minValue=1, maxValue=10, step=1,
             callback=self._update_bar_size, addSpace=6)
-        gui.widgetLabel(box, "Annotations:")
+        gui.widgetLabel(box, "注解:")
         self.annotation_cb = gui.comboBox(
             box, self, "annotation_var_idx", contentsLength=14,
             callback=self._update_annotations)
         self.annotation_var_model = itemmodels.VariableListModel(parent=self)
-        self.annotation_var_model[:] = ["None"]
+        self.annotation_var_model[:] = ["无"]
         self.annotation_cb.setModel(self.annotation_var_model)
         ibox = gui.indentedBox(box, 5)
         self.ann_hidden_warning = warning = gui.widgetLabel(
@@ -148,13 +147,13 @@ class OWSilhouettePlot(widget.OWWidget):
         gui.rubber(self.controlArea)
 
         gui.separator(self.buttonsArea)
-        box = gui.vBox(self.buttonsArea, "Output")
+        box = gui.vBox(self.buttonsArea, "输出")
         # Thunk the call to commit to call conditional commit
-        gui.checkBox(box, self, "add_scores", "Add silhouette scores",
+        gui.checkBox(box, self, "add_scores", "添加轮廓分数",
                      callback=lambda: self.commit())
         gui.auto_commit(
-            box, self, "auto_commit", "Commit",
-            auto_label="Auto commit", box=False)
+            box, self, "auto_commit", "提交",
+            auto_label="自动提交", box=False)
         # Ensure that the controlArea is not narrower than buttonsArea
         self.controlArea.layout().addWidget(self.buttonsArea)
 

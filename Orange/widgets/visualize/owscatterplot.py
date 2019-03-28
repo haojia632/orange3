@@ -151,17 +151,16 @@ class OWScatterPlot(OWDataProjectionWidget):
     data visualization enhancements."""
 
     name = '散点图'
-    description = "交互式散点图可视化" \
-                  "智能数据可视化增强"
+    description = "交互式散点图可视化智能数据可视化增强"
     icon = "icons/ScatterPlot.svg"
     priority = 140
     keywords = []
 
     class Inputs(OWDataProjectionWidget.Inputs):
-        features = Input("Features", AttributeList)
+        features = Input("特征", AttributeList)
 
     class Outputs(OWDataProjectionWidget.Outputs):
-        features = Output("Features", AttributeList, dynamic=False)
+        features = Output("特征", AttributeList, dynamic=False)
 
     settings_version = 4
     auto_sample = Setting(True)

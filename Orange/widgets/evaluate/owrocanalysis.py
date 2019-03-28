@@ -293,15 +293,14 @@ class InfiniteLine(pg.InfiniteLine):
 
 
 class OWROCAnalysis(widget.OWWidget):
-    name = "ROC Analysis"
-    description = "Display the Receiver Operating Characteristics curve " \
-                  "based on the evaluation of classifiers."
+    name = "ROC分析"
+    description = "根据分类器的评估，显示接收机的工作特性曲线。"
     icon = "icons/ROCAnalysis.svg"
     priority = 1010
     keywords = []
 
     class Inputs:
-        evaluation_results = Input("Evaluation Results", Orange.evaluation.Results)
+        evaluation_results = Input("评估结果", Orange.evaluation.Results)
 
     class Warning(widget.OWWidget.Warning):
         empty_results = widget.Msg(
@@ -339,60 +338,60 @@ class OWROCAnalysis(widget.OWWidget):
         self._perf_line = None
         self._tooltip_cache = None
 
-        box = gui.vBox(self.controlArea, "Plot")
-        tbox = gui.vBox(box, "Target Class")
+        box = gui.vBox(self.controlArea, "制图")
+        tbox = gui.vBox(box, "目标类")
         tbox.setFlat(True)
 
         self.target_cb = gui.comboBox(
             tbox, self, "target_index", callback=self._on_target_changed,
             contentsLength=8)
 
-        cbox = gui.vBox(box, "Classifiers")
+        cbox = gui.vBox(box, "分类器")
         cbox.setFlat(True)
         self.classifiers_list_box = gui.listBox(
             cbox, self, "selected_classifiers", "classifier_names",
             selectionMode=QListView.MultiSelection,
             callback=self._on_classifiers_changed)
 
-        abox = gui.vBox(box, "Combine ROC Curves From Folds")
+        abox = gui.vBox(box, "结合褶皱的ROC曲线")
         abox.setFlat(True)
         gui.comboBox(abox, self, "roc_averaging",
-                     items=["Merge Predictions from Folds", "Mean TP Rate",
-                            "Mean TP and FP at Threshold", "Show Individual Curves"],
+                     items=["从折叠中合并预测", "平均TP率",
+                            "阈值处的平均TP和FP", "显示单个曲线"],
                      callback=self._replot)
 
-        hbox = gui.vBox(box, "ROC Convex Hull")
+        hbox = gui.vBox(box, "ROC凸壳")
         hbox.setFlat(True)
         gui.checkBox(hbox, self, "display_convex_curve",
-                     "Show convex ROC curves", callback=self._replot)
+                     "显示凸ROC曲线", callback=self._replot)
         gui.checkBox(hbox, self, "display_convex_hull",
-                     "Show ROC convex hull", callback=self._replot)
+                     "显示ROC凸壳", callback=self._replot)
 
-        box = gui.vBox(self.controlArea, "Analysis")
+        box = gui.vBox(self.controlArea, "分析")
 
         gui.checkBox(box, self, "display_def_threshold",
-                     "Default threshold (0.5) point",
+                     "默认阈值（0.5）",
                      callback=self._on_display_def_threshold_changed)
 
-        gui.checkBox(box, self, "display_perf_line", "Show performance line",
+        gui.checkBox(box, self, "display_perf_line", "显示性能线",
                      callback=self._on_display_perf_line_changed)
         grid = QGridLayout()
         ibox = gui.indentedBox(box, orientation=grid)
 
         sp = gui.spin(box, self, "fp_cost", 1, 1000, 10,
                       callback=self._on_display_perf_line_changed)
-        grid.addWidget(QLabel("FP Cost:"), 0, 0)
+        grid.addWidget(QLabel("FP 成本:"), 0, 0)
         grid.addWidget(sp, 0, 1)
 
         sp = gui.spin(box, self, "fn_cost", 1, 1000, 10,
                       callback=self._on_display_perf_line_changed)
-        grid.addWidget(QLabel("FN Cost:"))
+        grid.addWidget(QLabel("FN 成本:"))
         grid.addWidget(sp, 1, 1)
         sp = gui.spin(box, self, "target_prior", 1, 99,
                       callback=self._on_display_perf_line_changed)
         sp.setSuffix("%")
         sp.addAction(QAction("Auto", sp))
-        grid.addWidget(QLabel("Prior target class probability:"))
+        grid.addWidget(QLabel("优先目标类概率:"))
         grid.addWidget(sp, 2, 1)
 
         self.plotview = pg.GraphicsView(background="w")
@@ -411,12 +410,12 @@ class OWROCAnalysis(widget.OWWidget):
         axis = self.plot.getAxis("bottom")
         axis.setTickFont(tickfont)
         axis.setPen(pen)
-        axis.setLabel("FP Rate (1-Specificity)")
+        axis.setLabel("FP 率 (1-特异性)")
 
         axis = self.plot.getAxis("left")
         axis.setTickFont(tickfont)
         axis.setPen(pen)
-        axis.setLabel("TP Rate (Sensitivity)")
+        axis.setLabel("TP 率 (灵敏性)")
 
         self.plot.showGrid(True, True, alpha=0.1)
         self.plot.setRange(xRange=(0.0, 1.0), yRange=(0.0, 1.0), padding=0.05)

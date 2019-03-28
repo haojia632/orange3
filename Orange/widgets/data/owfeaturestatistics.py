@@ -106,13 +106,13 @@ class FeatureStatisticsTableModel(AbstractSortTableModel):
         @property
         def name(self):
             return {self.ICON: '',
-                    self.NAME: 'Name',
-                    self.DISTRIBUTION: 'Distribution',
-                    self.CENTER: 'Center',
-                    self.DISPERSION: 'Dispersion',
-                    self.MIN: 'Min.',
-                    self.MAX: 'Max.',
-                    self.MISSING: 'Missing',
+                    self.NAME: '名称',
+                    self.DISTRIBUTION: '布局',
+                    self.CENTER: '中心',
+                    self.DISPERSION: '分散',
+                    self.MIN: '小',
+                    self.MAX: '大',
+                    self.MISSING: '丢失',
                     }[self.value]
 
         @property
@@ -692,11 +692,11 @@ class OWFeatureStatistics(widget.OWWidget):
     icon = 'icons/FeatureStatistics.svg'
 
     class Inputs:
-        data = Input('Data', Table, default=True)
+        data = Input('数据', Table, default=True)
 
     class Outputs:
-        reduced_data = Output('Reduced Data', Table, default=True)
-        statistics = Output('Statistics', Table)
+        reduced_data = Output('减少数据', Table, default=True)
+        statistics = Output('统计', Table)
 
     want_main_area = True
     buttons_area_orientation = Qt.Vertical
@@ -736,12 +736,12 @@ class OWFeatureStatistics(widget.OWWidget):
 
         self.color_var_model = DomainModel(
             valid_types=(ContinuousVariable, DiscreteVariable),
-            placeholder='None',
+            placeholder='无',
         )
         box = gui.vBox(self.controlArea, '直方图')
         self.cb_color_var = gui.comboBox(
             box, master=self, value='color_var', model=self.color_var_model,
-            label='Color:', orientation=Qt.Horizontal,
+            label='颜色：', orientation=Qt.Horizontal,
         )
         self.cb_color_var.activated.connect(self.__color_var_changed)
 

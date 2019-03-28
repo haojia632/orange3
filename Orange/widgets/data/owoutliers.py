@@ -20,11 +20,11 @@ class OWOutliers(widget.OWWidget):
     keywords = ["inlier"]
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        inliers = Output("Inliers", Table)
-        outliers = Output("Outliers", Table)
+        inliers = Output("正常值", Table)
+        outliers = Output("离群值", Table)
 
     want_main_area = False
 
@@ -70,9 +70,9 @@ class OWOutliers(widget.OWWidget):
             spinType=float, minv=0.01, maxv=10, callback=self.gamma_changed)
         gui.separator(detection, 12)
 
-        self.rb_cov = gui.appendRadioButton(detection, "Covariance estimator")
+        self.rb_cov = gui.appendRadioButton(detection, "协方差估计")
         ibox = gui.indentedBox(detection)
-        self.l_cov = gui.widgetLabel(ibox, 'Contamination:')
+        self.l_cov = gui.widgetLabel(ibox, '污染:')
         self.cont_slider = gui.hSlider(
             ibox, self, "cont", minValue=0, maxValue=100, ticks=10,
             labelFormat="%d %%", callback=self.cont_changed)
@@ -80,7 +80,7 @@ class OWOutliers(widget.OWWidget):
         ebox = gui.hBox(ibox)
         self.cb_emp_cov = gui.checkBox(
             ebox, self, "empirical_covariance",
-            "Support fraction:", callback=self.empirical_changed)
+            "支持部分：", callback=self.empirical_changed)
         self.support_fraction_spin = gui.spin(
             ebox, self, "support_fraction", step=1e-1, spinType=float,
             minv=0.1, maxv=10, callback=self.support_fraction_changed)

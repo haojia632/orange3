@@ -407,11 +407,11 @@ class OWLinePlot(OWWidget):
     enable_selection = Signal(bool)
 
     class Inputs:
-        data = Input("Data", Table, default=True)
-        data_subset = Input("Data Subset", Table)
+        data = Input("数据", Table, default=True)
+        data_subset = Input("数据子集", Table)
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True)
+        selected_data = Output("被选数据", Table, default=True)
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table)
 
     settingsHandler = DomainContextHandler()
@@ -461,26 +461,26 @@ class OWLinePlot(OWWidget):
         box.layout().addWidget(self.graph)
 
     def _add_controls(self):
-        infobox = gui.widgetBox(self.controlArea, "Info")
-        self.infoLabel = gui.widgetLabel(infobox, "No data on input.")
-        displaybox = gui.widgetBox(self.controlArea, "Display")
-        gui.checkBox(displaybox, self, "show_profiles", "Lines",
+        infobox = gui.widgetBox(self.controlArea, "信息")
+        self.infoLabel = gui.widgetLabel(infobox, "没有输入数据。")
+        displaybox = gui.widgetBox(self.controlArea, "显示")
+        gui.checkBox(displaybox, self, "show_profiles", "线",
                      callback=self.__show_profiles_changed,
                      tooltip="Plot lines")
-        gui.checkBox(displaybox, self, "show_range", "Range",
+        gui.checkBox(displaybox, self, "show_range", "范围",
                      callback=self.__show_range_changed,
                      tooltip="Plot range between 10th and 90th percentile")
-        gui.checkBox(displaybox, self, "show_mean", "Mean",
+        gui.checkBox(displaybox, self, "show_mean", "平均值",
                      callback=self.__show_mean_changed,
                      tooltip="Plot mean curve")
-        gui.checkBox(displaybox, self, "show_error", "Error bars",
+        gui.checkBox(displaybox, self, "show_error", "误差条",
                      callback=self.__show_error_changed,
                      tooltip="Show standard deviation")
 
         self.group_vars = DomainModel(
-            placeholder="None", separators=False, valid_types=DiscreteVariable)
+            placeholder="无", separators=False, valid_types=DiscreteVariable)
         self.group_view = gui.listView(
-            self.controlArea, self, "group_var", box="Group by",
+            self.controlArea, self, "group_var", box="分组",
             model=self.group_vars, callback=self.__group_var_changed)
         self.group_view.setEnabled(False)
         self.group_view.setMinimumSize(QSize(30, 100))
@@ -492,7 +492,7 @@ class OWLinePlot(OWWidget):
 
         gui.rubber(self.controlArea)
         gui.auto_commit(self.controlArea, self, "auto_commit",
-                        "Send Selection", "Send Automatically")
+                        "选中发送", "自动发送")
 
     def __show_profiles_changed(self):
         self.check_display_options()

@@ -9,8 +9,8 @@ from Orange.widgets.widget import Msg
 
 
 class OWRandomForest(OWBaseLearner):
-    name = "Random Forest"
-    description = "Predict using an ensemble of decision trees."
+    name = "随机森林"
+    description = "使用一组决策树进行预测。"
     icon = "icons/RandomForest.svg"
     replaces = [
         "Orange.widgets.classify.owrandomforest.OWRandomForest",
@@ -33,34 +33,34 @@ class OWRandomForest(OWBaseLearner):
     index_output = settings.Setting(0)
 
     class Error(OWBaseLearner.Error):
-        not_enough_features = Msg("Insufficient number of attributes ({})")
+        not_enough_features = Msg("属性数量不足 ({})")
 
     def add_main_layout(self):
-        box = gui.vBox(self.controlArea, 'Basic Properties')
+        box = gui.vBox(self.controlArea, '基本属性')
         self.n_estimators_spin = gui.spin(
             box, self, "n_estimators", minv=1, maxv=10000, controlWidth=80,
-            alignment=Qt.AlignRight, label="Number of trees: ",
+            alignment=Qt.AlignRight, label="树个数: ",
             callback=self.settings_changed)
         self.max_features_spin = gui.spin(
             box, self, "max_features", 2, 50, controlWidth=80,
-            label="Number of attributes considered at each split: ",
+            label="每次拆分时考虑的属性数: ",
             callback=self.settings_changed, checked="use_max_features",
             checkCallback=self.settings_changed, alignment=Qt.AlignRight,)
         self.random_state_spin = gui.spin(
             box, self, "random_state", 0, 2 ** 31 - 1, controlWidth=80,
-            label="Fixed seed for random generator: ", alignment=Qt.AlignRight,
+            label="随机发生器的固定种子: ", alignment=Qt.AlignRight,
             callback=self.settings_changed, checked="use_random_state",
             checkCallback=self.settings_changed)
 
-        box = gui.vBox(self.controlArea, "Growth Control")
+        box = gui.vBox(self.controlArea, "生长控制")
         self.max_depth_spin = gui.spin(
             box, self, "max_depth", 1, 50, controlWidth=80,
-            label="Limit depth of individual trees: ", alignment=Qt.AlignRight,
+            label="单株树极限深度: ", alignment=Qt.AlignRight,
             callback=self.settings_changed, checked="use_max_depth",
             checkCallback=self.settings_changed)
         self.min_samples_split_spin = gui.spin(
             box, self, "min_samples_split", 2, 1000, controlWidth=80,
-            label="Do not split subsets smaller than: ",
+            label="拆分不要小于: ",
             callback=self.settings_changed, checked="use_min_samples_split",
             checkCallback=self.settings_changed, alignment=Qt.AlignRight)
 

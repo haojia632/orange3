@@ -165,10 +165,10 @@ class OWTreeGraph(OWTreeViewer2D):
     class Inputs:
         # Had different input names before merging from
         # Classification/Regression tree variants
-        tree = Input("Tree", TreeModel, replaces=["Classification Tree", "Regression Tree"])
+        tree = Input("树", TreeModel, replaces=["Classification Tree", "Regression Tree"])
 
     class Outputs:
-        selected_data = Output("Selected Data", Table, default=True, id="selected-data")
+        selected_data = Output("被选数据", Table, default=True, id="selected-data")
         annotated_data = Output(ANNOTATED_DATA_SIGNAL_NAME, Table, id="annotated-data")
 
     settingsHandler = ClassValuesContextHandler()
@@ -330,7 +330,7 @@ class OWTreeGraph(OWTreeViewer2D):
             return
         items = [("Tree size", self.info.text()),
                  ("Edge widths",
-                  ("Fixed", "Relative to root", "Relative to parent")[
+                  ("固定", "相对于根", "相对于父")[
                       # pylint: disable=invalid-sequence-index
                       self.line_width_method])]
         if self.domain.class_var.is_discrete:

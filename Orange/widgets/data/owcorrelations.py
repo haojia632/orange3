@@ -37,7 +37,7 @@ class CorrelationType(IntEnum):
         """
         Texts for correlation types. Can be used in gui controls (eg. combobox).
         """
-        return ["Pearson correlation", "Spearman correlation"]
+        return ["皮尔逊相关", "斯皮尔曼相关"]
 
 
 class KMeansCorrelationHeuristic:
@@ -160,12 +160,12 @@ class OWCorrelations(OWWidget):
     priority = 1106
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        data = Output("Data", Table)
-        features = Output("Features", AttributeList)
-        correlations = Output("Correlations", Table)
+        data = Output("数据", Table)
+        features = Output("特征", AttributeList)
+        correlations = Output("相关性", Table)
 
     want_control_area = False
 
@@ -174,8 +174,8 @@ class OWCorrelations(OWWidget):
     correlation_type = Setting(0)
 
     class Information(OWWidget.Information):
-        not_enough_vars = Msg("Need at least two continuous features.")
-        not_enough_inst = Msg("Need at least two instances.")
+        not_enough_vars = Msg("至少需要两个连续的功能。")
+        not_enough_inst = Msg("至少需要两个实例。")
 
     def __init__(self):
         super().__init__()

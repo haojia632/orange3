@@ -211,8 +211,8 @@ class OWFreeViz(OWAnchorProjectionWidget):
     MAX_ITERATIONS = 1000
     MAX_INSTANCES = 10000
 
-    name = "FreeViz"
-    description = "显示FreeViz投影"
+    name = "粒子物理空间可视化"
+    description = "显示粒子物理空间可视化投影"
     icon = "icons/Freeviz.svg"
     priority = 240
     keywords = ["viz"]
@@ -255,11 +255,11 @@ class OWFreeViz(OWAnchorProjectionWidget):
     def __add_controls_start_box(self):
         box = gui.vBox(self.controlArea, box=True)
         gui.comboBox(
-            box, self, "initialization", label="Initialization:",
+            box, self, "initialization", label="初始化:",
             items=InitType.items(), orientation=Qt.Horizontal,
             labelWidth=90, callback=self.__init_combo_changed)
         self.btn_start = gui.button(
-            box, self, "Optimize", self.__toggle_start, enabled=False)
+            box, self, "优化", self.__toggle_start, enabled=False)
 
     @property
     def effective_variables(self):
