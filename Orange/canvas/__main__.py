@@ -153,7 +153,7 @@ def show_survey():
 
 def check_for_updates():
     settings = QSettings()
-    check_updates = settings.value('startup/check-updates', True, type=bool)
+    check_upidates = settings.value('startup/check-updates', True, type=bool)
     last_check_time = settings.value('startup/last-update-check-time', 0, type=int)
     ONE_DAY = 86400
 
